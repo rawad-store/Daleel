@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دليل - Daleel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #2D5F7C;
+      --secondary-color: #FF9800;
+      --accent-color: #4CAF50;
+      --light-color: #f5f7f9;
+      --dark-color: #333;
+      --gray-color: #e0e0e0;
+      --danger-color: #f44336;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body { 
+      font-family: 'Cairo', sans-serif; 
+      background: var(--light-color); 
+      margin: 0; 
+      padding: 0; 
+      color: var(--dark-color);
+      line-height: 1.6;
+    }
+    
+    header { 
+      background: var(--primary-color); 
+      color: white; 
+      padding: 15px; 
+      text-align: center;
+      position: relative;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .container { 
+      max-width: 1000px; 
+      margin: auto; 
+      padding: 20px; 
+    }
+    
+    .service-card { 
+      background: white; 
+      padding: 20px; 
+      margin: 15px 0; 
+      border-radius: 8px; 
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .verified { 
+      color: var(--accent-color); 
+      font-weight: bold; 
+    }
+    
+    .pending { 
+      color: var(--secondary-color); 
+      font-weight: bold; 
+    }
+    
+    .vote-btn { 
+      border: none; 
+      background: none; 
+      cursor: pointer; 
+      font-size: 1.2rem; 
+      margin: 0 5px; 
+      transition: transform 0.2s;
+    }
+    
+    .vote-btn:hover {
+      transform: scale(1.2);
+    }
+    
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Cairo', sans-serif;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #1e4660;
+    }
+    
+    .btn-secondary {
+      background: var(--secondary-color);
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background: #e68900;
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+    
+    .btn-outline:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .auth-form, .service-form { 
+      display: none; 
+      margin-bottom: 20px; 
+      background: white; 
+      padding: 20px; 
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    input, textarea, select {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid var(--gray-color);
+      border-radius: 6px;
+      font-family: 'Cairo', sans-serif;
+    }
+    
+    .tabs {
+      display: flex;
+      margin: 20px 0;
+      border-bottom: 2px solid var(--gray-color);
+    }
+    
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s;
+    }
+    
+    .tab.active {
+      border-bottom: 3px solid var(--secondary-color);
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+    
+    .user-info {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .user-info span {
+      margin-right: 10px;
+    }
+    
+    .filters {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    
+    .filter-select {
+      flex: 1;
+      min-width: 150px;
+    }
+    
+    .service-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .service-meta {
+      display: flex;
+      gap: 15px;
+      margin: 10px 0;
+      flex-wrap: wrap;
+    }
+    
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: var(--primary-color);
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: #777;
+    }
+    
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: var(--gray-color);
+    }
+    
+    @media (max-width: 768px) {
+      .user-info {
+        position: static;
+        transform: none;
+        justify-content: center;
+        margin-top: 10px;
+      }
+      
+      .filters {
+        flex-direction: column;
+      }
+      
+      .service-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📍 دليل - Daleel</h1>
+    <div class="user-info" id="userInfo" style="display: none;">
+      <span id="userEmail"></span>
+      <button class="btn btn-outline" onclick="logout()">تسجيل الخروج</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Auth Section -->
+    <div id="authSection">
+      <div style="text-align: center; margin: 20px 0;">
+        <button class="btn btn-primary" onclick="showForm('loginForm')">تسجيل الدخول</button>
+        <button class="btn btn-secondary" onclick="showForm('registerForm')">إنشاء حساب</button>
+      </div>
+
+      <form id="loginForm" class="auth-form">
+        <h3>تسجيل الدخول</h3>
+        <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" required>
+        <input type="password" id="loginPassword" placeholder="كلمة المرور" required>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">دخول</button>
+      </form>
+
+      <form id="registerForm" class="auth-form">
+        <h3>إنشاء حساب</h3>
+        <input type="email" id="registerEmail" placeholder="البريد الإلكتروني" required>
+        <input type="password" id="registerPassword" placeholder="كلمة المرور (6 أحرف على الأقل)" required>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">تسجيل</button>
+      </form>
+    </div>
+
+    <div id="mainContent" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <button class="btn btn-secondary" onclick="toggleAddForm()">
+          <i class="fas fa-plus"></i> إضافة خدمة جديدة
+        </button>
+        
+        <div class="filters">
+          <select class="filter-select" id="categoryFilter" onchange="loadServices()">
+            <option value="">جميع الأقسام</option>
+            <option value="حكومي">حكومي</option>
+            <option value="صحة">صحة</option>
+            <option value="تعليم">تعليم</option>
+            <option value="مواصلات">مواصلات</option>
+            <option value="أخرى">أخرى</option>
+          </select>
+          
+          <select class="filter-select" id="sortBy" onchange="loadServices()">
+            <option value="newest">الأحدث أولاً</option>
+            <option value="oldest">الأقدم أولاً</option>
+            <option value="mostVoted">الأكثر تصويتاً</option>
+            <option value="leastVoted">الأقل تصويتاً</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Add Service Form -->
+      <form id="serviceForm" class="service-form">
+        <h3>إضافة خدمة جديدة</h3>
+        <input type="text" id="serviceName" placeholder="اسم الخدمة" required>
+        <select id="serviceCategory" required>
+          <option value="">اختر القسم</option>
+          <option value="حكومي">حكومي</option>
+          <option value="صحة">صحة</option>
+          <option value="تعليم">تعليم</option>
+          <option value="مواصلات">مواصلات</option>
+          <option value="أخرى">أخرى</option>
+        </select>
+        <input type="text" id="serviceLocation" placeholder="المكان" required>
+        <textarea id="serviceDocuments" placeholder="الأوراق المطلوبة" required></textarea>
+        <input type="text" id="serviceCost" placeholder="التكلفة (اختياري)">
+        <input type="text" id="serviceDuration" placeholder="المدة المتوقعة (اختياري)">
+        <div style="display: flex; gap: 10px;">
+          <button type="submit" class="btn btn-primary">إضافة الخدمة</button>
+          <button type="button" class="btn btn-outline" onclick="toggleAddForm()">إلغاء</button>
+        </div>
+      </form>
+
+      <!-- Services List -->
+      <div id="servicesContainer">
+        <div class="loading">
+          <i class="fas fa-spinner fa-spin"></i>
+          <p>جاري تحميل الخدمات...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase v8 SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+  <script>
+    // 🔧 بيانات مشروعك من Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyB6TzN-QHVUowizABYxm0Y8fkqTp1qb_qA",
+      authDomain: "daleel-c4204.firebaseapp.com",
+      projectId: "daleel-c4204",
+      storageBucket: "daleel-c4204.appspot.com",
+      messagingSenderId: "864882936232",
+      appId: "1:864882936232:web:73083fed09357c6925b59d",
+      measurementId: "G-E5HMQBFBW8"
+    };
+
+    // ✅ Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+
+    const servicesContainer = document.getElementById("servicesContainer");
+    const serviceForm = document.getElementById("serviceForm");
+    const authSection = document.getElementById("authSection");
+    const mainContent = document.getElementById("mainContent");
+    const userInfo = document.getElementById("userInfo");
+    const userEmail = document.getElementById("userEmail");
+
+    // حالة التطبيق
+    let currentUser = null;
+    let services = [];
+
+    // تهيئة التطبيق
+    function initApp() {
+      // مراقبة حالة المصادقة
+      auth.onAuthStateChanged(async (user) => {
+        if (user) {
+          currentUser = user;
+          userEmail.textContent = user.email;
+          userInfo.style.display = 'flex';
+          authSection.style.display = 'none';
+          mainContent.style.display = 'block';
+          await loadServices();
+        } else {
+          currentUser = null;
+          userInfo.style.display = 'none';
+          authSection.style.display = 'block';
+          mainContent.style.display = 'none';
+        }
+      });
+    }
+
+    // Toggle Add Form
+    function toggleAddForm() {
+      serviceForm.style.display = serviceForm.style.display === "none" ? "block" : "none";
+    }
+
+    // Show Auth Forms
+    function showForm(formId) {
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("registerForm").style.display = "none";
+      document.getElementById(formId).style.display = "block";
+    }
+
+    // Register
+    document.getElementById("registerForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("registerEmail").value;
+      const password = document.getElementById("registerPassword").value;
+      
+      if (password.length < 6) {
+        alert("كلمة المرور يجب أن تكون 6 أحرف على الأقل");
+        return;
+      }
+      
+      try {
+        await auth.createUserWithEmailAndPassword(email, password);
+        alert("تم إنشاء الحساب ✅");
+        document.getElementById("registerForm").reset();
+      } catch (err) { 
+        alert(err.message); 
+      }
+    });
+
+    // Login
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+      try {
+        await auth.signInWithEmailAndPassword(email, password);
+        alert("تم تسجيل الدخول ✅");
+        document.getElementById("loginForm").reset();
+      } catch (err) { 
+        alert(err.message); 
+      }
+    });
+
+    // Logout
+    function logout() {
+      if (confirm("هل تريد تسجيل الخروج؟")) {
+        auth.signOut();
+      }
+    }
+
+    // Add Service
+    serviceForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      if (!currentUser) {
+        alert("يجب تسجيل الدخول أولاً");
+        return;
+      }
+      
+      const serviceData = {
+        name: document.getElementById("serviceName").value,
+        category: document.getElementById("serviceCategory").value,
+        location: document.getElementById("serviceLocation").value,
+        documents: document.getElementById("serviceDocuments").value,
+        cost: document.getElementById("serviceCost").value || "غير محدد",
+        duration: document.getElementById("serviceDuration").value || "غير محددة",
+        createdAt: new Date(),
+        votes: 0,
+        verified: false,
+        userId: currentUser.uid
+      };
+      
+      try {
+        await db.collection("services").add(serviceData);
+        alert("تمت إضافة الخدمة ✅");
+        serviceForm.reset();
+        toggleAddForm();
+        await loadServices();
+      } catch (err) { 
+        console.error(err);
+        alert("حدث خطأ أثناء إضافة الخدمة");
+      }
+    });
+
+    // Load Services
+    async function loadServices() {
+      servicesContainer.innerHTML = `
+        <div class="loading">
+          <i class="fas fa-spinner fa-spin"></i>
+          <p>جاري تحميل الخدمات...</p>
+        </div>
+      `;
+      
+      try {
+        const categoryFilter = document.getElementById("categoryFilter").value;
+        const sortBy = document.getElementById("sortBy").value;
+        
+        let query = db.collection("services");
+        
+        // تطبيق الفلتر حسب القسم
+        if (categoryFilter) {
+          query = query.where("category", "==", categoryFilter);
+        }
+        
+        // تطبيق الترتيب
+        switch(sortBy) {
+          case "newest":
+            query = query.orderBy("createdAt", "desc");
+            break;
+          case "oldest":
+            query = query.orderBy("createdAt", "asc");
+            break;
+          case "mostVoted":
+            query = query.orderBy("votes", "desc");
+            break;
+          case "leastVoted":
+            query = query.orderBy("votes", "asc");
+            break;
+          default:
+            query = query.orderBy("createdAt", "desc");
+        }
+        
+        const snapshot = await query.get();
+        
+        if (snapshot.empty) {
+          servicesContainer.innerHTML = `
+            <div class="empty-state">
+              <i class="fas fa-inbox"></i>
+              <h3>لا توجد خدمات لعرضها</h3>
+              <p>كن أول من يضيف خدمة!</p>
+            </div>
+          `;
+          return;
+        }
+        
+        servicesContainer.innerHTML = "";
+        snapshot.forEach(doc => {
+          const s = doc.data();
+          const card = document.createElement("div");
+          card.className = "service-card";
+          card.innerHTML = `
+            <div class="service-header">
+              <h3>${s.name}</h3>
+              <span class="${s.verified ? 'verified' : 'pending'}">
+                <i class="fas ${s.verified ? 'fa-check-circle' : 'fa-clock'}"></i>
+                ${s.verified ? 'موثوق' : 'قيد المراجعة'}
+              </span>
+            </div>
+            
+            <div class="service-meta">
+              <div class="meta-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>${s.location}</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-folder"></i>
+                <span>${s.category}</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-money-bill-wave"></i>
+                <span>${s.cost}</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-clock"></i>
+                <span>${s.duration}</span>
+              </div>
+            </div>
+            
+            <div style="margin: 15px 0;">
+              <p><b>الأوراق المطلوبة:</b></p>
+              <p>${s.documents}</p>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+              <div>
+                <button class="vote-btn" onclick="vote('${doc.id}', 1)">
+                  <i class="fas fa-thumbs-up"></i>
+                </button>
+                <span>${s.votes}</span>
+                <button class="vote-btn" onclick="vote('${doc.id}', -1)">
+                  <i class="fas fa-thumbs-down"></i>
+                </button>
+              </div>
+              
+              <small>${formatDate(s.createdAt)}</small>
+            </div>
+          `;
+          servicesContainer.appendChild(card);
+        });
+      } catch (err) {
+        console.error(err);
+        servicesContainer.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-exclamation-circle"></i>
+            <h3>حدث خطأ أثناء تحميل الخدمات</h3>
+            <p>يرجى المحاولة مرة أخرى</p>
+          </div>
+        `;
+      }
+    }
+
+    // Voting
+    async function vote(id, value) {
+      if (!currentUser) {
+        alert("يجب تسجيل الدخول أولاً للتصويت");
+        return;
+      }
+      
+      try {
+        const ref = db.collection("services").doc(id);
+        await ref.update({ votes: firebase.firestore.FieldValue.increment(value) });
+        await loadServices();
+      } catch (err) {
+        console.error(err);
+        alert("حدث خطأ أثناء التصويت");
+      }
+    }
+
+    // Format Date
+    function formatDate(timestamp) {
+      if (!timestamp) return "";
+      
+      const date = timestamp.toDate();
+      return new Intl.DateTimeFormat('ar-EG', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      }).format(date);
+    }
+
+    // Initialize the app
+    initApp();
+  </script>
+</body>
+</html>
