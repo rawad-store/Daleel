@@ -1474,9 +1474,9 @@
       loadStats();
       initStarEvents();
     });
-    
-     <!-- نافذة تعريفية Daleel تفاعلية -->
-   <div id="welcomeModal" style="
+  
+<!-- نافذة تعريفية Daleel تفاعلية -->
+<div id="welcomeModal" style="
     position: fixed;
     top: 0;
     left: 0;
@@ -1578,13 +1578,10 @@
 </div>
 
 <style>
-@keyframes fadeInModal {
-    from {opacity: 0; transform: scale(0.95);}
-    to {opacity: 1; transform: scale(1);}
-}
 .fadeItem {
     transition: opacity 0.8s ease, transform 0.8s ease;
     transform: translateY(20px);
+    opacity: 0;
 }
 .fadeItem.show {
     opacity: 1 !important;
@@ -1597,56 +1594,56 @@
 </style>
 
 <script>
-// تحقق إذا ظهرت النافذة مسبقاً
-if (!localStorage.getItem('welcomeShown')) {
+(function(){
     const modal = document.getElementById('welcomeModal');
-    modal.style.display = 'flex';
-
     const fadeItems = document.querySelectorAll('.fadeItem');
     const startBtn = document.getElementById('startNow');
     const sendBtn = document.getElementById('sendExperience');
     const thankMsg = document.getElementById('thankMsg');
     const userExp = document.getElementById('userExperience');
+    const closeBtn = document.getElementById('closeModal');
 
-    // ظهور تدريجي لكل فقرة
-    fadeItems.forEach((el, i) => {
-        setTimeout(() => { el.classList.add('show'); }, i * 600);
-    });
+    // تظهر مرة واحدة لكل مستخدم
+    if(!localStorage.getItem('welcomeShown')){
+        modal.style.display = 'flex';
 
-    // ظهور زر البدء بعد كل الفقرات
-    setTimeout(() => { startBtn.classList.add('show'); }, fadeItems.length * 600);
+        // ظهور تدريجي لكل فقرة
+        fadeItems.forEach((el, i)=>{
+            setTimeout(()=>{ el.classList.add('show'); }, i*600);
+        });
 
-    // وظيفة إخفاء النافذة
-    function hideModal() {
-        modal.style.display = 'none';
-        localStorage.setItem('welcomeShown', 'true');
-    }
+        // ظهور زر البدء بعد كل الفقرات
+        setTimeout(()=>{ startBtn.classList.add('show'); }, fadeItems.length*600);
 
-    document.getElementById('closeModal').onclick = hideModal;
-    startBtn.onclick = hideModal;
-
-    // إرسال تجربة المستخدم
-    sendBtn.onclick = function() {
-        const text = userExp.value.trim();
-        if(text){
-            // حفظ التجربة مؤقتًا (يمكن ربطها بقاعدة بيانات لاحقًا)
-            let experiences = JSON.parse(localStorage.getItem('userExperiences') || '[]');
-            experiences.push(text);
-            localStorage.setItem('userExperiences', JSON.stringify(experiences));
-
-            thankMsg.style.display = 'block';
-            userExp.value = '';
-        } else {
-            alert("الرجاء كتابة تجربتك قبل الإرسال.");
+        // وظيفة إخفاء النافذة
+        function hideModal(){
+            modal.style.display = 'none';
+            localStorage.setItem('welcomeShown','true');
         }
+
+        closeBtn.onclick = hideModal;
+        startBtn.onclick = hideModal;
+
+        // إرسال تجربة المستخدم
+        sendBtn.onclick = function(){
+            const text = userExp.value.trim();
+            if(text){
+                let experiences = JSON.parse(localStorage.getItem('userExperiences') || '[]');
+                experiences.push(text);
+                localStorage.setItem('userExperiences', JSON.stringify(experiences));
+                thankMsg.style.display = 'block';
+                userExp.value = '';
+            }else{
+                alert("الرجاء كتابة تجربتك قبل الإرسال.");
+            }
+        }
+
+        // إخفاء تلقائي بعد 20 ثانية
+        setTimeout(hideModal,20000);
+    }else{
+        modal.style.display = 'none';
     }
-
-    // إخفاء تلقائي بعد 20 ثانية
-    setTimeout(hideModal, 20000);
-
-} else {
-    document.getElementById('welcomeModal').style.display = 'none';
-}
+})();
 </script>
 </body>
 </html>
