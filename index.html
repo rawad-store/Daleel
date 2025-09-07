@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل - Daleel | دليل الخدمات الحكومية والعامة</title>
+    <meta name="description" content="دليل شامل للخدمات الحكومية والعامة مع تقييمات المستخدمين والمعلومات المفصلة">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📍</text></svg>">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2D5F7C">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="دليل">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="دليل - Daleel | دليل الخدمات الحكومية والعامة">
+    <meta property="og:description" content="دليل شامل للخدمات الحكومية والعامة مع تقييمات المستخدمين والمعلومات المفصلة">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="دليل - Daleel">
+    <meta name="twitter:description" content="دليل شامل للخدمات الحكومية والعامة">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>جاري تحميل دليل...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <h1><i class="fas fa-map-marker-alt"></i> دليل</h1>
+                    <span class="tagline">دليلك للخدمات</span>
+                </div>
+                
+                <div class="nav-menu" id="navMenu">
+                    <a href="#home" class="nav-link active">الرئيسية</a>
+                    <a href="#services" class="nav-link">الخدمات</a>
+                    <a href="#about" class="nav-link">حول</a>
+                    <a href="#contact" class="nav-link">اتصل بنا</a>
+                </div>
+                
+                <div class="nav-actions">
+                    <button class="btn-secondary" onclick="showAuthModal('login')">
+                        <i class="fas fa-sign-in-alt"></i> دخول
+                    </button>
+                    <button class="btn-primary" onclick="showAuthModal('register')">
+                        <i class="fas fa-user-plus"></i> تسجيل
+                    </button>
+                    <button class="nav-toggle" id="navToggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h2 class="hero-title">دليلك الشامل للخدمات</h2>
+                <p class="hero-subtitle">اكتشف واستفد من تجارب الآخرين في الخدمات الحكومية والعامة</p>
+                <div class="hero-actions">
+                    <button class="btn-primary btn-large" onclick="scrollToSection('services')">
+                        <i class="fas fa-search"></i> استكشف الخدمات
+                    </button>
+                    <button class="btn-outline btn-large" onclick="toggleAddForm()">
+                        <i class="fas fa-plus"></i> أضف خدمة
+                    </button>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalServices">0</div>
+                    <div class="stat-label">خدمة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalUsers">0</div>
+                    <div class="stat-label">مستخدم</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalReviews">0</div>
+                    <div class="stat-label">تقييم</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search and Filter Section -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="ابحث عن خدمة...">
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-category="all">الكل</button>
+                    <button class="filter-btn" data-category="حكومي">حكومي</button>
+                    <button class="filter-btn" data-category="صحة">صحة</button>
+                    <button class="filter-btn" data-category="تعليم">تعليم</button>
+                    <button class="filter-btn" data-category="مالي">مالي</button>
+                    <button class="filter-btn" data-category="أخرى">أخرى</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Service Button (Floating) -->
+    <button class="fab" onclick="toggleAddForm()" title="إضافة خدمة جديدة">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <!-- Add Service Form -->
+    <div id="addServiceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-plus-circle"></i> إضافة خدمة جديدة</h3>
+                <button class="modal-close" onclick="closeAddForm()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="serviceForm" class="service-form">
+                <div class="form-group">
+                    <label for="serviceName">
+                        <i class="fas fa-tag"></i> اسم الخدمة
+                    </label>
+                    <input type="text" id="serviceName" placeholder="مثال: استخراج جواز سفر" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="serviceCategory">
+                            <i class="fas fa-folder"></i> القسم
+                        </label>
+                        <select id="serviceCategory" required>
+                            <option value="">اختر القسم</option>
+                            <option value="حكومي">حكومي</option>
+                            <option value="صحة">صحة</option>
+                            <option value="تعليم">تعليم</option>
+                            <option value="مالي">مالي</option>
+                            <option value="أخرى">أخرى</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="serviceLocation">
+                            <i class="fas fa-map-marker-alt"></i> المكان
+                        </label>
+                        <input type="text" id="serviceLocation" placeholder="مثال: الرياض - حي النخيل" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="serviceDocuments">
+                        <i class="fas fa-file-alt"></i> الأوراق المطلوبة
+                    </label>
+                    <textarea id="serviceDocuments" placeholder="اذكر الأوراق والمستندات المطلوبة..." required></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="serviceCost">
+                            <i class="fas fa-money-bill"></i> التكلفة (اختياري)
+                        </label>
+                        <input type="text" id="serviceCost" placeholder="مثال: 100 ريال">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="serviceDuration">
+                            <i class="fas fa-clock"></i> المدة المتوقعة (اختياري)
+                        </label>
+                        <input type="text" id="serviceDuration" placeholder="مثال: 3-5 أيام عمل">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="serviceNotes">
+                        <i class="fas fa-sticky-note"></i> ملاحظات إضافية (اختياري)
+                    </label>
+                    <textarea id="serviceNotes" placeholder="أي معلومات إضافية مفيدة..."></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeAddForm()">إلغاء</button>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i> إضافة الخدمة
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>الخدمات المتاحة</h2>
+                <p>استعرض تجارب المستخدمين مع الخدمات المختلفة</p>
+            </div>
+            
+            <div id="servicesContainer" class="services-grid">
+                <!-- Services will be loaded here -->
+            </div>
+            
+            <div id="noServices" class="no-services" style="display: none;">
+                <i class="fas fa-inbox"></i>
+                <h3>لا توجد خدمات</h3>
+                <p>كن أول من يضيف خدمة جديدة</p>
+                <button class="btn-primary" onclick="toggleAddForm()">
+                    <i class="fas fa-plus"></i> أضف خدمة
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="authTitle">تسجيل الدخول</h3>
+                <button class="modal-close" onclick="closeAuthModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="loginEmail">
+                        <i class="fas fa-envelope"></i> البريد الإلكتروني
+                    </label>
+                    <input type="email" id="loginEmail" placeholder="example@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">
+                        <i class="fas fa-lock"></i> كلمة المرور
+                    </label>
+                    <input type="password" id="loginPassword" placeholder="كلمة المرور" required>
+                </div>
+                
+                <button type="submit" class="btn-primary btn-full">
+                    <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+                </button>
+                
+                <p class="auth-switch">
+                    ليس لديك حساب؟ 
+                    <a href="#" onclick="switchAuthMode('register')">إنشاء حساب جديد</a>
+                </p>
+            </form>
+            
+            <!-- Register Form -->
+            <form id="registerForm" class="auth-form" style="display: none;">
+                <div class="form-group">
+                    <label for="registerEmail">
+                        <i class="fas fa-envelope"></i> البريد الإلكتروني
+                    </label>
+                    <input type="email" id="registerEmail" placeholder="example@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="registerPassword">
+                        <i class="fas fa-lock"></i> كلمة المرور
+                    </label>
+                    <input type="password" id="registerPassword" placeholder="كلمة المرور (6 أحرف على الأقل)" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">
+                        <i class="fas fa-lock"></i> تأكيد كلمة المرور
+                    </label>
+                    <input type="password" id="confirmPassword" placeholder="أعد كتابة كلمة المرور" required>
+                </div>
+                
+                <button type="submit" class="btn-primary btn-full">
+                    <i class="fas fa-user-plus"></i> إنشاء حساب
+                </button>
+                
+                <p class="auth-switch">
+                    لديك حساب بالفعل؟ 
+                    <a href="#" onclick="switchAuthMode('login')">تسجيل الدخول</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-map-marker-alt"></i> مكتبة الرواد - الصوة</h3>
+                    <p>دليلك الشامل للخدمات الحكومية والعامة</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>روابط سريعة</h4>
+                    <ul>
+                        <li><a href="#home">الرئيسية</a></li>
+                        <li><a href="#services">الخدمات</a></li>
+                        <li><a href="#about">حول</a></li>
+                        <li><a href="#contact">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>تواصل معنا</h4>
+                    <p><strong>واتساب:</strong> <a href="https://wa.me/+201126630356" target="_blank" rel="noopener">+20 1126630356</a></p>
+                    <p><strong>البريد الإلكتروني:</strong> <a href="mailto:tarek500500@gmail.com">tarek500500@gmail.com</a></p>
+                    <p><strong>العنوان:</strong><br>
+                    <span style="color: Light Blue;">أمام سنترال الصوة - بالمجمع<br>محافظة الشرقية، أبوحماد</span></p>
+                    <a href="https://maps.app.goo.gl/AYcYJXjYipwdSgRQA" target="_blank" class="btn btn-outline-primary" style="margin-top: 0.5rem;">
+                        <i class="fas fa-map" style="color: #ffffff" ></i> عرض على الخريطة
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 مكتبة الرواد - الصوة. جميع الحقوق محفوظة.</p>
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <h4 style="margin-bottom: 1.5rem; color: var(--primary-color); font-size: 1.3rem; font-weight: 600;">تابعونا على وسائل التواصل الاجتماعي</h4>
+                    <div class="social-grid">
+                        <a href="https://www.facebook.com/share/18bfjxRbHH" class="social-card" target="_blank" rel="noopener">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://wa.me/+201126630356" class="social-card" target="_blank" rel="noopener">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://www.instagram.com/tarekyahiaalmoghrapy?igsh=MW5teXV6NGg5aTk1aQ==" class="social-card" target="_blank" rel="noopener">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    
+    <!-- Main JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
+

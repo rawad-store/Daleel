@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دليل - Daleel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { font-family: 'Cairo', sans-serif; background:#f5f7f9; margin:0; padding:0; }
+    header { background:#2D5F7C; color:white; padding:15px; text-align:center; }
+    .container { max-width:1000px; margin:auto; padding:20px; }
+    .service-card { background:white; padding:15px; margin:10px 0; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
+    .verified { color:green; font-weight:bold; }
+    .pending { color:orange; font-weight:bold; }
+    .vote-btn { border:none; background:none; cursor:pointer; font-size:1.2rem; margin:0 5px; }
+    .add-btn { background:#FF9800; color:white; padding:12px 20px; border:none; border-radius:6px; cursor:pointer; }
+    #loginForm, #registerForm { display:none; margin-bottom:20px; background:white; padding:15px; border-radius:6px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📍 دليل - Daleel</h1>
+  </header>
+
+  <div class="container">
+    <!-- Auth Section -->
+    <div id="authSection">
+      <button onclick="showForm('loginForm')">تسجيل الدخول</button>
+      <button onclick="showForm('registerForm')">إنشاء حساب</button>
+
+      <form id="loginForm">
+        <h3>تسجيل الدخول</h3>
+        <input type="email" id="loginEmail" placeholder="البريد" required><br><br>
+        <input type="password" id="loginPassword" placeholder="كلمة المرور" required><br><br>
+        <button type="submit">دخول</button>
+      </form>
+
+      <form id="registerForm">
+        <h3>إنشاء حساب</h3>
+        <input type="email" id="registerEmail" placeholder="البريد" required><br><br>
+        <input type="password" id="registerPassword" placeholder="كلمة المرور" required><br><br>
+        <button type="submit">تسجيل</button>
+      </form>
+    </div>
+
+    <button class="add-btn" onclick="toggleAddForm()">➕ إضافة خدمة جديدة</button>
+
+    <!-- Add Service Form -->
+    <form id="serviceForm" style="display:none; margin-top:20px; background:white; padding:15px; border-radius:6px;">
+      <input type="text" id="serviceName" placeholder="اسم الخدمة" required><br><br>
+      <input type="text" id="serviceCategory" placeholder="القسم (حكومي، صحة..)" required><br><br>
+      <input type="text" id="serviceLocation" placeholder="المكان" required><br><br>
+      <textarea id="serviceDocuments" placeholder="الأوراق المطلوبة" required></textarea><br><br>
+      <input type="text" id="serviceCost" placeholder="التكلفة"><br><br>
+      <input type="text" id="serviceDuration" placeholder="المدة المتوقعة"><br><br>
+      <button type="submit">إضافة الخدمة</button>
+    </form>
+
+    <!-- Services List -->
+    <div id="servicesContainer"></div>
+  </div>
+
+  <!-- Firebase v8 SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+  <script>
+    // 🔧 بيانات مشروعك من Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyB6TzN-QHVUowizABYxm0Y8fkqTp1qb_qA",
+      authDomain: "daleel-c4204.firebaseapp.com",
+      projectId: "daleel-c4204",
+      storageBucket: "daleel-c4204.appspot.com",
+      messagingSenderId: "864882936232",
+      appId: "1:864882936232:web:73083fed09357c6925b59d",
+      measurementId: "G-E5HMQBFBW8"
+    };
+
+    // ✅ Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+
+    const servicesContainer = document.getElementById("servicesContainer");
+    const serviceForm = document.getElementById("serviceForm");
+
+    // Toggle Add Form
+    function toggleAddForm() {
+      serviceForm.style.display = serviceForm.style.display === "none" ? "block" : "none";
+    }
+
+    // Show Auth Forms
+    function showForm(formId) {
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("registerForm").style.display = "none";
+      document.getElementById(formId).style.display = "block";
+    }
+
+    // Register
+    document.getElementById("registerForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("registerEmail").value;
+      const password = document.getElementById("registerPassword").value;
+      try {
+        await auth.createUserWithEmailAndPassword(email, password);
+        alert("تم إنشاء الحساب ✅");
+      } catch (err) { alert(err.message); }
+    });
+
+    // Login
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+      try {
+        await auth.signInWithEmailAndPassword(email, password);
+        alert("تم تسجيل الدخول ✅");
+      } catch (err) { alert(err.message); }
+    });
+
+    // Add Service
+    serviceForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const serviceData = {
+        name: document.getElementById("serviceName").value,
+        category: document.getElementById("serviceCategory").value,
+        location: document.getElementById("serviceLocation").value,
+        documents: document.getElementById("serviceDocuments").value,
+        cost: document.getElementById("serviceCost").value || null,
+        duration: document.getElementById("serviceDuration").value || null,
+        createdAt: new Date(),
+        votes: 0,
+        verified: false
+      };
+      try {
+        await db.collection("services").add(serviceData);
+        alert("تمت إضافة الخدمة ✅");
+        serviceForm.reset();
+        loadServices();
+      } catch (err) { console.error(err); }
+    });
+
+    // Load Services
+    async function loadServices() {
+      servicesContainer.innerHTML = "";
+      const snapshot = await db.collection("services").orderBy("createdAt", "desc").get();
+      snapshot.forEach(doc => {
+        const s = doc.data();
+        const card = document.createElement("div");
+        card.className = "service-card";
+        card.innerHTML = `
+          <h3>${s.name}</h3>
+          <p><b>المكان:</b> ${s.location}</p>
+          <p><b>القسم:</b> ${s.category}</p>
+          <p><b>الأوراق:</b> ${s.documents}</p>
+          ${s.cost ? `<p><b>التكلفة:</b> ${s.cost}</p>` : ""}
+          ${s.duration ? `<p><b>المدة:</b> ${s.duration}</p>` : ""}
+          <p class="${s.verified ? 'verified' : 'pending'}">${s.verified ? 'موثوق' : 'قيد المراجعة'}</p>
+          <div>
+            <button class="vote-btn" onclick="vote('${doc.id}', 1)">👍</button>
+            <span>${s.votes}</span>
+            <button class="vote-btn" onclick="vote('${doc.id}', -1)">👎</button>
+          </div>
+        `;
+        servicesContainer.appendChild(card);
+      });
+    }
+
+    // Voting
+    async function vote(id, value) {
+      const ref = db.collection("services").doc(id);
+      await ref.update({ votes: firebase.firestore.FieldValue.increment(value) });
+      loadServices();
+    }
+
+    // Auto-load
+    loadServices();
+  </script>
+</body>
+</html>
