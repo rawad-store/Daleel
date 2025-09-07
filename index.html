@@ -8,84 +8,521 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
-    <!-- Meta Tags for Social Media Sharing -->
-    <meta property="og:title" content="مكتبة الرواد -الصوة | دليل الخدمات الحكومية والعامة">
-    <meta property="og:description" content="دليل شامل للخدمات الحكومية - منصة تفاعلية لمشاركة التجارب وتسهيل الوصول للخدمات العامة">
-    <meta property="og:image" content="https://raw.githubusercontent.com/rawad-store/konozalkhair/main/preview.jpg">
-    <meta property="og:url" content="https://rawad-store.github.io/">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="ar_AR">
+  <!-- Meta Tags for Social Media Sharing -->
+  <meta property="og:title" content="دليل - Daleel | دليل الخدمات الحكومية والعامة">
+  <meta property="og:description" content="دليل شامل للخدمات الحكومية - منصة تفاعلية لمشاركة التجارب وتسهيل الوصول للخدمات العامة">
+  <meta property="og:image" content="https://raw.githubusercontent.com/rawad-store/konozalkhair/main/preview.jpg">
+  <meta property="og:url" content="https://rawad-store.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ar_AR">
 
-    <!-- Twitter Card Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="مكتبة الرواد -الصوة | دليل الخدمات الحكومية والعامة">
-    <meta name="twitter:description" content="دليل شامل للخدمات الحكومية - منصة تفاعلية لمشاركة التجارب وتسهيل الوصول للخدمات العامة">
-    <meta name="twitter:image" content="https://raw.githubusercontent.com/rawad-store/rawad-store.github.io/main/preview.jpg">
-    
-    <!-- Preload critical resources -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onloa
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="دليل - Daleel | دليل الخدمات الحكومية والعامة">
+  <meta name="twitter:description" content="دليل شامل للخدمات الحكومية - منصة تفاعلية لمشاركة التجارب وتسهيل الوصول للخدمات العامة">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/rawad-store/rawad-store.github.io/main/preview.jpg">
+  
+  <!-- Preload critical resources -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
 
   <style>
-    :root{
-      --primary:#2D5F7C;--secondary:#4A90E2;--accent:#F5A623;
-      --text:#333;--bg:#F8F9FA;--white:#fff;--border:#E0E0E0;
-      --shadow:0 2px 12px rgba(0,0,0,.08);
-      --success:#27AE60;--error:#E74C3C;
+    :root {
+      --primary: #2D5F7C;
+      --secondary: #4A90E2;
+      --accent: #F5A623;
+      --text: #333;
+      --bg: #F8F9FA;
+      --white: #fff;
+      --border: #E0E0E0;
+      --shadow: 0 2px 12px rgba(0,0,0,.08);
+      --success: #27AE60;
+      --error: #E74C3C;
+      --primary-color: #2D5F7C;
     }
-    *{box-sizing:border-box} body{margin:0;font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text)}
-    a{color:inherit}
-    header{position:sticky;top:0;z-index:50;background:var(--white);box-shadow:var(--shadow)}
-    .nav{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:12px 16px}
-    .brand{display:flex;gap:10px;align-items:center;font-weight:700;color:var(--primary)}
-    .actions{display:flex;gap:8px}
-    .btn{border:none;border-radius:8px;padding:.65rem 1rem;cursor:pointer;font-family:inherit}
-    .btn-primary{background:var(--primary);color:var(--white)}
-    .btn-outline{background:transparent;color:var(--primary);border:2px solid var(--primary)}
-    .btn-danger{background:var(--error);color:#fff}
-    .btn-icon{display:inline-flex;gap:.45rem;align-items:center}
-    .hero{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:40px 0}
-    .hero .wrap{max-width:1200px;margin:auto;padding:0 16px;display:grid;gap:16px}
-    .hero h1{margin:0 0 10px}
-    .stats{display:flex;gap:24px;flex-wrap:wrap}
-    .stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:12px 16px;border-radius:12px}
-    .container{max-width:1200px;margin:auto;padding:24px 16px}
-    .search-bar{display:flex;margin-bottom:20px;max-width:600px;margin:0 auto 30px}
-    .search-bar input{flex:1;padding:12px 16px;border:2px solid var(--border);border-radius:8px 0 0 8px;font-family:inherit}
-    .search-bar button{background:var(--primary);color:white;border:none;padding:0 20px;border-radius:0 8px 8px 0;cursor:pointer}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-    .card{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:14px;position:relative}
-    .card img{width:100%;height:180px;object-fit:cover;border-radius:10px;margin-bottom:10px;background:#f3f3f3}
-    .meta{display:flex;gap:8px;flex-wrap:wrap;font-size:.9rem;color:#555;margin:.5rem 0}
-    .rating{display:flex;gap:3px;margin:8px 0;color:#FFC107}
-    .reviews{margin-top:10px;border-top:1px solid var(--border);padding-top:10px}
-    .review-item{background:#f9f9f9;padding:10px;border-radius:8px;margin-bottom:8px}
-    .review-header{display:flex;justify-content:space-between;margin-bottom:5px}
-    .empty{padding:48px;text-align:center;color:#777}
-    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.5);z-index:100}
-    .modal.active{display:flex}
-    .modal .box{background:#fff;border-radius:14px;max-width:520px;width:92%;box-shadow:var(--shadow);overflow:hidden;max-height:90vh;overflow-y:auto}
-    .box-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
-    .box-body{padding:16px 18px}
-    .row{display:grid;gap:10px}
-    .row-2{grid-template-columns:1fr 1fr}
-    label{font-weight:600;color:var(--primary)}
-    input, select, textarea{width:100%;padding:.7rem;border:2px solid var(--border);border-radius:8px;font-family:inherit}
-    textarea{min-height:100px;resize:vertical}
-    .f-end{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
-    .toast-wrap{position:fixed;top:16px;right:16px;z-index:200}
-    .toast{background:var(--primary);color:#fff;padding:.8rem 1rem;border-radius:8px;margin-bottom:8px;box-shadow:var(--shadow)}
-    .toast.error{background:var(--error)} .toast.success{background:var(--success)}
-    .contact-info{background:var(--white);padding:20px;border-radius:14px;box-shadow:var(--shadow);margin-top:30px;text-align:center}
-    .contact-info h3{color:var(--primary);margin-top:0}
-    .contact-links{display:flex;justify-content:center;gap:20px;margin-top:15px;flex-wrap:wrap}
-    .contact-link{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--text)}
-    footer{background:var(--primary);color:white;text-align:center;padding:20px;margin-top:40px}
-    .tabs{display:flex;gap:10px;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:10px}
-    .tab{background:#f1f1f1;padding:8px 16px;border-radius:6px;cursor:pointer}
-    .tab.active{background:var(--primary);color:white}
-    @media(max-width:600px){.row-2{grid-template-columns:1fr} .stats{justify-content:center} .contact-links{flex-direction:column;align-items:center}}
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+    
+    .nav {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+    }
+    
+    .brand {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .actions {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .btn {
+      border: none;
+      border-radius: 8px;
+      padding: .65rem 1rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: var(--white);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+    
+    .btn-danger {
+      background: var(--error);
+      color: var(--white);
+    }
+    
+    .btn-icon {
+      display: inline-flex;
+      gap: .45rem;
+      align-items: center;
+    }
+    
+    .hero {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--white);
+      padding: 40px 0;
+    }
+    
+    .hero .wrap {
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 16px;
+      display: grid;
+      gap: 16px;
+    }
+    
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: 2.2rem;
+    }
+    
+    .stats {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    
+    .stat {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.25);
+      padding: 12px 16px;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 24px 16px;
+    }
+    
+    .search-bar {
+      display: flex;
+      margin-bottom: 30px;
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+    
+    .search-bar input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 2px solid var(--border);
+      border-radius: 8px 0 0 8px;
+      font-family: inherit;
+      outline: none;
+    }
+    
+    .search-bar input:focus {
+      border-color: var(--primary);
+    }
+    
+    .search-bar button {
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      padding: 0 20px;
+      border-radius: 0 8px 8px 0;
+      cursor: pointer;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+    
+    .card {
+      background: var(--white);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 14px;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      background: #f3f3f3;
+    }
+    
+    .meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: .9rem;
+      color: #555;
+      margin: .5rem 0;
+    }
+    
+    .rating {
+      display: flex;
+      gap: 3px;
+      margin: 8px 0;
+      color: #FFC107;
+    }
+    
+    .reviews {
+      margin-top: 10px;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+    }
+    
+    .review-item {
+      background: #f9f9f9;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+    
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+    }
+    
+    .empty {
+      padding: 48px;
+      text-align: center;
+      color: #777;
+      grid-column: 1 / -1;
+    }
+    
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,.5);
+      z-index: 100;
+      padding: 16px;
+    }
+    
+    .modal.active {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .modal .box {
+      background: var(--white);
+      border-radius: 14px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: scaleIn 0.3s ease;
+    }
+    
+    @keyframes scaleIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    
+    .box-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .box-body {
+      padding: 16px 18px;
+    }
+    
+    .row {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    
+    .row-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    label {
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    input, select, textarea {
+      width: 100%;
+      padding: .7rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      outline: none;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+    }
+    
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    .f-end {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    
+    .toast-wrap {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 200;
+    }
+    
+    .toast {
+      background: var(--primary);
+      color: var(--white);
+      padding: .8rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      box-shadow: var(--shadow);
+      animation: slideIn 0.3s ease;
+    }
+    
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    .toast.error {
+      background: var(--error);
+    }
+    
+    .toast.success {
+      background: var(--success);
+    }
+    
+    .contact-info {
+      background: var(--white);
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      margin-top: 30px;
+      text-align: center;
+    }
+    
+    .contact-info h3 {
+      color: var(--primary);
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--text);
+    }
+    
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    
+    .tabs::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .tab {
+      background: #f1f1f1;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+    
+    .tab:hover {
+      background: #e5e5e5;
+    }
+    
+    .tab.active {
+      background: var(--primary);
+      color: var(--white);
+    }
+    
+    footer {
+      background: var(--primary);
+      color: var(--white);
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+    
+    .social-grid {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .social-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      background: var(--primary);
+      color: var(--white);
+      border-radius: 50%;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+    
+    .social-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    @media (max-width: 768px) {
+      .row-2 {
+        grid-template-columns: 1fr;
+      }
+      
+      .stats {
+        justify-content: center;
+      }
+      
+      .contact-links {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      
+      .tabs {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .nav {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .hero h1 {
+        font-size: 1.5rem;
+      }
+      
+      .stat {
+        flex: 1;
+        min-width: 120px;
+        text-align: center;
+      }
+    }
   </style>
 </head>
 <body>
@@ -136,10 +573,8 @@
     <!-- Services -->
     <div id="services" class="grid"></div>
     <div id="empty" class="empty">لا توجد خدمات حالياً — كن أول من يضيف خدمة ✨</div>
-  </main>
 
-  <!-- Contact Info -->
-  <div class="container">
+    <!-- Contact Info -->
     <div class="contact-info">
       <h3>للتواصل معنا</h3>
       <p>يسعدنا تواصلكم معنا لأي استفسارات أو مقترحات</p>
@@ -147,23 +582,24 @@
         <a href="mailto:tarek500500@gmail.com" class="contact-link">
           <i class="fas fa-envelope"></i> tarek500500@gmail.com
         </a>
-        <a href="https://wa.me/+201126630356?text=مرحباً، أريد الاستفسار عن خدماتكم" class="whatsapp-header" target="_blank" rel="noopener">
-                    <i class="fab fa-whatsapp"></i>
+        <a href="https://wa.me/+201126630356?text=مرحباً، أريد الاستفسار عن خدماتكم" class="contact-link" target="_blank" rel="noopener">
+          <i class="fab fa-whatsapp"></i> واتساب
+        </a>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+      <h4 style="margin-bottom: 1.5rem; color: var(--primary-color); font-size: 1.3rem; font-weight: 600;">تابعونا على وسائل التواصل الاجتماعي</h4>
+      <div class="social-grid">
+        <a href="https://www.facebook.com/share/1FzKsPMMsG/" class="social-card" target="_blank" rel="noopener">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://www.facebook.com/share/18bfjxRbHH" class="social-card" target="_blank" rel="noopener">
+          <i class="fab fa-facebook-f"></i>
         </a>
       </div>
     </div>
   </div>
-
-         <div style="text-align: center;">
-                <h4 style="margin-bottom: 1.5rem; color: var(--primary-color); font-size: 1.3rem; font-weight: 600;">تابعونا على وسائل التواصل الاجتماعي</h4>
-                <div class="social-grid">
-                    <a href="https://www.facebook.com/share/1FzKsPMMsG/" class="social-card" target="_blank" rel="noopener">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="https://www.facebook.com/share/18bfjxRbHH" class="social-card" target="_blank" rel="noopener">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                </div>
 
   <!-- Footer -->
   <footer>
@@ -187,7 +623,11 @@
             <label for="svcCat">القسم</label>
             <select id="svcCat" required>
               <option value="">اختر القسم</option>
-              <option>حكومي</option><option>صحة</option><option>تعليم</option><option>مالي</option><option>أخرى</option>
+              <option>حكومي</option>
+              <option>صحة</option>
+              <option>تعليم</option>
+              <option>مالي</option>
+              <option>أخرى</option>
             </select>
           </div>
           <div>
@@ -357,38 +797,73 @@
     let currentServiceForReview = null;
 
     /* ==== UI Helpers ==== */
-    const $ = (s, p=document) => p.querySelector(s);
-    function toast(msg, type='success'){
+    const $ = (s, p = document) => p.querySelector(s);
+    const $$ = (s, p = document) => p.querySelectorAll(s);
+    
+    function toast(msg, type = 'success') {
       const el = document.createElement('div');
       el.className = `toast ${type}`;
       el.textContent = msg;
       $('#toasts').appendChild(el);
-      setTimeout(()=>el.remove(), 3200);
+      setTimeout(() => el.remove(), 3200);
     }
 
     /* ==== Auth Modal ==== */
-    function openAuth(mode='login'){
+    function openAuth(mode = 'login') {
       $('#authModal').classList.add('active');
-      if(mode==='register'){ $('#authTitle').textContent='إنشاء حساب'; $('#loginForm').style.display='none'; $('#registerForm').style.display='grid'; $('#switchLabel').textContent='تسجيل الدخول'; }
-      else { $('#authTitle').textContent='تسجيل الدخول'; $('#loginForm').style.display='grid'; $('#registerForm').style.display='none'; $('#switchLabel').textContent='إنشاء حساب'; }
+      if (mode === 'register') {
+        $('#authTitle').textContent = 'إنشاء حساب';
+        $('#loginForm').style.display = 'none';
+        $('#registerForm').style.display = 'grid';
+        $('#switchLabel').textContent = 'تسجيل الدخول';
+      } else {
+        $('#authTitle').textContent = 'تسجيل الدخول';
+        $('#loginForm').style.display = 'grid';
+        $('#registerForm').style.display = 'none';
+        $('#switchLabel').textContent = 'إنشاء حساب';
+      }
     }
-    function closeAuth(){ $('#authModal').classList.remove('active'); $('#loginForm').reset(); $('#registerForm').reset(); }
-    function switchAuth(){ if($('#loginForm').style.display!=='none') openAuth('register'); else openAuth('login'); }
-    window.openAuth = openAuth; window.closeAuth = closeAuth; window.switchAuth = switchAuth;
+    
+    function closeAuth() {
+      $('#authModal').classList.remove('active');
+      $('#loginForm').reset();
+      $('#registerForm').reset();
+    }
+    
+    function switchAuth() {
+      if ($('#loginForm').style.display !== 'none') {
+        openAuth('register');
+      } else {
+        openAuth('login');
+      }
+    }
+    
+    window.openAuth = openAuth;
+    window.closeAuth = closeAuth;
+    window.switchAuth = switchAuth;
 
     /* ==== Add Modal ==== */
-    function toggleAdd(){ 
-      if(!currentUser){ toast('يجب تسجيل الدخول أولاً','error'); openAuth('login'); return; }
+    function toggleAdd() { 
+      if (!currentUser) {
+        toast('يجب تسجيل الدخول أولاً', 'error');
+        openAuth('login');
+        return;
+      }
       $('#addModal').classList.toggle('active');
     }
+    
     window.toggleAdd = toggleAdd;
 
     /* ==== Review Modal ==== */
-    function openReview(serviceId){
-      if(!currentUser){ toast('يجب تسجيل الدخول أولاً','error'); openAuth('login'); return; }
+    function openReview(serviceId) {
+      if (!currentUser) {
+        toast('يجب تسجيل الدخول أولاً', 'error');
+        openAuth('login');
+        return;
+      }
       
       const service = services.find(s => s.id === serviceId);
-      if(!service) return;
+      if (!service) return;
       
       currentServiceForReview = service;
       $('#reviewServiceName').textContent = service.name;
@@ -403,12 +878,12 @@
       $('#reviewModal').classList.add('active');
     }
     
-    function closeReview(){
+    function closeReview() {
       $('#reviewModal').classList.remove('active');
       currentServiceForReview = null;
     }
     
-    function resetStars(){
+    function resetStars() {
       const stars = $('#ratingStars').querySelectorAll('i');
       stars.forEach(star => {
         star.classList.remove('fas');
@@ -416,10 +891,10 @@
       });
     }
     
-    function setStars(rating){
+    function setStars(rating) {
       const stars = $('#ratingStars').querySelectorAll('i');
       stars.forEach((star, index) => {
-        if(index < rating){
+        if (index < rating) {
           star.classList.remove('far');
           star.classList.add('fas');
         } else {
@@ -431,47 +906,46 @@
     
     // إضافة تفاعل النجوم
     document.addEventListener('DOMContentLoaded', function() {
-      // تأجيل تهيئة النجوم حتى يتم تحميل DOM
-      setTimeout(() => {
-        const stars = $('#ratingStars')?.querySelectorAll('i');
-        if(stars){
-          stars.forEach(star => {
-            star.addEventListener('mouseenter', function() {
-              const rating = parseInt(this.getAttribute('data-rating'));
-              setStars(rating);
-            });
-            
-            star.addEventListener('mouseleave', function() {
-              const currentRating = parseInt($('#reviewRating').value);
-              setStars(currentRating);
-            });
-            
-            star.addEventListener('click', function() {
-              const rating = parseInt(this.getAttribute('data-rating'));
-              $('#reviewRating').value = rating;
-              setStars(rating);
-            });
+      const stars = $('#ratingStars')?.querySelectorAll('i');
+      if (stars) {
+        stars.forEach(star => {
+          star.addEventListener('mouseenter', function() {
+            const rating = parseInt(this.getAttribute('data-rating'));
+            setStars(rating);
           });
-        }
-      }, 500);
+          
+          star.addEventListener('mouseleave', function() {
+            const currentRating = parseInt($('#reviewRating').value);
+            setStars(currentRating);
+          });
+          
+          star.addEventListener('click', function() {
+            const rating = parseInt(this.getAttribute('data-rating'));
+            $('#reviewRating').value = rating;
+            setStars(rating);
+          });
+        });
+      }
     });
 
     /* ==== Search and Filter ==== */
-    function searchServices(){
+    function searchServices() {
       const searchTerm = $('#searchInput').value.trim().toLowerCase();
-      filterServices(searchTerm, $('#svcCat').value);
+      const activeTab = document.querySelector('.tab.active');
+      const category = activeTab ? activeTab.getAttribute('data-category') : '';
+      filterServices(searchTerm, category);
     }
     
-    function filterServices(searchTerm = '', category = ''){
+    function filterServices(searchTerm = '', category = '') {
       let filtered = allServices;
       
       // التصفية حسب الفئة
-      if(category){
+      if (category) {
         filtered = filtered.filter(service => service.category === category);
       }
       
       // التصفية حسب البحث
-      if(searchTerm){
+      if (searchTerm) {
         filtered = filtered.filter(service => 
           service.name.toLowerCase().includes(searchTerm) || 
           service.location.toLowerCase().includes(searchTerm) ||
@@ -502,38 +976,57 @@
       
       // إضافة حدث للبحث عند الضغط على Enter
       $('#searchInput').addEventListener('keypress', function(e) {
-        if(e.key === 'Enter') searchServices();
+        if (e.key === 'Enter') searchServices();
       });
     });
 
     /* ==== Auth Handlers ==== */
-    $('#registerForm').addEventListener('submit', async (e)=>{
+    $('#registerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = $('#regEmail').value.trim();
-      const pass  = $('#regPass').value;
+      const pass = $('#regPass').value;
       const confirm = $('#regConfirm').value;
-      if(pass!==confirm){ toast('كلمات المرور غير متطابقة','error'); return; }
-      try{
+      
+      if (pass !== confirm) {
+        toast('كلمات المرور غير متطابقة', 'error');
+        return;
+      }
+      
+      try {
         await createUserWithEmailAndPassword(auth, email, pass);
-        toast('تم إنشاء الحساب بنجاح'); closeAuth();
-      }catch(err){ toast(mapAuthErr(err),'error'); console.error(err); }
+        toast('تم إنشاء الحساب بنجاح');
+        closeAuth();
+      } catch (err) {
+        toast(mapAuthErr(err), 'error');
+        console.error(err);
+      }
     });
 
-    $('#loginForm').addEventListener('submit', async (e)=>{
+    $('#loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = $('#loginEmail').value.trim();
-      const pass  = $('#loginPass').value;
-      try{
+      const pass = $('#loginPass').value;
+      
+      try {
         await signInWithEmailAndPassword(auth, email, pass);
-        toast('تم تسجيل الدخول'); closeAuth();
-      }catch(err){ toast(mapAuthErr(err),'error'); console.error(err); }
+        toast('تم تسجيل الدخول');
+        closeAuth();
+      } catch (err) {
+        toast(mapAuthErr(err), 'error');
+        console.error(err);
+      }
     });
 
-    function logout(){ signOut(auth).then(()=>toast('تم تسجيل الخروج')).catch(e=>toast('خطأ: '+e.message,'error')); }
+    function logout() {
+      signOut(auth)
+        .then(() => toast('تم تسجيل الخروج'))
+        .catch(e => toast('خطأ: ' + e.message, 'error'));
+    }
+    
     window.logout = logout;
 
-    function mapAuthErr(e){
-      switch(e.code){
+    function mapAuthErr(e) {
+      switch (e.code) {
         case 'auth/email-already-in-use': return 'البريد الإلكتروني مستخدم بالفعل';
         case 'auth/invalid-email': return 'البريد الإلكتروني غير صالح';
         case 'auth/weak-password': return 'كلمة المرور ضعيفة (6 أحرف على الأقل)';
@@ -543,20 +1036,23 @@
       }
     }
 
-    onAuthStateChanged(auth, (user)=>{
+    onAuthStateChanged(auth, (user) => {
       currentUser = user;
-      $('#loginBtn').style.display  = user ? 'none':'inline-block';
-      $('#registerBtn').style.display= user ? 'none':'inline-block';
-      $('#logoutBtn').style.display = user ? 'inline-block':'none';
-      $('#addServiceTop').style.display = user ? 'inline-block':'none';
+      $('#loginBtn').style.display = user ? 'none' : 'inline-block';
+      $('#registerBtn').style.display = user ? 'none' : 'inline-block';
+      $('#logoutBtn').style.display = user ? 'inline-block' : 'none';
+      $('#addServiceTop').style.display = user ? 'inline-block' : 'none';
       loadServices(); // تحديث القائمة حسب المستخدم (لإظهار زر الحذف لمالِك الخدمة)
       loadStats();
     });
 
     /* ==== Add Service ==== */
-    $('#serviceForm').addEventListener('submit', async (e)=>{
+    $('#serviceForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      if(!currentUser){ toast('سجّل الدخول أولاً','error'); return; }
+      if (!currentUser) {
+        toast('سجّل الدخول أولاً', 'error');
+        return;
+      }
 
       const name = $('#svcName').value.trim();
       const category = $('#svcCat').value;
@@ -567,21 +1063,32 @@
       const notes = $('#svcNotes').value.trim();
       const file = $('#svcImg').files[0];
 
-      if(!name || !category || !location || !documents){ toast('يرجى ملء الحقول المطلوبة','error'); return; }
+      if (!name || !category || !location || !documents) {
+        toast('يرجى ملء الحقول المطلوبة', 'error');
+        return;
+      }
 
-      try{
-        let imageUrl = ''; let imagePath = '';
-        if(file){
+      try {
+        let imageUrl = '';
+        let imagePath = '';
+        
+        if (file) {
           imagePath = `services/${currentUser.uid}/${Date.now()}-${file.name}`;
           const ref = sRef(storage, imagePath);
           const snap = await uploadBytes(ref, file);
           imageUrl = await getDownloadURL(snap.ref);
         }
 
-        await addDoc(collection(db,'services'),{
-          name, category, location,
-          documents, cost, duration, notes,
-          imageUrl, imagePath,
+        await addDoc(collection(db, 'services'), {
+          name,
+          category,
+          location,
+          documents,
+          cost,
+          duration,
+          notes,
+          imageUrl,
+          imagePath,
           userId: currentUser.uid,
           userEmail: currentUser.email,
           reviews: [],
@@ -590,23 +1097,32 @@
           createdAt: serverTimestamp()
         });
 
-        toast('تمت إضافة الخدمة بنجاح','success');
-        $('#serviceForm').reset(); toggleAdd(); loadServices(); loadStats();
-      }catch(err){ console.error(err); toast('خطأ في الإضافة: '+err.message,'error'); }
+        toast('تمت إضافة الخدمة بنجاح', 'success');
+        $('#serviceForm').reset();
+        toggleAdd();
+        loadServices();
+        loadStats();
+      } catch (err) {
+        console.error(err);
+        toast('خطأ في الإضافة: ' + err.message, 'error');
+      }
     });
 
     /* ==== Review Handlers ==== */
-    $('#reviewForm').addEventListener('submit', async (e)=>{
+    $('#reviewForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      if(!currentUser || !currentServiceForReview){ return; }
+      if (!currentUser || !currentServiceForReview) return;
       
       const rating = parseInt($('#reviewRating').value);
       const comment = $('#reviewComment').value.trim();
       const accuracy = $('#reviewAccuracy').value;
       
-      if(!rating || !accuracy){ toast('يرجى إدخال التقييم وتحديد دقة المعلومات','error'); return; }
+      if (!rating || !accuracy) {
+        toast('يرجى إدخال التقييم وتحديد دقة المعلومات', 'error');
+        return;
+      }
       
-      try{
+      try {
         const reviewData = {
           userId: currentUser.uid,
           userEmail: currentUser.email,
@@ -632,24 +1148,29 @@
           totalReviews: updatedReviews.length
         });
         
-        toast('شكراً لتقييمك الخدمة!','success');
+        toast('شكراً لتقييمك الخدمة!', 'success');
         closeReview();
         loadServices(); // إعادة تحميل الخدمات لتحديث التقييمات
         loadStats(); // تحديث الإحصائيات
-      }catch(err){ console.error(err); toast('خطأ في إضافة التقييم: '+err.message,'error'); }
+      } catch (err) {
+        console.error(err);
+        toast('خطأ في إضافة التقييم: ' + err.message, 'error');
+      }
     });
     
-    async function loadReviews(serviceId){
-      try{
-        const serviceDoc = await getDocs(query(collection(db, 'services'), where('__name__', '==', serviceId)));
-        if(!serviceDoc.empty){
-          const serviceData = serviceDoc.docs[0].data();
+    async function loadReviews(serviceId) {
+      try {
+        const q = query(collection(db, 'services'), where('__name__', '==', serviceId));
+        const querySnapshot = await getDocs(q);
+        
+        if (!querySnapshot.empty) {
+          const serviceData = querySnapshot.docs[0].data();
           const reviews = serviceData.reviews || [];
           
           const reviewsList = $('#reviewsList');
           reviewsList.innerHTML = '';
           
-          if(reviews.length === 0){
+          if (reviews.length === 0) {
             reviewsList.innerHTML = '<p>لا توجد تقييمات بعد</p>';
             return;
           }
@@ -680,13 +1201,15 @@
             reviewsList.appendChild(reviewEl);
           });
         }
-      }catch(err){ console.error('خطأ في تحميل التقييمات:', err); }
+      } catch (err) {
+        console.error('خطأ في تحميل التقييمات:', err);
+      }
     }
     
-    function renderStars(rating){
+    function renderStars(rating) {
       let stars = '';
-      for(let i = 1; i <= 5; i++){
-        if(i <= rating){
+      for (let i = 1; i <= 5; i++) {
+        if (i <= rating) {
           stars += '<i class="fas fa-star"></i>';
         } else {
           stars += '<i class="far fa-star"></i>';
@@ -696,30 +1219,41 @@
     }
 
     /* ==== Load & Render Services ==== */
-    async function loadServices(){
-      try{
-        const q = query(collection(db,'services'), orderBy('createdAt','desc'));
+    async function loadServices() {
+      try {
+        const q = query(collection(db, 'services'), orderBy('createdAt', 'desc'));
         const snap = await getDocs(q);
         services = [];
         allServices = [];
+        
         snap.forEach(d => {
           const data = d.data();
-          services.push({ id:d.id, ...data });
-          allServices.push({ id:d.id, ...data });
+          services.push({ id: d.id, ...data });
+          allServices.push({ id: d.id, ...data });
         });
+        
         renderServices();
-      }catch(err){ console.error(err); toast('خطأ في تحميل الخدمات','error'); }
+      } catch (err) {
+        console.error(err);
+        toast('خطأ في تحميل الخدمات', 'error');
+      }
     }
 
-    function renderServices(){
-      const wrap = $('#services'); wrap.innerHTML = '';
-      if(services.length===0){ $('#empty').style.display='block'; return; }
-      $('#empty').style.display='none';
+    function renderServices() {
+      const wrap = $('#services');
+      wrap.innerHTML = '';
+      
+      if (services.length === 0) {
+        $('#empty').style.display = 'block';
+        return;
+      }
+      
+      $('#empty').style.display = 'none';
 
-      services.forEach(s=>{
+      services.forEach(s => {
         const isOwner = currentUser && s.userId === currentUser.uid;
         const card = document.createElement('div');
-        card.className='card';
+        card.className = 'card';
         
         // عرض متوسط التقييم إن وجد
         const ratingHtml = s.averageRating ? `
@@ -730,87 +1264,111 @@
         ` : '<div style="color:#777;font-size:0.9rem">لا توجد تقييمات بعد</div>';
         
         card.innerHTML = `
-          ${s.imageUrl ? `<img src="${s.imageUrl}" alt="${s.name}"/>` : ``}
+          ${s.imageUrl ? `<img src="${s.imageUrl}" alt="${s.name}" loading="lazy"/>` : ``}
           <h3 style="margin:.3rem 0">${s.name}</h3>
           <div class="meta"><span>🏷️ ${s.category}</span><span>📍 ${s.location}</span></div>
           ${ratingHtml}
-          <p><b>الأوراق:</b> ${escapeHTML(s.documents||'')}</p>
-          ${s.cost && s.cost!=='غير محدد' ? `<p><b>التكلفة:</b> ${escapeHTML(s.cost)}</p>`:''}
-          ${s.duration && s.duration!=='غير محدد' ? `<p><b>المدة:</b> ${escapeHTML(s.duration)}</p>`:''}
-          ${s.notes ? `<p><b>ملاحظات:</b> ${escapeHTML(s.notes)}</p>`:''}
+          <p><b>الأوراق:</b> ${escapeHTML(s.documents || '')}</p>
+          ${s.cost && s.cost !== 'غير محدد' ? `<p><b>التكلفة:</b> ${escapeHTML(s.cost)}</p>` : ''}
+          ${s.duration && s.duration !== 'غير محدد' ? `<p><b>المدة:</b> ${escapeHTML(s.duration)}</p>` : ''}
+          ${s.notes ? `<p><b>ملاحظات:</b> ${escapeHTML(s.notes)}</p>` : ''}
           <small style="display:block;margin-top:8px;color:#666">أضيفت بواسطة: ${s.userEmail || '—'}</small>
           <div class="f-end" style="margin-top:10px">
             <button class="btn btn-primary btn-icon" onclick="openReview('${s.id}')">
               <i class="fas fa-star"></i> قيم الخدمة
             </button>
-            ${isOwner ? `<button class="btn btn-danger btn-icon" data-id="${s.id}">🗑️ حذف</button>`:''}
+            ${isOwner ? `<button class="btn btn-danger btn-icon" data-id="${s.id}">🗑️ حذف</button>` : ''}
           </div>
         `;
+        
         // إرفاق حدث الحذف إذا كان المالك
-        if(isOwner){
+        if (isOwner) {
           const delBtn = card.querySelector('button.btn-danger');
-          delBtn.addEventListener('click', ()=>confirmDelete(s));
+          delBtn.addEventListener('click', () => confirmDelete(s));
         }
+        
         wrap.appendChild(card);
       });
     }
 
-    function escapeHTML(str){
+    function escapeHTML(str) {
       return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
     }
 
-    async function confirmDelete(svc){
-      if(!confirm('هل تريد حذف هذه الخدمة؟ سيتم حذف الصورة أيضاً إن وجدت.')) return;
-      try{
+    async function confirmDelete(svc) {
+      if (!confirm('هل تريد حذف هذه الخدمة؟ سيتم حذف الصورة أيضاً إن وجدت.')) return;
+      
+      try {
         // 1) حذف المستند
-        await deleteDoc(doc(db,'services', svc.id));
+        await deleteDoc(doc(db, 'services', svc.id));
         // 2) حذف الصورة إن وُجدت
-        if(svc.imagePath){
-          try{ await deleteObject(sRef(storage, svc.imagePath)); }catch(e){ console.warn('Image delete warning:', e.message); }
+        if (svc.imagePath) {
+          try {
+            await deleteObject(sRef(storage, svc.imagePath));
+          } catch (e) {
+            console.warn('Image delete warning:', e.message);
+          }
         }
-        toast('تم حذف الخدمة'); loadServices(); loadStats();
-      }catch(err){ console.error(err); toast('خطأ في الحذف: '+err.message,'error'); }
+        
+        toast('تم حذف الخدمة');
+        loadServices();
+        loadStats();
+      } catch (err) {
+        console.error(err);
+        toast('خطأ في الحذف: ' + err.message, 'error');
+      }
     }
 
     /* ==== Stats ==== */
-    async function loadStats(){
-      try{
-        const servicesSnap = await getDocs(collection(db,'services'));
+    async function loadStats() {
+      try {
+        const servicesSnap = await getDocs(collection(db, 'services'));
         $('#statServices').textContent = servicesSnap.size;
 
         const users = new Set();
         let totalReviews = 0;
         
-        servicesSnap.forEach(d=>{ 
+        servicesSnap.forEach(d => { 
           const data = d.data();
           const u = data.userId; 
-          if(u) users.add(u);
+          if (u) users.add(u);
           totalReviews += data.totalReviews || 0;
         });
         
         $('#statUsers').textContent = users.size;
         $('#statReviews').textContent = totalReviews;
-      }catch(e){
-        $('#statServices').textContent='0'; $('#statUsers').textContent='0'; $('#statReviews').textContent='0';
+      } catch (e) {
+        $('#statServices').textContent = '0';
+        $('#statUsers').textContent = '0';
+        $('#statReviews').textContent = '0';
       }
     }
 
     /* ==== Global keys (Esc closes modals) ==== */
-    document.addEventListener('keydown', (e)=>{
-      if(e.key==='Escape'){ 
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { 
         $('#authModal').classList.remove('active'); 
         $('#addModal').classList.remove('active'); 
         $('#reviewModal').classList.remove('active');
       }
     });
-    document.querySelectorAll('.modal').forEach(m=>{
-      m.addEventListener('click', (e)=>{ if(e.target===m) m.classList.remove('active'); });
+    
+    document.querySelectorAll('.modal').forEach(m => {
+      m.addEventListener('click', (e) => {
+        if (e.target === m) m.classList.remove('active');
+      });
     });
     
     // جعل دوال البحث والتقييم متاحة عالمياً
     window.searchServices = searchServices;
     window.openReview = openReview;
     window.closeReview = closeReview;
+    
+    // التهيئة الأولية
+    document.addEventListener('DOMContentLoaded', function() {
+      loadServices();
+      loadStats();
+    });
   </script>
 </body>
 </html>
