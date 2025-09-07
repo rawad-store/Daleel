@@ -770,59 +770,713 @@
 
   <!-- Firebase + App -->
   <script type="module">
-    /* ==== Firebase SDKs ==== */
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js';
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js';
-    import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, deleteDoc, updateDoc, arrayUnion, getDoc, Timestamp } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js';
+  /* ==== Firebase SDKs ==== */
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js';
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js';
+  import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, deleteDoc, updateDoc, arrayUnion, getDoc, Timestamp } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js';
 
-    /* ==== Config (خاصة بمشروعك) ==== */
-    const firebaseConfig = {
-      apiKey: "AIzaSyB6TzN-QHVUOwizABYxm0Y8fkqTp1qb_qA",
-      authDomain: "daleel-c4204.firebaseapp.com",
-      projectId: "daleel-c4204",
-      storageBucket: "daleel-c4204.appspot.com",
-      messagingSenderId: "864882936232",
-      appId: "1:864882936232:web:5bfc14d7c0f02559d5f02d"
-    };
+  /* ==== Config (خاصة بمشروعك) ==== */
+  const firebaseConfig = {
+    apiKey: "AIzaSyB6TzN-QHVUOwizABYxm0Y8fkqTp1qb_qA",
+    authDomain: "daleel-c4204.firebaseapp.com",
+    projectId: "daleel-c4204",
+    storageBucket: "daleel-c4204.appspot.com",
+    messagingSenderId: "864882936232",
+    appId: "1:864882936232:web:5bfc14d7c0f02559d5f02d"
+  };
 
-    /* ==== Init ==== */
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+  /* ==== Init ==== */
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
-    /* ==== State ==== */
-    let currentUser = null;
-    let services = [];
-    let allServices = [];
-    let currentServiceForReview = null;
+  /* ==== State ==== */
+  let currentUser = null;
+  let services = [];
+  let allServices = [];
+  let currentServiceForReview = null;
 
-    /* ==== UI Helpers ==== */
-    const $ = (s, p = document) => p.querySelector(s);
-    const $$ = (s, p = document) => p.querySelectorAll(s);
+  /* ==== UI Helpers ==== */
+  const $ = (s, p = document) => p.querySelector(s);
+  const $$ = (s, p = document) => p.querySelectorAll(s);
+  
+  function toast(msg, type = 'success') {
+    const el = document.createElement('div');
+    el.className = `toast ${type}`;
+    el.textContent = msg;
+    $('#toasts').appendChild(el);
+    setTimeout(() => el.remove(), 5000);
+  }
+
+  function showLoading(form) {
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.classList.add('disabled');
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري...';
+    }
+  }
+
+  function hideLoading(form, originalText) {
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.classList.remove('disabled');
+      submitBtn.innerHTML = originalText;
+    }
+  }
+
+  /* ==== Auth Modal ==== */
+  function openAuth(mode = 'login') {
+    $('#authModal').classList.add('active');
+    if (mode === 'register') {
+      $('#authTitle').textContent = 'إنشاء حساب';
+      $('#loginForm').style.display = 'none';
+      $('#registerForm').style.display = 'grid';
+      $('#switchLabel').textContent = 'تسجيل الدخول';
+    } else {
+      $('#authTitle').textContent = 'تسجيل الدخول';
+      $('#loginForm').style.display = 'grid';
+      $('#registerForm').style.display = 'none';
+      $('#switchLabel').textContent = 'إنشاء حساب';
+    }
+  }
+  
+  function closeAuth() {
+    $('#authModal').classList.remove('active');
+    $('#loginForm').reset();
+    $('#registerForm').reset();
+  }
+  
+  function switchAuth() {
+    if ($('#loginForm').style.display !== 'none') {
+      openAuth('register');
+    } else {
+      openAuth('login');
+    }
+  }
+  
+  window.openAuth = openAuth;
+  window.closeAuth = closeAuth;
+  window.switchAuth = switchAuth;
+
+  /* ==== Add Modal ==== */
+  function toggleAdd() { 
+    if (!currentUser) {
+      toast('يجب تسجيل الدخول أولاً', 'error');
+      openAuth('login');
+      return;
+    }
+    $('#addModal').classList.toggle('active');
+  }
+  
+  window.toggleAdd = toggleAdd;
+
+  /* ==== Review Modal ==== */
+  async function openReview(serviceId) {
+    if (!currentUser) {
+      toast('يجب تسجيل الدخول أولاً', 'error');
+      openAuth('login');
+      return;
+    }
     
-    function toast(msg, type = 'success') {
-      const el = document.createElement('div');
-      el.className = `toast ${type}`;
-      el.textContent = msg;
-      $('#toasts').appendChild(el);
-      setTimeout(() => el.remove(), 5000);
+    const service = services.find(s => s.id === serviceId);
+    if (!service) {
+      toast('الخدمة غير موجودة', 'error');
+      return;
+    }
+    
+    currentServiceForReview = service;
+    $('#reviewServiceName').textContent = service.name;
+    $('#reviewRating').value = '0';
+    $('#reviewComment').value = '';
+    $('#reviewAccuracy').value = '';
+    resetStars();
+    
+    const hasReviewed = service.reviews?.some(r => r.userId === currentUser.uid);
+    if (hasReviewed) {
+      $('#reviewForm').innerHTML = '<p style="color: var(--error);">لقد قيمت هذه الخدمة مسبقاً. يمكنك تقييم كل خدمة مرة واحدة فقط.</p>';
+    }
+    
+    loadReviews(serviceId);
+    
+    $('#reviewModal').classList.add('active');
+  }
+  
+  function closeReview() {
+    $('#reviewModal').classList.remove('active');
+    currentServiceForReview = null;
+    const reviewForm = $('#reviewForm');
+    reviewForm.innerHTML = `
+      <div class="row">
+        <label>التقييم</label>
+        <div class="rating" id="ratingStars">
+          <i class="far fa-star" data-rating="1"></i>
+          <i class="far fa-star" data-rating="2"></i>
+          <i class="far fa-star" data-rating="3"></i>
+          <i class="far fa-star" data-rating="4"></i>
+          <i class="far fa-star" data-rating="5"></i>
+        </div>
+        <input type="hidden" id="reviewRating" value="0" required />
+      </div>
+      <div class="row">
+        <label for="reviewComment">التعليق (اختياري)</label>
+        <textarea id="reviewComment" placeholder="اكتب تعليقك عن الخدمة..."></textarea>
+      </div>
+      <div class="row">
+        <label for="reviewAccuracy">هل المعلومات صحيحة؟</label>
+        <select id="reviewAccuracy" required>
+          <option value="">اختر الإجابة</option>
+          <option value="نعم">نعم، المعلومات صحيحة</option>
+          <option value="جزئياً">جزئياً، بعض المعلومات تحتاج تحديث</option>
+          <option value="لا">لا، المعلومات غير صحيحة</option>
+        </select>
+      </div>
+      <div class="f-end">
+        <button type="button" class="btn" onclick="closeReview()">إلغاء</button>
+        <button type="submit" class="btn btn-primary btn-icon">💾 حفظ التقييم</button>
+      </div>
+    `;
+    initStarEvents();
+  }
+  
+  function resetStars() {
+    const stars = $$('#ratingStars i');
+    stars.forEach(star => {
+      star.classList.remove('fas');
+      star.classList.add('far');
+    });
+  }
+  
+  function setStars(rating) {
+    const stars = $$('#ratingStars i');
+    stars.forEach((star, index) => {
+      if (index < rating) {
+        star.classList.remove('far');
+        star.classList.add('fas');
+      } else {
+        star.classList.remove('fas');
+        star.classList.add('far');
+      }
+    });
+  }
+
+  function initStarEvents() {
+    const stars = $$('#ratingStars i');
+    if (stars.length > 0) {
+      stars.forEach(star => {
+        star.addEventListener('mouseenter', function() {
+          const rating = parseInt(this.getAttribute('data-rating'));
+          setStars(rating);
+        });
+        
+        star.addEventListener('mouseleave', function() {
+          const currentRating = parseInt($('#reviewRating').value);
+          setStars(currentRating);
+        });
+        
+        star.addEventListener('click', function() {
+          const rating = parseInt(this.getAttribute('data-rating'));
+          $('#reviewRating').value = rating;
+          setStars(rating);
+        });
+      });
+    }
+  }
+  
+  document.addEventListener('DOMContentLoaded', initStarEvents);
+
+  /* ==== Search and Filter ==== */
+  function searchServices() {
+    const searchTerm = $('#searchInput').value.trim().toLowerCase();
+    const activeTab = $('.tab.active');
+    const category = activeTab ? activeTab.getAttribute('data-category') : '';
+    console.log('البحث:', { searchTerm, category }); // تسجيل لتتبع القيم
+    filterServices(searchTerm, category);
+  }
+  
+  function filterServices(searchTerm = '', category = '') {
+    console.log('تصفية الخدمات:', { searchTerm, category, totalServices: allServices.length }); // تسجيل للتحقق من البيانات
+    
+    let filtered = [...allServices]; // إنشاء نسخة من allServices لتجنب التعديل على الأصل
+    
+    // التصفية حسب الفئة
+    if (category) {
+      filtered = filtered.filter(service => {
+        const match = service.category === category;
+        console.log('تصفية الفئة:', { service: service.name, category, match });
+        return match;
+      });
+    }
+    
+    // التصفية حسب نص البحث
+    if (searchTerm) {
+      filtered = filtered.filter(service => {
+        const nameMatch = service.name?.toLowerCase().includes(searchTerm);
+        const locationMatch = service.location?.toLowerCase().includes(searchTerm);
+        const documentsMatch = service.documents?.toLowerCase().includes(searchTerm);
+        const match = nameMatch || locationMatch || documentsMatch;
+        console.log('تصفية البحث:', { 
+          service: service.name, 
+          searchTerm, 
+          nameMatch, 
+          locationMatch, 
+          documentsMatch, 
+          match 
+        });
+        return match;
+      });
+    }
+    
+    services = filtered;
+    console.log('الخدمات المصفاة:', services.length); // تسجيل عدد الخدمات بعد التصفية
+    renderServices();
+  }
+  
+  // إضافة أحداث للبحث والتبويبات
+  document.addEventListener('DOMContentLoaded', function() {
+    const tabs = $$('.tab');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        
+        const category = this.getAttribute('data-category');
+        const searchTerm = $('#searchInput').value.trim().toLowerCase();
+        console.log('تبويب محدد:', { category, searchTerm }); // تسجيل لتتبع التبويب
+        filterServices(searchTerm, category);
+      });
+    });
+    
+    // حدث البحث عند الضغط على Enter
+    $('#searchInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        console.log('تم الضغط على Enter في حقل البحث');
+        searchServices();
+      }
+    });
+    
+    // حدث البحث أثناء الكتابة (اختياري لتحسين التجربة)
+    $('#searchInput').addEventListener('input', function() {
+      console.log('إدخال في البحث:', this.value);
+      searchServices();
+    });
+  });
+
+  /* ==== Auth Handlers ==== */
+  $('#registerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const originalText = $('#registerForm button[type="submit"]').innerHTML;
+    showLoading($('#registerForm'));
+    const email = $('#regEmail').value.trim();
+    const pass = $('#regPass').value;
+    const confirm = $('#regConfirm').value;
+    
+    if (pass !== confirm) {
+      toast('كلمات المرور غير متطابقة', 'error');
+      hideLoading($('#registerForm'), originalText);
+      return;
+    }
+    
+    try {
+      await createUserWithEmailAndPassword(auth, email, pass);
+      toast('تم إنشاء الحساب بنجاح');
+      closeAuth();
+    } catch (err) {
+      toast(mapAuthErr(err), 'error');
+      console.error('خطأ في التسجيل:', err);
+    } finally {
+      hideLoading($('#registerForm'), originalText);
+    }
+  });
+
+  $('#loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const originalText = $('#loginForm button[type="submit"]').innerHTML;
+    showLoading($('#loginForm'));
+    const email = $('#loginEmail').value.trim();
+    const pass = $('#loginPass').value;
+    
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
+      toast('تم تسجيل الدخول بنجاح');
+      closeAuth();
+    } catch (err) {
+      toast(mapAuthErr(err), 'error');
+      console.error('خطأ في الدخول:', err);
+    } finally {
+      hideLoading($('#loginForm'), originalText);
+    }
+  });
+
+  function logout() {
+    signOut(auth)
+      .then(() => {
+        toast('تم تسجيل الخروج بنجاح');
+        $('#addServiceNav').style.display = 'none';
+        $('#addServiceTop').style.display = 'none';
+      })
+      .catch(e => {
+        toast('خطأ في الخروج: ' + e.message, 'error');
+        console.error('خطأ في الخروج:', e);
+      });
+  }
+  
+  window.logout = logout;
+
+  function mapAuthErr(e) {
+    switch (e.code) {
+      case 'auth/email-already-in-use': return 'البريد الإلكتروني مستخدم بالفعل';
+      case 'auth/invalid-email': return 'البريد الإلكتروني غير صالح';
+      case 'auth/weak-password': return 'كلمة المرور ضعيفة (6 أحرف على الأقل)';
+      case 'auth/user-not-found': return 'لا يوجد حساب بهذا البريد';
+      case 'auth/wrong-password': return 'كلمة المرور غير صحيحة';
+      case 'auth/invalid-credential': return 'بيانات الدخول غير صحيحة';
+      case 'auth/operation-not-allowed': return 'العملية غير مسموحة';
+      default: return e.message;
+    }
+  }
+
+  onAuthStateChanged(auth, (user) => {
+    currentUser = user;
+    $('#loginBtn').style.display = user ? 'none' : 'inline-block';
+    $('#registerBtn').style.display = user ? 'none' : 'inline-block';
+    $('#logoutBtn').style.display = user ? 'inline-block' : 'none';
+    $('#addServiceNav').style.display = user ? 'inline-block' : 'none';
+    $('#addServiceTop').style.display = user ? 'inline-block' : 'none';
+    loadServices();
+    loadStats();
+  });
+
+  /* ==== Add Service ==== */
+  $('#serviceForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!currentUser) {
+      toast('سجّل الدخول أولاً', 'error');
+      openAuth('login');
+      return;
     }
 
-    function showLoading(form) {
-      const submitBtn = form.querySelector('button[type="submit"]');
-      if (submitBtn) {
-        submitBtn.classList.add('disabled');
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري...';
-      }
+    const originalText = $('#serviceForm button[type="submit"]').innerHTML;
+    showLoading($('#serviceForm'));
+
+    const name = $('#svcName').value.trim();
+    const category = $('#svcCat').value;
+    const location = $('#svcLoc').value.trim();
+    const documents = $('#svcDocs').value.trim();
+    const cost = $('#svcCost').value.trim() || 'غير محدد';
+    const duration = $('#svcDur').value.trim() || 'غير محدد';
+    const notes = $('#svcNotes').value.trim();
+
+    if (!name || !category || !location || !documents) {
+      toast('يرجى ملء الحقول المطلوبة', 'error');
+      hideLoading($('#serviceForm'), originalText);
+      return;
     }
 
-    function hideLoading(form, originalText) {
-      const submitBtn = form.querySelector('button[type="submit"]');
-      if (submitBtn) {
-        submitBtn.classList.remove('disabled');
-        submitBtn.innerHTML = originalText;
+    try {
+      await addDoc(collection(db, 'services'), {
+        name,
+        category,
+        location,
+        documents,
+        cost,
+        duration,
+        notes,
+        userId: currentUser.uid,
+        userEmail: currentUser.email,
+        reviews: [],
+        averageRating: 0,
+        totalReviews: 0,
+        createdAt: serverTimestamp()
+      });
+
+      toast('تمت إضافة الخدمة بنجاح', 'success');
+      $('#serviceForm').reset();
+      toggleAdd();
+      loadServices();
+      loadStats();
+    } catch (err) {
+      console.error('خطأ في إضافة الخدمة:', err);
+      toast('خطأ في الإضافة: ' + (err.message || 'غير معروف'), 'error');
+    } finally {
+      hideLoading($('#serviceForm'), originalText);
+    }
+  });
+
+  /* ==== Review Handlers ==== */
+  $('#reviewModal').addEventListener('submit', async (e) => {
+    if (e.target.id !== 'reviewForm') return;
+    e.preventDefault();
+    if (!currentUser || !currentServiceForReview) return;
+    
+    const originalText = $('#reviewForm button[type="submit"]').innerHTML;
+    showLoading($('#reviewForm'));
+    
+    const rating = parseInt($('#reviewRating').value);
+    const comment = $('#reviewComment').value.trim();
+    const accuracy = $('#reviewAccuracy').value;
+    
+    if (!rating || !accuracy) {
+      toast('يرجى إدخال التقييم وتحديد دقة المعلومات', 'error');
+      hideLoading($('#reviewForm'), originalText);
+      return;
+    }
+    
+    const hasReviewed = currentServiceForReview.reviews?.some(r => r.userId === currentUser.uid);
+    if (hasReviewed) {
+      toast('لقد قيمت هذه الخدمة مسبقاً', 'error');
+      hideLoading($('#reviewForm'), originalText);
+      return;
+    }
+    
+    try {
+      const reviewData = {
+        userId: currentUser.uid,
+        userEmail: currentUser.email,
+        rating: rating,
+        comment: comment,
+        accuracy: accuracy,
+        createdAt: Timestamp.now()
+      };
+      
+      const serviceRef = doc(db, 'services', currentServiceForReview.id);
+      await updateDoc(serviceRef, {
+        reviews: arrayUnion(reviewData)
+      });
+      
+      const updatedService = await getDoc(serviceRef);
+      const updatedReviews = updatedService.data().reviews || [];
+      const totalRating = updatedReviews.reduce((sum, review) => sum + review.rating, 0);
+      const averageRating = updatedReviews.length > 0 ? totalRating / updatedReviews.length : 0;
+      
+      await updateDoc(serviceRef, {
+        averageRating: averageRating,
+        totalReviews: updatedReviews.length
+      });
+      
+      toast('شكراً لتقييمك الخدمة!', 'success');
+      closeReview();
+      loadServices();
+      loadStats();
+    } catch (err) {
+      console.error('خطأ في إضافة التقييم:', err);
+      toast('خطأ في إضافة التقييم: ' + (err.message || 'غير معروف'), 'error');
+    } finally {
+      hideLoading($('#reviewForm'), originalText);
+    }
+  });
+  
+  async function loadReviews(serviceId) {
+    const reviewsList = $('#reviewsList');
+    reviewsList.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> جاري التحميل...</div>';
+    
+    try {
+      const serviceRef = doc(db, 'services', serviceId);
+      const serviceSnap = await getDoc(serviceRef);
+      
+      if (serviceSnap.exists()) {
+        const serviceData = serviceSnap.data();
+        const reviews = serviceData.reviews || [];
+        
+        reviewsList.innerHTML = '';
+        
+        if (reviews.length === 0) {
+          reviewsList.innerHTML = '<p>لا توجد تقييمات بعد</p>';
+          return;
+        }
+        
+        const sortedReviews = [...reviews].sort((a, b) => {
+          const dateA = a.createdAt?.toDate() || new Date(0);
+          const dateB = b.createdAt?.toDate() || new Date(0);
+          return dateB - dateA;
+        });
+        
+        sortedReviews.forEach(review => {
+          const reviewEl = document.createElement('div');
+          reviewEl.className = 'review-item';
+          
+          const date = review.createdAt ? review.createdAt.toDate().toLocaleDateString('ar-EG', { year: 'numeric', month: 'short', day: 'numeric' }) : 'تاريخ غير معروف';
+          
+          reviewEl.innerHTML = `
+            <div class="review-header">
+              <div>${escapeHTML(review.userEmail || 'مستخدم مجهول')}</div>
+              <div>${date}</div>
+            </div>
+            <div class="rating">
+              ${renderStars(review.rating)}
+            </div>
+            <div><strong>دقة المعلومات:</strong> ${escapeHTML(review.accuracy)}</div>
+            ${review.comment ? `<div>${escapeHTML(review.comment)}</div>` : ''}
+          `;
+          
+          reviewsList.appendChild(reviewEl);
+        });
+      } else {
+        reviewsList.innerHTML = '<p>لا توجد تقييمات بعد</p>';
+      }
+    } catch (err) {
+      console.error('خطأ في تحميل التقييمات:', err);
+      reviewsList.innerHTML = '<p style="color: var(--error);">خطأ في تحميل التقييمات</p>';
+    }
+  }
+  
+  function renderStars(rating) {
+    let stars = '';
+    for (let i = 1; i <= 5; i++) {
+      if (i <= rating) {
+        stars += '<i class="fas fa-star"></i>';
+      } else if (i - 0.5 <= rating) {
+        stars += '<i class="fas fa-star-half-alt"></i>';
+      } else {
+        stars += '<i class="far fa-star"></i>';
       }
     }
+    return stars;
+  }
+
+  /* ==== Load & Render Services ==== */
+  async function loadServices() {
+    $('#services').innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> جاري تحميل الخدمات...</div>';
+    
+    try {
+      const q = query(collection(db, 'services'), orderBy('createdAt', 'desc'));
+      const snap = await getDocs(q);
+      services = [];
+      allServices = [];
+      
+      snap.forEach(d => {
+        const data = d.data();
+        services.push({ id: d.id, ...data });
+        allServices.push({ id: d.id, ...data });
+      });
+      
+      console.log('تم تحميل الخدمات:', allServices.length); // تسجيل للتحقق من التحميل
+      renderServices();
+    } catch (err) {
+      console.error('خطأ في تحميل الخدمات:', err);
+      toast('خطأ في تحميل الخدمات', 'error');
+      $('#services').innerHTML = '<p style="color: var(--error);">خطأ في تحميل الخدمات</p>';
+    }
+  }
+
+  function renderServices() {
+    const wrap = $('#services');
+    wrap.innerHTML = '';
+    
+    if (services.length === 0) {
+      $('#empty').style.display = 'block';
+      console.log('لا توجد خدمات لعرضها');
+      return;
+    }
+    
+    $('#empty').style.display = 'none';
+
+    services.forEach(s => {
+      const isOwner = currentUser && s.userId === currentUser.uid;
+      const card = document.createElement('div');
+      card.className = 'card';
+      
+      const ratingHtml = s.averageRating > 0 ? `
+        <div class="rating">
+          ${renderStars(s.averageRating)}
+          <span style="color:#666;margin-right:5px">(${s.totalReviews || 0})</span>
+        </div>
+      ` : '<div style="color:#777;font-size:0.9rem">لا توجد تقييمات بعد</div>';
+      
+      card.innerHTML = `
+        <h3 style="margin:.3rem 0">${escapeHTML(s.name)}</h3>
+        <div class="meta"><span>🏷️ ${escapeHTML(s.category)}</span><span>📍 ${escapeHTML(s.location)}</span></div>
+        ${ratingHtml}
+        <p><b>الأوراق:</b> ${escapeHTML(s.documents || '')}</p>
+        ${s.cost && s.cost !== 'غير محدد' ? `<p><b>التكلفة:</b> ${escapeHTML(s.cost)}</p>` : ''}
+        ${s.duration && s.duration !== 'غير محدد' ? `<p><b>المدة:</b> ${escapeHTML(s.duration)}</p>` : ''}
+        ${s.notes ? `<p><b>ملاحظات:</b> ${escapeHTML(s.notes)}</p>` : ''}
+        <small style="display:block;margin-top:8px;color:#666">أضيفت بواسطة: ${escapeHTML(s.userEmail || '—')}</small>
+        <div class="f-end" style="margin-top:10px">
+          <button class="btn btn-primary btn-icon" onclick="openReview('${s.id}')">
+            <i class="fas fa-star"></i> قيم الخدمة
+          </button>
+          ${isOwner ? `<button class="btn btn-danger btn-icon" onclick="confirmDelete('${s.id}')">🗑️ حذف</button>` : ''}
+        </div>
+      `;
+      
+      wrap.appendChild(card);
+    });
+    console.log('تم عرض الخدمات:', services.length); // تسجيل للتحقق من العرض
+  }
+
+  function escapeHTML(str) {
+    return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+
+  window.confirmDelete = async function(serviceId) {
+    const svc = services.find(s => s.id === serviceId);
+    if (!svc || !confirm('هل تريد حذف هذه الخدمة؟')) return;
+    
+    try {
+      await deleteDoc(doc(db, 'services', svc.id));
+      toast('تم حذف الخدمة بنجاح');
+      loadServices();
+      loadStats();
+    } catch (err) {
+      console.error('خطأ في الحذف:', err);
+      toast('خطأ في الحذف: ' + (err.message || 'غير معروف'), 'error');
+    }
+  };
+
+  /* ==== Stats ==== */
+  async function loadStats() {
+    try {
+      const servicesSnap = await getDocs(collection(db, 'services'));
+      $('#statServices').textContent = servicesSnap.size;
+
+      const users = new Set();
+      let totalReviews = 0;
+      
+      servicesSnap.forEach(d => { 
+        const data = d.data();
+        const u = data.userId; 
+        if (u) users.add(u);
+        totalReviews += data.totalReviews || 0;
+      });
+      
+      $('#statUsers').textContent = users.size;
+      $('#statReviews').textContent = totalReviews;
+    } catch (e) {
+      console.error('خطأ في تحميل الإحصائيات:', e);
+      $('#statServices').textContent = '0';
+      $('#statUsers').textContent = '0';
+      $('#statReviews').textContent = '0';
+    }
+  }
+
+  /* ==== Global keys (Esc closes modals) ==== */
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { 
+      $('#authModal').classList.remove('active'); 
+      $('#addModal').classList.remove('active'); 
+      closeReview();
+    }
+  });
+  
+  document.querySelectorAll('.modal').forEach(m => {
+    m.addEventListener('click', (e) => {
+      if (e.target === m) {
+        m.classList.remove('active');
+        if (m.id === 'reviewModal') closeReview();
+      }
+    });
+  });
+  
+  window.searchServices = searchServices;
+  window.openReview = openReview;
+  window.closeReview = closeReview;
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    loadServices();
+    loadStats();
+    initStarEvents();
+  });
 
     /* ==== Auth Modal ==== */
     function openAuth(mode = 'login') {
