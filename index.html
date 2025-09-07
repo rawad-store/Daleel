@@ -785,7 +785,7 @@
     /* ==== Firebase SDKs ==== */
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js';
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js';
-    import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, deleteDoc, where, updateDoc, arrayUnion, getDoc } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js';
+    import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, deleteDoc, where, updateDoc, arrayUnion, getDoc, Timestamp } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js';
     import { getStorage, ref as sRef, uploadBytes, getDownloadURL, deleteObject } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-storage.js';
 
     /* ==== Config (خاصة بمشروعك) ==== */
@@ -1225,7 +1225,7 @@
           rating: rating,
           comment: comment,
           accuracy: accuracy,
-          createdAt: serverTimestamp()
+          createdAt: Timestamp.now()
         };
         
         // تحديث الخدمة بإضافة التقييم الجديد
