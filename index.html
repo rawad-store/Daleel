@@ -1474,6 +1474,178 @@
       loadStats();
       initStarEvents();
     });
+    <!-- نافذة تعريفية Daleel تفاعلية -->
+<div id="welcomeModal" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    font-family: 'Cairo', sans-serif;
+">
+    <div style="
+        background: #ffffff;
+        padding: 30px 25px;
+        max-width: 550px;
+        width: 90%;
+        border-radius: 12px;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        border-top: 6px solid #27ae60;
+        overflow: hidden;
+    ">
+        <!-- زر الإغلاق -->
+        <button id="closeModal" style="
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            border: none;
+            background: transparent;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #34495e;
+        ">&times;</button>
+
+        <!-- شعار الموقع (اختياري) -->
+        <img src="" alt="شعار الموقع" style="max-width: 80px; margin-bottom: 15px; display: none;">
+
+        <!-- المحتوى -->
+        <h2 class="fadeItem" style="color: #27ae60; margin-bottom: 15px; opacity:0;">مرحبًا بك في دليلك الشامل!</h2>
+        <p class="fadeItem" style="color: #34495e; line-height: 1.6; margin-bottom: 15px; opacity:0;">
+            دليلك هو منصتك الأولى لفهم وإنجاز الخدمات الحكومية والعامة بسهولة وبدون عناء.
+        </p>
+        <p class="fadeItem" style="color: #34495e; line-height: 1.6; margin-bottom: 15px; opacity:0;">
+            استكشف الخدمات، وشارك تجربتك الحقيقية لتفيد الآخرين، مع معرفة الأوراق المطلوبة والخطوات الصحيحة قبل أي مشوار.
+        </p>
+        <p class="fadeItem" style="color: #34495e; line-height: 1.6; margin-bottom: 15px; opacity:0;">
+            أي شخص يقدر <strong>يضيف تجربته ويقيم الخدمات</strong> ويترك ملاحظاته، لتوفير وقت وجهد ومال الجميع.
+        </p>
+        <p class="fadeItem" style="color: #34495e; line-height: 1.6; margin-bottom: 20px; opacity:0;">
+            💡 <strong>ابدأ بنفسك! اكتب آخر مهمة أو خدمة قمت بها لتفيد غيرك، مهما كانت صغيرة، فقد توفر عليه الكثير.</strong>
+        </p>
+
+        <!-- حقل إدخال التجربة -->
+        <textarea id="userExperience" placeholder="اكتب تجربتك هنا..." style="
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+            resize: vertical;
+            min-height: 60px;
+        "></textarea>
+
+        <!-- زر الإرسال -->
+        <button id="sendExperience" style="
+            background: #27ae60;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 10px;
+        " onmouseover="this.style.background='#2ecc71'" onmouseout="this.style.background='#27ae60'">
+            إرسال تجربتي
+        </button>
+
+        <p id="thankMsg" style="color:#27ae60; font-weight:bold; display:none; margin-bottom:15px;">شكرًا لمشاركتك تجربتك!</p>
+
+        <!-- زر البدء -->
+        <button id="startNow" style="
+            background: #e67e22;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            opacity:0;
+        " onmouseover="this.style.background='#d35400'" onmouseout="this.style.background='#e67e22'">
+            ابدأ الآن
+        </button>
+    </div>
+</div>
+
+<style>
+@keyframes fadeInModal {
+    from {opacity: 0; transform: scale(0.95);}
+    to {opacity: 1; transform: scale(1);}
+}
+.fadeItem {
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(20px);
+}
+.fadeItem.show {
+    opacity: 1 !important;
+    transform: translateY(0);
+}
+#startNow.show {
+    opacity: 1 !important;
+    transform: translateY(0);
+}
+</style>
+
+<script>
+// تحقق إذا ظهرت النافذة مسبقاً
+if (!localStorage.getItem('welcomeShown')) {
+    const modal = document.getElementById('welcomeModal');
+    modal.style.display = 'flex';
+
+    const fadeItems = document.querySelectorAll('.fadeItem');
+    const startBtn = document.getElementById('startNow');
+    const sendBtn = document.getElementById('sendExperience');
+    const thankMsg = document.getElementById('thankMsg');
+    const userExp = document.getElementById('userExperience');
+
+    // ظهور تدريجي لكل فقرة
+    fadeItems.forEach((el, i) => {
+        setTimeout(() => { el.classList.add('show'); }, i * 600);
+    });
+
+    // ظهور زر البدء بعد كل الفقرات
+    setTimeout(() => { startBtn.classList.add('show'); }, fadeItems.length * 600);
+
+    // وظيفة إخفاء النافذة
+    function hideModal() {
+        modal.style.display = 'none';
+        localStorage.setItem('welcomeShown', 'true');
+    }
+
+    document.getElementById('closeModal').onclick = hideModal;
+    startBtn.onclick = hideModal;
+
+    // إرسال تجربة المستخدم
+    sendBtn.onclick = function() {
+        const text = userExp.value.trim();
+        if(text){
+            // حفظ التجربة مؤقتًا (يمكن ربطها بقاعدة بيانات لاحقًا)
+            let experiences = JSON.parse(localStorage.getItem('userExperiences') || '[]');
+            experiences.push(text);
+            localStorage.setItem('userExperiences', JSON.stringify(experiences));
+
+            thankMsg.style.display = 'block';
+            userExp.value = '';
+        } else {
+            alert("الرجاء كتابة تجربتك قبل الإرسال.");
+        }
+    }
+
+    // إخفاء تلقائي بعد 20 ثانية
+    setTimeout(hideModal, 20000);
+
+} else {
+    document.getElementById('welcomeModal').style.display = 'none';
+}
   </script>
 </body>
 </html>
