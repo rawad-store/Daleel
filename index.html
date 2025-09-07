@@ -1,376 +1,425 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دليل - Daleel | دليل الخدمات الحكومية والعامة</title>
-    <meta name="description" content="دليل شامل للخدمات الحكومية والعامة مع تقييمات المستخدمين والمعلومات المفصلة">
-    <meta name="keywords" content="دليل خدمات, خدمات حكومية, تقييمات مستخدمين, خدمات عامة, السعودية, مصر">
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📍</text></svg>">
-    
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2D5F7C">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="دليل">
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="دليل - Daleel | دليل الخدمات الحكومية والعامة">
-    <meta property="og:description" content="دليل شامل للخدمات الحكومية والعامة مع تقييمات المستخدمين والمعلومات المفصلة">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://your-domain.com"> <!-- Replace with actual domain -->
-    <meta property="og:image" content="https://your-domain.com/images/og-image.png"> <!-- Add an actual image URL -->
-    
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="دليل - Daleel">
-    <meta name="twitter:description" content="دليل شامل للخدمات الحكومية والعامة">
-    <meta name="twitter:image" content="https://your-domain.com/images/twitter-image.png"> <!-- Add an actual image URL -->
-    
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>دليل - Daleel | دليل الخدمات الحكومية والعامة</title>
+  <meta name="description" content="دليل شامل للخدمات الحكومية والعامة مع تقييمات المستخدمين والمعلومات المفصلة"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --primary:#2D5F7C;--secondary:#4A90E2;--accent:#F5A623;
+      --text:#333;--bg:#F8F9FA;--white:#fff;--border:#E0E0E0;
+      --shadow:0 2px 12px rgba(0,0,0,.08);
+      --success:#27AE60;--error:#E74C3C;
+    }
+    *{box-sizing:border-box} body{margin:0;font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text)}
+    a{color:inherit}
+    header{position:sticky;top:0;z-index:50;background:var(--white);box-shadow:var(--shadow)}
+    .nav{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:12px 16px}
+    .brand{display:flex;gap:10px;align-items:center;font-weight:700;color:var(--primary)}
+    .actions{display:flex;gap:8px}
+    .btn{border:none;border-radius:8px;padding:.65rem 1rem;cursor:pointer;font-family:inherit}
+    .btn-primary{background:var(--primary);color:var(--white)}
+    .btn-outline{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+    .btn-danger{background:var(--error);color:#fff}
+    .btn-icon{display:inline-flex;gap:.45rem;align-items:center}
+    .hero{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:40px 0}
+    .hero .wrap{max-width:1200px;margin:auto;padding:0 16px;display:grid;gap:16px}
+    .hero h1{margin:0 0 10px}
+    .stats{display:flex;gap:24px;flex-wrap:wrap}
+    .stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:12px 16px;border-radius:12px}
+    .container{max-width:1200px;margin:auto;padding:24px 16px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+    .card{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:14px}
+    .card img{width:100%;height:180px;object-fit:cover;border-radius:10px;margin-bottom:10px;background:#f3f3f3}
+    .meta{display:flex;gap:8px;flex-wrap:wrap;font-size:.9rem;color:#555;margin:.5rem 0}
+    .empty{padding:48px;text-align:center;color:#777}
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.5);z-index:100}
+    .modal.active{display:flex}
+    .modal .box{background:#fff;border-radius:14px;max-width:520px;width:92%;box-shadow:var(--shadow);overflow:hidden}
+    .box-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+    .box-body{padding:16px 18px}
+    .row{display:grid;gap:10px}
+    .row-2{grid-template-columns:1fr 1fr}
+    label{font-weight:600;color:var(--primary)}
+    input, select, textarea{width:100%;padding:.7rem;border:2px solid var(--border);border-radius:8px;font-family:inherit}
+    textarea{min-height:100px;resize:vertical}
+    .f-end{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
+    .toast-wrap{position:fixed;top:16px;right:16px;z-index:200}
+    .toast{background:var(--primary);color:#fff;padding:.8rem 1rem;border-radius:8px;margin-bottom:8px;box-shadow:var(--shadow)}
+    .toast.error{background:var(--error)} .toast.success{background:var(--success)}
+    @media(max-width:600px){.row-2{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loadingScreen" class="loading-screen">
-        <div class="loading-spinner">
-            <div class="spinner"></div>
-            <p>جاري تحميل دليل...</p>
-        </div>
+  <!-- Header -->
+  <header>
+    <nav class="nav">
+      <div class="brand">📍 دليل <span style="font-weight:400;color:#777">| دليلك للخدمات</span></div>
+      <div class="actions">
+        <button id="loginBtn" class="btn btn-outline btn-icon" onclick="openAuth('login')">دخول</button>
+        <button id="registerBtn" class="btn btn-primary btn-icon" onclick="openAuth('register')">تسجيل</button>
+        <button id="logoutBtn" class="btn btn-outline btn-icon" style="display:none" onclick="logout()">خروج</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>دليلك الشامل للخدمات الحكومية والعامة</h1>
+        <p style="opacity:.9">استكشف الخدمات وشارك تجربتك مع الآخرين</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><b id="statServices">0</b> خدمة</div>
+        <div class="stat"><b id="statUsers">0</b> مستخدم</div>
+        <div class="stat"><b id="statReviews">0</b> تقييم</div>
+        <div class="stat"><button id="addServiceTop" class="btn btn-primary btn-icon" style="display:none" onclick="toggleAdd()">➕ أضف خدمة</button></div>
+      </div>
     </div>
+  </section>
 
-    <!-- Header -->
-    <header class="header">
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="nav-brand">
-                    <h1><i class="fas fa-map-marker-alt"></i> دليل</h1>
-                    <span class="tagline">دليلك للخدمات</span>
-                </div>
-                
-                <div class="nav-menu" id="navMenu">
-                    <a href="#home" class="nav-link active">الرئيسية</a>
-                    <a href="#services" class="nav-link">الخدمات</a>
-                    <a href="#about" class="nav-link">حول</a>
-                    <a href="#contact" class="nav-link">اتصل بنا</a>
-                </div>
-                
-                <div class="nav-actions">
-                    <button class="btn-secondary" onclick="showAuthModal('login')">
-                        <i class="fas fa-sign-in-alt"></i> دخول
-                    </button>
-                    <button class="btn-primary" onclick="showAuthModal('register')">
-                        <i class="fas fa-user-plus"></i> تسجيل
-                    </button>
-                    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                </div>
-            </div>
-        </nav>
-    </header>
+  <!-- Services -->
+  <main class="container">
+    <div id="services" class="grid"></div>
+    <div id="empty" class="empty">لا توجد خدمات حالياً — كن أول من يضيف خدمة ✨</div>
+  </main>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h2 class="hero-title">دليلك الشامل للخدمات</h2>
-                <p class="hero-subtitle">اكتشف واستفد من تجارب الآخرين في الخدمات الحكومية والعامة</p>
-                <div class="hero-actions">
-                    <button class="btn-primary btn-large" onclick="scrollToSection('services')">
-                        <i class="fas fa-search"></i> استكشف الخدمات
-                    </button>
-                    <button class="btn-outline btn-large" onclick="toggleAddForm()">
-                        <i class="fas fa-plus"></i> أضف خدمة
-                    </button>
-                </div>
-            </div>
-            <div class="hero-stats">
-                <div class="stat-card">
-                    <div class="stat-number" id="totalServices">0</div>
-                    <div class="stat-label">خدمة</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="totalUsers">0</div>
-                    <div class="stat-label">مستخدم</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="totalReviews">0</div>
-                    <div class="stat-label">تقييم</div>
-                </div>
-            </div>
+  <!-- Add Service Modal -->
+  <div id="addModal" class="modal" aria-hidden="true">
+    <div class="box" role="dialog" aria-modal="true">
+      <div class="box-header">
+        <h3 style="margin:0">إضافة خدمة جديدة</h3>
+        <button class="btn btn-outline" onclick="toggleAdd()">إغلاق</button>
+      </div>
+      <form id="serviceForm" class="box-body">
+        <div class="row">
+          <label for="svcName">اسم الخدمة</label>
+          <input id="svcName" placeholder="مثال: استخراج جواز سفر" required />
         </div>
-    </section>
-
-    <!-- Search and Filter Section -->
-    <section class="search-section">
-        <div class="container">
-            <div class="search-container">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" placeholder="ابحث عن خدمة..." aria-label="ابحث عن خدمة">
-                </div>
-                <div class="filter-buttons">
-                    <button class="filter-btn active" data-category="all">الكل</button>
-                    <button class="filter-btn" data-category="حكومي">حكومي</button>
-                    <button class="filter-btn" data-category="صحة">صحة</button>
-                    <button class="filter-btn" data-category="تعليم">تعليم</button>
-                    <button class="filter-btn" data-category="مالي">مالي</button>
-                    <button class="filter-btn" data-category="أخرى">أخرى</button>
-                </div>
-            </div>
+        <div class="row row-2">
+          <div>
+            <label for="svcCat">القسم</label>
+            <select id="svcCat" required>
+              <option value="">اختر القسم</option>
+              <option>حكومي</option><option>صحة</option><option>تعليم</option><option>مالي</option><option>أخرى</option>
+            </select>
+          </div>
+          <div>
+            <label for="svcLoc">المكان</label>
+            <input id="svcLoc" placeholder="الرياض - حي النخيل" required />
+          </div>
         </div>
-    </section>
-
-    <!-- Add Service Button (Floating) -->
-    <button class="fab" onclick="toggleAddForm()" title="إضافة خدمة جديدة" aria-label="إضافة خدمة جديدة">
-        <i class="fas fa-plus"></i>
-    </button>
-
-    <!-- Add Service Form -->
-    <div id="addServiceModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="addServiceTitle">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="addServiceTitle"><i class="fas fa-plus-circle"></i> إضافة خدمة جديدة</h3>
-                <button class="modal-close" onclick="closeAddForm()" aria-label="إغلاق">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <form id="serviceForm" class="service-form">
-                <div class="form-group">
-                    <label for="serviceName">
-                        <i class="fas fa-tag"></i> اسم الخدمة
-                    </label>
-                    <input type="text" id="serviceName" placeholder="مثال: استخراج جواز سفر" required aria-required="true">
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="serviceCategory">
-                            <i class="fas fa-folder"></i> القسم
-                        </label>
-                        <select id="serviceCategory" required aria-required="true">
-                            <option value="">اختر القسم</option>
-                            <option value="حكومي">حكومي</option>
-                            <option value="صحة">صحة</option>
-                            <option value="تعليم">تعليم</option>
-                            <option value="مالي">مالي</option>
-                            <option value="أخرى">أخرى</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="serviceLocation">
-                            <i class="fas fa-map-marker-alt"></i> المكان
-                        </label>
-                        <input type="text" id="serviceLocation" placeholder="مثال: الرياض - حي النخيل" required aria-required="true">
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="serviceDocuments">
-                        <i class="fas fa-file-alt"></i> الأوراق المطلوبة
-                    </label>
-                    <textarea id="serviceDocuments" placeholder="اذكر الأوراق والمستندات المطلوبة..." required aria-required="true"></textarea>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="serviceCost">
-                            <i class="fas fa-money-bill"></i> التكلفة (اختياري)
-                        </label>
-                        <input type="text" id="serviceCost" placeholder="مثال: 100 ريال">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="serviceDuration">
-                            <i class="fas fa-clock"></i> المدة المتوقعة (اختياري)
-                        </label>
-                        <input type="text" id="serviceDuration" placeholder="مثال: 3-5 أيام عمل">
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="serviceNotes">
-                        <i class="fas fa-sticky-note"></i> ملاحظات إضافية (اختياري)
-                    </label>
-                    <textarea id="serviceNotes" placeholder="أي معلومات إضافية مفيدة..."></textarea>
-                </div>
-                
-                <div class="form-actions">
-                    <button type="button" class="btn-secondary" onclick="closeAddForm()">إلغاء</button>
-                    <button type="submit" class="btn-primary">
-                        <i class="fas fa-save"></i> إضافة الخدمة
-                    </button>
-                </div>
-            </form>
+        <div class="row">
+          <label for="svcDocs">الأوراق المطلوبة</label>
+          <textarea id="svcDocs" placeholder="اذكر الأوراق المطلوبة..." required></textarea>
         </div>
+        <div class="row row-2">
+          <div>
+            <label for="svcCost">التكلفة (اختياري)</label>
+            <input id="svcCost" placeholder="مثال: 100 ريال"/>
+          </div>
+          <div>
+            <label for="svcDur">المدة المتوقعة (اختياري)</label>
+            <input id="svcDur" placeholder="مثال: 3-5 أيام"/>
+          </div>
+        </div>
+        <div class="row">
+          <label for="svcNotes">ملاحظات (اختياري)</label>
+          <textarea id="svcNotes" placeholder="أي معلومات إضافية مفيدة..."></textarea>
+        </div>
+        <div class="row">
+          <label for="svcImg">صورة الخدمة (اختياري)</label>
+          <input id="svcImg" type="file" accept="image/*"/>
+        </div>
+        <div class="f-end">
+          <button type="button" class="btn" onclick="toggleAdd()">إلغاء</button>
+          <button type="submit" class="btn btn-primary btn-icon">💾 حفظ</button>
+        </div>
+      </form>
     </div>
+  </div>
 
-    <!-- Services Section -->
-    <section id="services" class="services-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>الخدمات المتاحة</h2>
-                <p>استعرض تجارب المستخدمين مع الخدمات المختلفة</p>
-            </div>
-            
-            <div id="servicesContainer" class="services-grid">
-                <!-- Services will be loaded here -->
-            </div>
-            
-            <div id="noServices" class="no-services" style="display: none;">
-                <i class="fas fa-inbox"></i>
-                <h3>لا توجد خدمات</h3>
-                <p>كن أول من يضيف خدمة جديدة</p>
-                <button class="btn-primary" onclick="toggleAddForm()">
-                    <i class="fas fa-plus"></i> أضف خدمة
-                </button>
-            </div>
-        </div>
-    </section>
+  <!-- Auth Modal -->
+  <div id="authModal" class="modal" aria-hidden="true">
+    <div class="box" role="dialog" aria-modal="true">
+      <div class="box-header">
+        <h3 id="authTitle" style="margin:0">تسجيل الدخول</h3>
+        <button class="btn btn-outline" onclick="closeAuth()">إغلاق</button>
+      </div>
+      <div class="box-body">
+        <!-- Login -->
+        <form id="loginForm" class="row" autocomplete="on">
+          <div class="row">
+            <label for="loginEmail">البريد الإلكتروني</label>
+            <input id="loginEmail" type="email" placeholder="email@example.com" required />
+          </div>
+          <div class="row">
+            <label for="loginPass">كلمة المرور</label>
+            <input id="loginPass" type="password" placeholder="******" required />
+          </div>
+          <div class="f-end">
+            <button type="submit" class="btn btn-primary btn-icon">➡️ دخول</button>
+          </div>
+        </form>
 
-    <!-- Auth Modal -->
-    <div id="authModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="authTitle">تسجيل الدخول</h3>
-                <button class="modal-close" onclick="closeAuthModal()" aria-label="إغلاق">
-                    <i class="fas fa-times"></i>
-                </button>
+        <!-- Register -->
+        <form id="registerForm" class="row" style="display:none" autocomplete="on">
+          <div class="row">
+            <label for="regEmail">البريد الإلكتروني</label>
+            <input id="regEmail" type="email" placeholder="email@example.com" required />
+          </div>
+          <div class="row row-2">
+            <div>
+              <label for="regPass">كلمة المرور</label>
+              <input id="regPass" type="password" minlength="6" placeholder="6 أحرف على الأقل" required />
             </div>
-            
-            <!-- Login Form -->
-            <form id="loginForm" class="auth-form">
-                <div class="form-group">
-                    <label for="loginEmail">
-                        <i class="fas fa-envelope"></i> البريد الإلكتروني
-                    </label>
-                    <input type="email" id="loginEmail" placeholder="example@email.com" required aria-required="true">
-                </div>
-                
-                <div class="form-group">
-                    <label for="loginPassword">
-                        <i class="fas fa-lock"></i> كلمة المرور
-                    </label>
-                    <input type="password" id="loginPassword" placeholder="كلمة المرور" required aria-required="true">
-                </div>
-                
-                <button type="submit" class="btn-primary btn-full">
-                    <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
-                </button>
-                
-                <p class="auth-switch">
-                    ليس لديك حساب؟ 
-                    <a href="#" onclick="switchAuthMode('register')">إنشاء حساب جديد</a>
-                </p>
-            </form>
-            
-            <!-- Register Form -->
-            <form id="registerForm" class="auth-form" style="display: none;">
-                <div class="form-group">
-                    <label for="registerEmail">
-                        <i class="fas fa-envelope"></i> البريد الإلكتروني
-                    </label>
-                    <input type="email" id="registerEmail" placeholder="example@email.com" required aria-required="true">
-                </div>
-                
-                <div class="form-group">
-                    <label for="registerPassword">
-                        <i class="fas fa-lock"></i> كلمة المرور
-                    </label>
-                    <input type="password" id="registerPassword" placeholder="كلمة المرور (6 أحرف على الأقل)" required aria-required="true" minlength="6">
-                </div>
-                
-                <div class="form-group">
-                    <label for="confirmPassword">
-                        <i class="fas fa-lock"></i> تأكيد كلمة المرور
-                    </label>
-                    <input type="password" id="confirmPassword" placeholder="أعد كتابة كلمة المرور" required aria-required="true" minlength="6">
-                </div>
-                
-                <button type="submit" class="btn-primary btn-full">
-                    <i class="fas fa-user-plus"></i> إنشاء حساب
-                </button>
-                
-                <p class="auth-switch">
-                    لديك حساب بالفعل؟ 
-                    <a href="#" onclick="switchAuthMode('login')">تسجيل الدخول</a>
-                </p>
-            </form>
+            <div>
+              <label for="regConfirm">تأكيد كلمة المرور</label>
+              <input id="regConfirm" type="password" minlength="6" placeholder="أعد كتابة كلمة المرور" required />
+            </div>
+          </div>
+          <div class="f-end">
+            <button type="submit" class="btn btn-primary btn-icon">📝 إنشاء حساب</button>
+          </div>
+        </form>
+
+        <div style="margin-top:10px;text-align:center">
+          <a href="#" onclick="switchAuth()">تبديل إلى <span id="switchLabel">إنشاء حساب</span></a>
         </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Toast Notifications -->
-    <div id="toastContainer" class="toast-container"></div>
+  <!-- Toasts -->
+  <div id="toasts" class="toast-wrap"></div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3><i class="fas fa-map-marker-alt"></i> دليل - Daleel</h3> <!-- Corrected to match site name -->
-                    <p>دليلك الشامل للخدمات الحكومية والعامة</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>روابط سريعة</h4>
-                    <ul>
-                        <li><a href="#home">الرئيسية</a></li>
-                        <li><a href="#services">الخدمات</a></li>
-                        <li><a href="#about">حول</a></li>
-                        <li><a href="#contact">اتصل بنا</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>تواصل معنا</h4>
-                    <p><strong>واتساب:</strong> <a href="https://wa.me/+201126630356" target="_blank" rel="noopener noreferrer">+20 1126630356</a></p>
-                    <p><strong>البريد الإلكتروني:</strong> <a href="mailto:tarek500500@gmail.com">tarek500500@gmail.com</a></p>
-                    <p><strong>العنوان:</strong><br>
-                    <span style="color: Light Blue;">أمام سنترال الصوة - بالمجمع<br>محافظة الشرقية، أبوحماد</span></p>
-                    <a href="https://maps.app.goo.gl/AYcYJXjYipwdSgRQA" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary" style="margin-top: 0.5rem;">
-                        <i class="fas fa-map" style="color: #ffffff"></i> عرض على الخريطة
-                    </a>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2025 دليل - Daleel. جميع الحقوق محفوظة.</p> <!-- Corrected copyright to match site -->
-                <div style="text-align: center; margin-top: 1.5rem;">
-                    <h4 style="margin-bottom: 1.5rem; color: var(--primary-color); font-size: 1.3rem; font-weight: 600;">تابعونا على وسائل التواصل الاجتماعي</h4>
-                    <div class="social-grid">
-                        <a href="https://www.facebook.com/your-profile" class="social-card" target="_blank" rel="noopener noreferrer"> <!-- Corrected invalid Facebook share link -->
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="https://wa.me/+201126630356" class="social-card" target="_blank" rel="noopener noreferrer">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                        <a href="https://www.instagram.com/tarekyahiaalmoghrapy?igsh=MW5teXV6NGg5aTk1aQ==" class="social-card" target="_blank" rel="noopener noreferrer">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+  <!-- Firebase + App -->
+  <script type="module">
+    /* ==== Firebase SDKs ==== */
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js';
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js';
+    import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, deleteDoc } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js';
+    import { getStorage, ref as sRef, uploadBytes, getDownloadURL, deleteObject } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js';
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    
-    <!-- Main JavaScript -->
-    <script src="script.js"></script>
+    /* ==== Config (خاصة بمشروعك) ==== */
+    const firebaseConfig = {
+      apiKey: "AIzaSyB6TzN-QHVUOwizABYxm0Y8fkqTp1qb_qA",
+      authDomain: "daleel-c4204.firebaseapp.com",
+      projectId: "daleel-c4204",
+      storageBucket: "daleel-c4204.appspot.com",
+      messagingSenderId: "864882936232",
+      appId: "1:864882936232:web:5bfc14d7c0f02559d5f02d"
+    };
+
+    /* ==== Init ==== */
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    /* ==== State ==== */
+    let currentUser = null;
+    let services = [];
+
+    /* ==== UI Helpers ==== */
+    const $ = (s, p=document) => p.querySelector(s);
+    function toast(msg, type='success'){
+      const el = document.createElement('div');
+      el.className = `toast ${type}`;
+      el.textContent = msg;
+      $('#toasts').appendChild(el);
+      setTimeout(()=>el.remove(), 3200);
+    }
+
+    /* ==== Auth Modal ==== */
+    function openAuth(mode='login'){
+      $('#authModal').classList.add('active');
+      if(mode==='register'){ $('#authTitle').textContent='إنشاء حساب'; $('#loginForm').style.display='none'; $('#registerForm').style.display='grid'; $('#switchLabel').textContent='تسجيل الدخول'; }
+      else { $('#authTitle').textContent='تسجيل الدخول'; $('#loginForm').style.display='grid'; $('#registerForm').style.display='none'; $('#switchLabel').textContent='إنشاء حساب'; }
+    }
+    function closeAuth(){ $('#authModal').classList.remove('active'); $('#loginForm').reset(); $('#registerForm').reset(); }
+    function switchAuth(){ if($('#loginForm').style.display!=='none') openAuth('register'); else openAuth('login'); }
+    window.openAuth = openAuth; window.closeAuth = closeAuth; window.switchAuth = switchAuth;
+
+    /* ==== Add Modal ==== */
+    function toggleAdd(){ 
+      if(!currentUser){ toast('يجب تسجيل الدخول أولاً','error'); openAuth('login'); return; }
+      $('#addModal').classList.toggle('active');
+    }
+    window.toggleAdd = toggleAdd;
+
+    /* ==== Auth Handlers ==== */
+    $('#registerForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const email = $('#regEmail').value.trim();
+      const pass  = $('#regPass').value;
+      const confirm = $('#regConfirm').value;
+      if(pass!==confirm){ toast('كلمات المرور غير متطابقة','error'); return; }
+      try{
+        await createUserWithEmailAndPassword(auth, email, pass);
+        toast('تم إنشاء الحساب بنجاح'); closeAuth();
+      }catch(err){ toast(mapAuthErr(err),'error'); console.error(err); }
+    });
+
+    $('#loginForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const email = $('#loginEmail').value.trim();
+      const pass  = $('#loginPass').value;
+      try{
+        await signInWithEmailAndPassword(auth, email, pass);
+        toast('تم تسجيل الدخول'); closeAuth();
+      }catch(err){ toast(mapAuthErr(err),'error'); console.error(err); }
+    });
+
+    function logout(){ signOut(auth).then(()=>toast('تم تسجيل الخروج')).catch(e=>toast('خطأ: '+e.message,'error')); }
+    window.logout = logout;
+
+    function mapAuthErr(e){
+      switch(e.code){
+        case 'auth/email-already-in-use': return 'البريد الإلكتروني مستخدم بالفعل';
+        case 'auth/invalid-email': return 'البريد الإلكتروني غير صالح';
+        case 'auth/weak-password': return 'كلمة المرور ضعيفة (6 أحرف على الأقل)';
+        case 'auth/user-not-found': return 'لا يوجد حساب بهذا البريد';
+        case 'auth/wrong-password': return 'كلمة المرور غير صحيحة';
+        default: return e.message;
+      }
+    }
+
+    onAuthStateChanged(auth, (user)=>{
+      currentUser = user;
+      $('#loginBtn').style.display  = user ? 'none':'inline-block';
+      $('#registerBtn').style.display= user ? 'none':'inline-block';
+      $('#logoutBtn').style.display = user ? 'inline-block':'none';
+      $('#addServiceTop').style.display = user ? 'inline-block':'none';
+      loadServices(); // تحديث القائمة حسب المستخدم (لإظهار زر الحذف لمالِك الخدمة)
+      loadStats();
+    });
+
+    /* ==== Add Service ==== */
+    $('#serviceForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      if(!currentUser){ toast('سجّل الدخول أولاً','error'); return; }
+
+      const name = $('#svcName').value.trim();
+      const category = $('#svcCat').value;
+      const location = $('#svcLoc').value.trim();
+      const documents = $('#svcDocs').value.trim();
+      const cost = $('#svcCost').value.trim() || 'غير محدد';
+      const duration = $('#svcDur').value.trim() || 'غير محدد';
+      const notes = $('#svcNotes').value.trim();
+      const file = $('#svcImg').files[0];
+
+      if(!name || !category || !location || !documents){ toast('يرجى ملء الحقول المطلوبة','error'); return; }
+
+      try{
+        let imageUrl = ''; let imagePath = '';
+        if(file){
+          imagePath = `services/${currentUser.uid}/${Date.now()}-${file.name}`;
+          const ref = sRef(storage, imagePath);
+          const snap = await uploadBytes(ref, file);
+          imageUrl = await getDownloadURL(snap.ref);
+        }
+
+        await addDoc(collection(db,'services'),{
+          name, category, location,
+          documents, cost, duration, notes,
+          imageUrl, imagePath,
+          userId: currentUser.uid,
+          userEmail: currentUser.email,
+          createdAt: serverTimestamp()
+        });
+
+        toast('تمت إضافة الخدمة بنجاح','success');
+        $('#serviceForm').reset(); toggleAdd(); loadServices(); loadStats();
+      }catch(err){ console.error(err); toast('خطأ في الإضافة: '+err.message,'error'); }
+    });
+
+    /* ==== Load & Render Services ==== */
+    async function loadServices(){
+      try{
+        const q = query(collection(db,'services'), orderBy('createdAt','desc'));
+        const snap = await getDocs(q);
+        services = [];
+        snap.forEach(d => services.push({ id:d.id, ...d.data() }));
+        renderServices();
+      }catch(err){ console.error(err); toast('خطأ في تحميل الخدمات','error'); }
+    }
+
+    function renderServices(){
+      const wrap = $('#services'); wrap.innerHTML = '';
+      if(services.length===0){ $('#empty').style.display='block'; return; }
+      $('#empty').style.display='none';
+
+      services.forEach(s=>{
+        const isOwner = currentUser && s.userId === currentUser.uid;
+        const card = document.createElement('div');
+        card.className='card';
+        card.innerHTML = `
+          ${s.imageUrl ? `<img src="${s.imageUrl}" alt="${s.name}"/>` : ``}
+          <h3 style="margin:.3rem 0">${s.name}</h3>
+          <div class="meta"><span>🏷️ ${s.category}</span><span>📍 ${s.location}</span></div>
+          <p><b>الأوراق:</b> ${escapeHTML(s.documents||'')}</p>
+          ${s.cost && s.cost!=='غير محدد' ? `<p><b>التكلفة:</b> ${escapeHTML(s.cost)}</p>`:''}
+          ${s.duration && s.duration!=='غير محدد' ? `<p><b>المدة:</b> ${escapeHTML(s.duration)}</p>`:''}
+          ${s.notes ? `<p><b>ملاحظات:</b> ${escapeHTML(s.notes)}</p>`:''}
+          <small style="display:block;margin-top:8px;color:#666">أضيفت بواسطة: ${s.userEmail || '—'}</small>
+          ${isOwner ? `<div class="f-end" style="margin-top:10px">
+              <button class="btn btn-danger btn-icon" data-id="${s.id}">🗑️ حذف</button>
+            </div>`:``}
+        `;
+        // attach delete if owner
+        if(isOwner){
+          const delBtn = card.querySelector('button.btn-danger');
+          delBtn.addEventListener('click', ()=>confirmDelete(s));
+        }
+        wrap.appendChild(card);
+      });
+    }
+
+    function escapeHTML(str){
+      return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+
+    async function confirmDelete(svc){
+      if(!confirm('هل تريد حذف هذه الخدمة؟ سيتم حذف الصورة أيضاً إن وجدت.')) return;
+      try{
+        // 1) حذف المستند
+        await deleteDoc(doc(db,'services', svc.id));
+        // 2) حذف الصورة إن وُجدت
+        if(svc.imagePath){
+          try{ await deleteObject(sRef(storage, svc.imagePath)); }catch(e){ console.warn('Image delete warning:', e.message); }
+        }
+        toast('تم حذف الخدمة'); loadServices(); loadStats();
+      }catch(err){ console.error(err); toast('خطأ في الحذف: '+err.message,'error'); }
+    }
+
+    /* ==== Stats ==== */
+    async function loadStats(){
+      try{
+        const snap = await getDocs(collection(db,'services'));
+        $('#statServices').textContent = snap.size;
+
+        const users = new Set();
+        snap.forEach(d=>{ const u=d.data().userId; if(u) users.add(u); });
+        $('#statUsers').textContent = users.size;
+
+        $('#statReviews').textContent = '0'; // Placeholder لحين إضافة التقييمات لاحقاً
+      }catch(e){
+        $('#statServices').textContent='0'; $('#statUsers').textContent='0'; $('#statReviews').textContent='0';
+      }
+    }
+
+    /* ==== Global keys (Esc closes modals) ==== */
+    document.addEventListener('keydown', (e)=>{
+      if(e.key==='Escape'){ $('#authModal').classList.remove('active'); $('#addModal').classList.remove('active'); }
+    });
+    document.querySelectorAll('.modal').forEach(m=>{
+      m.addEventListener('click', (e)=>{ if(e.target===m) m.classList.remove('active'); });
+    });
+  </script>
 </body>
 </html>
