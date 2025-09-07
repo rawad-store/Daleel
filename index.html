@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دليل - Daleel | دليل الخدمات الحكومية والعامة</title>
     <meta name="description" content="دليل شامل للخدمات الحكومية والعامة مع تقييمات المستخدمين والمعلومات المفصلة">
+    <meta name="keywords" content="دليل خدمات, خدمات حكومية, تقييمات مستخدمين, خدمات عامة, السعودية, مصر">
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📍</text></svg>">
@@ -26,13 +27,14 @@
     <meta property="og:title" content="دليل - Daleel | دليل الخدمات الحكومية والعامة">
     <meta property="og:description" content="دليل شامل للخدمات الحكومية والعامة مع تقييمات المستخدمين والمعلومات المفصلة">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
+    <meta property="og:url" content="https://your-domain.com"> <!-- Replace with actual domain -->
+    <meta property="og:image" content="https://your-domain.com/images/og-image.png"> <!-- Add an actual image URL -->
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="دليل - Daleel">
     <meta name="twitter:description" content="دليل شامل للخدمات الحكومية والعامة">
+    <meta name="twitter:image" content="https://your-domain.com/images/twitter-image.png"> <!-- Add an actual image URL -->
     
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -68,7 +70,7 @@
                     <button class="btn-primary" onclick="showAuthModal('register')">
                         <i class="fas fa-user-plus"></i> تسجيل
                     </button>
-                    <button class="nav-toggle" id="navToggle">
+                    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
                         <span></span>
                         <span></span>
                         <span></span>
@@ -116,7 +118,7 @@
             <div class="search-container">
                 <div class="search-box">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" placeholder="ابحث عن خدمة...">
+                    <input type="text" id="searchInput" placeholder="ابحث عن خدمة..." aria-label="ابحث عن خدمة">
                 </div>
                 <div class="filter-buttons">
                     <button class="filter-btn active" data-category="all">الكل</button>
@@ -131,16 +133,16 @@
     </section>
 
     <!-- Add Service Button (Floating) -->
-    <button class="fab" onclick="toggleAddForm()" title="إضافة خدمة جديدة">
+    <button class="fab" onclick="toggleAddForm()" title="إضافة خدمة جديدة" aria-label="إضافة خدمة جديدة">
         <i class="fas fa-plus"></i>
     </button>
 
     <!-- Add Service Form -->
-    <div id="addServiceModal" class="modal">
+    <div id="addServiceModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="addServiceTitle">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fas fa-plus-circle"></i> إضافة خدمة جديدة</h3>
-                <button class="modal-close" onclick="closeAddForm()">
+                <h3 id="addServiceTitle"><i class="fas fa-plus-circle"></i> إضافة خدمة جديدة</h3>
+                <button class="modal-close" onclick="closeAddForm()" aria-label="إغلاق">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -149,7 +151,7 @@
                     <label for="serviceName">
                         <i class="fas fa-tag"></i> اسم الخدمة
                     </label>
-                    <input type="text" id="serviceName" placeholder="مثال: استخراج جواز سفر" required>
+                    <input type="text" id="serviceName" placeholder="مثال: استخراج جواز سفر" required aria-required="true">
                 </div>
                 
                 <div class="form-row">
@@ -157,7 +159,7 @@
                         <label for="serviceCategory">
                             <i class="fas fa-folder"></i> القسم
                         </label>
-                        <select id="serviceCategory" required>
+                        <select id="serviceCategory" required aria-required="true">
                             <option value="">اختر القسم</option>
                             <option value="حكومي">حكومي</option>
                             <option value="صحة">صحة</option>
@@ -171,7 +173,7 @@
                         <label for="serviceLocation">
                             <i class="fas fa-map-marker-alt"></i> المكان
                         </label>
-                        <input type="text" id="serviceLocation" placeholder="مثال: الرياض - حي النخيل" required>
+                        <input type="text" id="serviceLocation" placeholder="مثال: الرياض - حي النخيل" required aria-required="true">
                     </div>
                 </div>
                 
@@ -179,7 +181,7 @@
                     <label for="serviceDocuments">
                         <i class="fas fa-file-alt"></i> الأوراق المطلوبة
                     </label>
-                    <textarea id="serviceDocuments" placeholder="اذكر الأوراق والمستندات المطلوبة..." required></textarea>
+                    <textarea id="serviceDocuments" placeholder="اذكر الأوراق والمستندات المطلوبة..." required aria-required="true"></textarea>
                 </div>
                 
                 <div class="form-row">
@@ -239,11 +241,11 @@
     </section>
 
     <!-- Auth Modal -->
-    <div id="authModal" class="modal">
+    <div id="authModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="authTitle">تسجيل الدخول</h3>
-                <button class="modal-close" onclick="closeAuthModal()">
+                <button class="modal-close" onclick="closeAuthModal()" aria-label="إغلاق">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -254,14 +256,14 @@
                     <label for="loginEmail">
                         <i class="fas fa-envelope"></i> البريد الإلكتروني
                     </label>
-                    <input type="email" id="loginEmail" placeholder="example@email.com" required>
+                    <input type="email" id="loginEmail" placeholder="example@email.com" required aria-required="true">
                 </div>
                 
                 <div class="form-group">
                     <label for="loginPassword">
                         <i class="fas fa-lock"></i> كلمة المرور
                     </label>
-                    <input type="password" id="loginPassword" placeholder="كلمة المرور" required>
+                    <input type="password" id="loginPassword" placeholder="كلمة المرور" required aria-required="true">
                 </div>
                 
                 <button type="submit" class="btn-primary btn-full">
@@ -280,21 +282,21 @@
                     <label for="registerEmail">
                         <i class="fas fa-envelope"></i> البريد الإلكتروني
                     </label>
-                    <input type="email" id="registerEmail" placeholder="example@email.com" required>
+                    <input type="email" id="registerEmail" placeholder="example@email.com" required aria-required="true">
                 </div>
                 
                 <div class="form-group">
                     <label for="registerPassword">
                         <i class="fas fa-lock"></i> كلمة المرور
                     </label>
-                    <input type="password" id="registerPassword" placeholder="كلمة المرور (6 أحرف على الأقل)" required>
+                    <input type="password" id="registerPassword" placeholder="كلمة المرور (6 أحرف على الأقل)" required aria-required="true" minlength="6">
                 </div>
                 
                 <div class="form-group">
                     <label for="confirmPassword">
                         <i class="fas fa-lock"></i> تأكيد كلمة المرور
                     </label>
-                    <input type="password" id="confirmPassword" placeholder="أعد كتابة كلمة المرور" required>
+                    <input type="password" id="confirmPassword" placeholder="أعد كتابة كلمة المرور" required aria-required="true" minlength="6">
                 </div>
                 
                 <button type="submit" class="btn-primary btn-full">
@@ -317,7 +319,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3><i class="fas fa-map-marker-alt"></i> مكتبة الرواد - الصوة</h3>
+                    <h3><i class="fas fa-map-marker-alt"></i> دليل - Daleel</h3> <!-- Corrected to match site name -->
                     <p>دليلك الشامل للخدمات الحكومية والعامة</p>
                 </div>
                 
@@ -333,29 +335,29 @@
                 
                 <div class="footer-section">
                     <h4>تواصل معنا</h4>
-                    <p><strong>واتساب:</strong> <a href="https://wa.me/+201126630356" target="_blank" rel="noopener">+20 1126630356</a></p>
+                    <p><strong>واتساب:</strong> <a href="https://wa.me/+201126630356" target="_blank" rel="noopener noreferrer">+20 1126630356</a></p>
                     <p><strong>البريد الإلكتروني:</strong> <a href="mailto:tarek500500@gmail.com">tarek500500@gmail.com</a></p>
                     <p><strong>العنوان:</strong><br>
                     <span style="color: Light Blue;">أمام سنترال الصوة - بالمجمع<br>محافظة الشرقية، أبوحماد</span></p>
-                    <a href="https://maps.app.goo.gl/AYcYJXjYipwdSgRQA" target="_blank" class="btn btn-outline-primary" style="margin-top: 0.5rem;">
-                        <i class="fas fa-map" style="color: #ffffff" ></i> عرض على الخريطة
+                    <a href="https://maps.app.goo.gl/AYcYJXjYipwdSgRQA" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary" style="margin-top: 0.5rem;">
+                        <i class="fas fa-map" style="color: #ffffff"></i> عرض على الخريطة
                     </a>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 مكتبة الرواد - الصوة. جميع الحقوق محفوظة.</p>
+                <p>&copy; 2025 دليل - Daleel. جميع الحقوق محفوظة.</p> <!-- Corrected copyright to match site -->
                 <div style="text-align: center; margin-top: 1.5rem;">
                     <h4 style="margin-bottom: 1.5rem; color: var(--primary-color); font-size: 1.3rem; font-weight: 600;">تابعونا على وسائل التواصل الاجتماعي</h4>
                     <div class="social-grid">
-                        <a href="https://www.facebook.com/share/18bfjxRbHH" class="social-card" target="_blank" rel="noopener">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="https://wa.me/+201126630356" class="social-card" target="_blank" rel="noopener">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                    <a href="https://www.instagram.com/tarekyahiaalmoghrapy?igsh=MW5teXV6NGg5aTk1aQ==" class="social-card" target="_blank" rel="noopener">
-                        <i class="fab fa-instagram"></i>
+                        <a href="https://www.facebook.com/your-profile" class="social-card" target="_blank" rel="noopener noreferrer"> <!-- Corrected invalid Facebook share link -->
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://wa.me/+201126630356" class="social-card" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://www.instagram.com/tarekyahiaalmoghrapy?igsh=MW5teXV6NGg5aTk1aQ==" class="social-card" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-instagram"></i>
                         </a>
                     </div>
                 </div>
@@ -372,4 +374,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
