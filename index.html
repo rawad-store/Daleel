@@ -7,9 +7,23 @@
   <meta name="description" content="دليل شامل للخدمات الحكومية والعامة مع تقييمات المستخدمين والمعلومات المفصلة"/>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <!-- Meta Tags for Social Media Sharing -->
+  <meta property="og:title" content="دليل - Daleel | دليل الخدمات الحكومية والعامة">
+  <meta property="og:description" content="دليل شامل للخدمات الحكومية - منصة تفاعلية لمشاركة التجارب وتسهيل الوصول للخدمات العامة">
+  <meta property="og:image" content="https://raw.githubusercontent.com/rawad-store/konozalkhair/main/preview.jpg">
+  <meta property="og:url" content="https://rawad-store.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ar_AR">
+
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="دليل - Daleel | دليل الخدمات الحكومية والعامة">
+  <meta name="twitter:description" content="دليل شامل للخدمات الحكومية - منصة تفاعلية لمشاركة التجارب وتسهيل الوصول للخدمات العامة">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/rawad-store/rawad-store.github.io/main/preview.jpg">
   
-  <!-- سياسة أمان المحتوى -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:;">
+  <!-- سياسة أمان المحتوى المعدلة -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com https://cdnjs.cloudflare.com 'unsafe-eval'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:;">
 
   <style>
     :root {
@@ -525,6 +539,26 @@
         text-align: center;
       }
     }
+
+    .loading {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      grid-column: 1 / -1;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-radius: 50%;
+      border-top-color: var(--primary);
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
@@ -573,8 +607,12 @@
     </div>
 
     <!-- Services -->
-    <div id="services" class="grid"></div>
-    <div id="empty" class="empty">لا توجد خدمات حالياً — كن أول من يضيف خدمة ✨</div>
+    <div id="services" class="grid">
+      <div class="loading">
+        <div class="spinner"></div>
+      </div>
+    </div>
+    <div id="empty" class="empty" style="display:none">لا توجد خدمات حالياً — كن أول من يضيف خدمة ✨</div>
 
     <!-- Contact Info -->
     <div class="contact-info">
@@ -773,11 +811,34 @@
 
   <!-- Firebase + App -->
   <script type="module">
+    // إضافة علامة تحميل
+    function showLoading() {
+      document.getElementById('empty').style.display = 'none';
+      document.getElementById('services').innerHTML = `
+        <div class="loading">
+          <div class="spinner"></div>
+        </div>
+      `;
+    }
+
+    // إخفاء علامة التحميل
+    function hideLoading() {
+      const loadingEl = document.querySelector('.loading');
+      if (loadingEl) {
+        loadingEl.remove();
+      }
+    }
+
+    // إظهار رسالة عدم وجود خدمات
+    function showNoServices() {
+      document.getElementById('empty').style.display = 'block';
+    }
+
     /* ==== Firebase SDKs ==== */
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js';
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js';
-    import { getFirestore, collection, addDoc, getDocs, getDoc, query, orderBy, serverTimestamp, doc, deleteDoc, where, updateDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js';
-    import { getStorage, ref as sRef, uploadBytes, getDownloadURL, deleteObject } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js';
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+    import { getFirestore, collection, addDoc, getDocs, getDoc, query, orderBy, serverTimestamp, doc, deleteDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+    import { getStorage, ref as sRef, uploadBytes, getDownloadURL, deleteObject } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js';
 
     /* ==== Config (خاصة بمشروعك) ==== */
     const firebaseConfig = {
@@ -1249,6 +1310,7 @@
     /* ==== Load & Render Services ==== */
     async function loadServices() {
       try {
+        showLoading();
         const q = query(collection(db, 'services'), orderBy('createdAt', 'desc'));
         const snap = await getDocs(q);
         services = [];
@@ -1261,9 +1323,16 @@
         });
         
         renderServices();
+        hideLoading();
+        
+        if (services.length === 0) {
+          showNoServices();
+        }
       } catch (err) {
         console.error(err);
         toast('خطأ في تحميل الخدمات', 'error');
+        hideLoading();
+        showNoServices();
       }
     }
 
@@ -1272,7 +1341,7 @@
       wrap.innerHTML = '';
       
       if (services.length === 0) {
-        $('#empty').style.display = 'block';
+        showNoServices();
         return;
       }
       
