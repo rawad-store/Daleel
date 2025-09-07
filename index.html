@@ -6,6 +6,7 @@
   <title>دليل - Daleel | دليل الخدمات الحكومية والعامة</title>
   <meta name="description" content="دليل شامل للخدمات الحكومية والعامة مع تقييمات المستخدمين والمعلومات المفصلة"/>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
   <style>
     :root{
@@ -31,14 +32,21 @@
     .stats{display:flex;gap:24px;flex-wrap:wrap}
     .stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:12px 16px;border-radius:12px}
     .container{max-width:1200px;margin:auto;padding:24px 16px}
+    .search-bar{display:flex;margin-bottom:20px;max-width:600px;margin:0 auto 30px}
+    .search-bar input{flex:1;padding:12px 16px;border:2px solid var(--border);border-radius:8px 0 0 8px;font-family:inherit}
+    .search-bar button{background:var(--primary);color:white;border:none;padding:0 20px;border-radius:0 8px 8px 0;cursor:pointer}
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-    .card{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:14px}
+    .card{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:14px;position:relative}
     .card img{width:100%;height:180px;object-fit:cover;border-radius:10px;margin-bottom:10px;background:#f3f3f3}
     .meta{display:flex;gap:8px;flex-wrap:wrap;font-size:.9rem;color:#555;margin:.5rem 0}
+    .rating{display:flex;gap:3px;margin:8px 0;color:#FFC107}
+    .reviews{margin-top:10px;border-top:1px solid var(--border);padding-top:10px}
+    .review-item{background:#f9f9f9;padding:10px;border-radius:8px;margin-bottom:8px}
+    .review-header{display:flex;justify-content:space-between;margin-bottom:5px}
     .empty{padding:48px;text-align:center;color:#777}
     .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.5);z-index:100}
     .modal.active{display:flex}
-    .modal .box{background:#fff;border-radius:14px;max-width:520px;width:92%;box-shadow:var(--shadow);overflow:hidden}
+    .modal .box{background:#fff;border-radius:14px;max-width:520px;width:92%;box-shadow:var(--shadow);overflow:hidden;max-height:90vh;overflow-y:auto}
     .box-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
     .box-body{padding:16px 18px}
     .row{display:grid;gap:10px}
@@ -50,7 +58,15 @@
     .toast-wrap{position:fixed;top:16px;right:16px;z-index:200}
     .toast{background:var(--primary);color:#fff;padding:.8rem 1rem;border-radius:8px;margin-bottom:8px;box-shadow:var(--shadow)}
     .toast.error{background:var(--error)} .toast.success{background:var(--success)}
-    @media(max-width:600px){.row-2{grid-template-columns:1fr}}
+    .contact-info{background:var(--white);padding:20px;border-radius:14px;box-shadow:var(--shadow);margin-top:30px;text-align:center}
+    .contact-info h3{color:var(--primary);margin-top:0}
+    .contact-links{display:flex;justify-content:center;gap:20px;margin-top:15px;flex-wrap:wrap}
+    .contact-link{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--text)}
+    footer{background:var(--primary);color:white;text-align:center;padding:20px;margin-top:40px}
+    .tabs{display:flex;gap:10px;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:10px}
+    .tab{background:#f1f1f1;padding:8px 16px;border-radius:6px;cursor:pointer}
+    .tab.active{background:var(--primary);color:white}
+    @media(max-width:600px){.row-2{grid-template-columns:1fr} .stats{justify-content:center} .contact-links{flex-direction:column;align-items:center}}
   </style>
 </head>
 <body>
@@ -82,11 +98,47 @@
     </div>
   </section>
 
-  <!-- Services -->
-  <main class="container">
+  <!-- Search -->
+  <div class="container">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="ابحث عن خدمة..." />
+      <button onclick="searchServices()"><i class="fas fa-search"></i></button>
+    </div>
+    
+    <div class="tabs">
+      <div class="tab active" data-category="">جميع الخدمات</div>
+      <div class="tab" data-category="حكومي">حكومي</div>
+      <div class="tab" data-category="صحة">صحة</div>
+      <div class="tab" data-category="تعليم">تعليم</div>
+      <div class="tab" data-category="مالي">مالي</div>
+      <div class="tab" data-category="أخرى">أخرى</div>
+    </div>
+
+    <!-- Services -->
     <div id="services" class="grid"></div>
     <div id="empty" class="empty">لا توجد خدمات حالياً — كن أول من يضيف خدمة ✨</div>
   </main>
+
+  <!-- Contact Info -->
+  <div class="container">
+    <div class="contact-info">
+      <h3>للتواصل معنا</h3>
+      <p>يسعدنا تواصلكم معنا لأي استفسارات أو مقترحات</p>
+      <div class="contact-links">
+        <a href="mailto:tarek500500@gmail.com" class="contact-link">
+          <i class="fas fa-envelope"></i> tarek500500@gmail.com
+        </a>
+        <a href="https://wa.me/201126630356" target="_blank" class="contact-link">
+          <i class="fab fa-whatsapp"></i> +201126630356
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 دليل - Daleel. جميع الحقوق محفوظة لمكتبة الرواد بالصوة</p>
+  </footer>
 
   <!-- Add Service Modal -->
   <div id="addModal" class="modal" aria-hidden="true">
@@ -110,7 +162,7 @@
           </div>
           <div>
             <label for="svcLoc">المكان</label>
-            <input id="svcLoc" placeholder="الرياض - حي النخيل" required />
+            <input id="svcLoc" placeholder="الشرقية - أبوحماد" required />
           </div>
         </div>
         <div class="row">
@@ -120,7 +172,7 @@
         <div class="row row-2">
           <div>
             <label for="svcCost">التكلفة (اختياري)</label>
-            <input id="svcCost" placeholder="مثال: 100 ريال"/>
+            <input id="svcCost" placeholder="مثال: 100 جنيه"/>
           </div>
           <div>
             <label for="svcDur">المدة المتوقعة (اختياري)</label>
@@ -140,6 +192,53 @@
           <button type="submit" class="btn btn-primary btn-icon">💾 حفظ</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- Review Modal -->
+  <div id="reviewModal" class="modal" aria-hidden="true">
+    <div class="box" role="dialog" aria-modal="true">
+      <div class="box-header">
+        <h3 style="margin:0">تقييم الخدمة: <span id="reviewServiceName"></span></h3>
+        <button class="btn btn-outline" onclick="closeReview()">إغلاق</button>
+      </div>
+      <div class="box-body">
+        <form id="reviewForm">
+          <div class="row">
+            <label>التقييم</label>
+            <div class="rating" id="ratingStars">
+              <i class="far fa-star" data-rating="1"></i>
+              <i class="far fa-star" data-rating="2"></i>
+              <i class="far fa-star" data-rating="3"></i>
+              <i class="far fa-star" data-rating="4"></i>
+              <i class="far fa-star" data-rating="5"></i>
+            </div>
+            <input type="hidden" id="reviewRating" value="0" required />
+          </div>
+          <div class="row">
+            <label for="reviewComment">التعليق (اختياري)</label>
+            <textarea id="reviewComment" placeholder="اكتب تعليقك عن الخدمة..."></textarea>
+          </div>
+          <div class="row">
+            <label for="reviewAccuracy">هل المعلومات صحيحة؟</label>
+            <select id="reviewAccuracy" required>
+              <option value="">اختر الإجابة</option>
+              <option value="نعم">نعم، المعلومات صحيحة</option>
+              <option value="جزئياً">جزئياً، بعض المعلومات تحتاج تحديث</option>
+              <option value="لا">لا، المعلومات غير صحيحة</option>
+            </select>
+          </div>
+          <div class="f-end">
+            <button type="button" class="btn" onclick="closeReview()">إلغاء</button>
+            <button type="submit" class="btn btn-primary btn-icon">💾 حفظ التقييم</button>
+          </div>
+        </form>
+        
+        <div class="reviews" id="serviceReviews">
+          <h4>التقييمات السابقة</h4>
+          <div id="reviewsList"></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -202,7 +301,7 @@
     /* ==== Firebase SDKs ==== */
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js';
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js';
-    import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, deleteDoc } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js';
+    import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, deleteDoc, where, updateDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js';
     import { getStorage, ref as sRef, uploadBytes, getDownloadURL, deleteObject } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js';
 
     /* ==== Config (خاصة بمشروعك) ==== */
@@ -224,6 +323,8 @@
     /* ==== State ==== */
     let currentUser = null;
     let services = [];
+    let allServices = [];
+    let currentServiceForReview = null;
 
     /* ==== UI Helpers ==== */
     const $ = (s, p=document) => p.querySelector(s);
@@ -251,6 +352,129 @@
       $('#addModal').classList.toggle('active');
     }
     window.toggleAdd = toggleAdd;
+
+    /* ==== Review Modal ==== */
+    function openReview(serviceId){
+      if(!currentUser){ toast('يجب تسجيل الدخول أولاً','error'); openAuth('login'); return; }
+      
+      const service = services.find(s => s.id === serviceId);
+      if(!service) return;
+      
+      currentServiceForReview = service;
+      $('#reviewServiceName').textContent = service.name;
+      $('#reviewRating').value = '0';
+      $('#reviewComment').value = '';
+      $('#reviewAccuracy').value = '';
+      resetStars();
+      
+      // تحميل التقييمات الحالية
+      loadReviews(serviceId);
+      
+      $('#reviewModal').classList.add('active');
+    }
+    
+    function closeReview(){
+      $('#reviewModal').classList.remove('active');
+      currentServiceForReview = null;
+    }
+    
+    function resetStars(){
+      const stars = $('#ratingStars').querySelectorAll('i');
+      stars.forEach(star => {
+        star.classList.remove('fas');
+        star.classList.add('far');
+      });
+    }
+    
+    function setStars(rating){
+      const stars = $('#ratingStars').querySelectorAll('i');
+      stars.forEach((star, index) => {
+        if(index < rating){
+          star.classList.remove('far');
+          star.classList.add('fas');
+        } else {
+          star.classList.remove('fas');
+          star.classList.add('far');
+        }
+      });
+    }
+    
+    // إضافة تفاعل النجوم
+    document.addEventListener('DOMContentLoaded', function() {
+      // تأجيل تهيئة النجوم حتى يتم تحميل DOM
+      setTimeout(() => {
+        const stars = $('#ratingStars')?.querySelectorAll('i');
+        if(stars){
+          stars.forEach(star => {
+            star.addEventListener('mouseenter', function() {
+              const rating = parseInt(this.getAttribute('data-rating'));
+              setStars(rating);
+            });
+            
+            star.addEventListener('mouseleave', function() {
+              const currentRating = parseInt($('#reviewRating').value);
+              setStars(currentRating);
+            });
+            
+            star.addEventListener('click', function() {
+              const rating = parseInt(this.getAttribute('data-rating'));
+              $('#reviewRating').value = rating;
+              setStars(rating);
+            });
+          });
+        }
+      }, 500);
+    });
+
+    /* ==== Search and Filter ==== */
+    function searchServices(){
+      const searchTerm = $('#searchInput').value.trim().toLowerCase();
+      filterServices(searchTerm, $('#svcCat').value);
+    }
+    
+    function filterServices(searchTerm = '', category = ''){
+      let filtered = allServices;
+      
+      // التصفية حسب الفئة
+      if(category){
+        filtered = filtered.filter(service => service.category === category);
+      }
+      
+      // التصفية حسب البحث
+      if(searchTerm){
+        filtered = filtered.filter(service => 
+          service.name.toLowerCase().includes(searchTerm) || 
+          service.location.toLowerCase().includes(searchTerm) ||
+          service.documents.toLowerCase().includes(searchTerm)
+        );
+      }
+      
+      services = filtered;
+      renderServices();
+    }
+    
+    // إضافة أحداث للتبويبات
+    document.addEventListener('DOMContentLoaded', function() {
+      const tabs = document.querySelectorAll('.tab');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          // إزالة النشاط من جميع الألسنة
+          tabs.forEach(t => t.classList.remove('active'));
+          // إضافة النشاط للسان المحدد
+          this.classList.add('active');
+          
+          // تصفية الخدمات حسب الفئة
+          const category = this.getAttribute('data-category');
+          const searchTerm = $('#searchInput').value.trim().toLowerCase();
+          filterServices(searchTerm, category);
+        });
+      });
+      
+      // إضافة حدث للبحث عند الضغط على Enter
+      $('#searchInput').addEventListener('keypress', function(e) {
+        if(e.key === 'Enter') searchServices();
+      });
+    });
 
     /* ==== Auth Handlers ==== */
     $('#registerForm').addEventListener('submit', async (e)=>{
@@ -330,6 +554,9 @@
           imageUrl, imagePath,
           userId: currentUser.uid,
           userEmail: currentUser.email,
+          reviews: [],
+          averageRating: 0,
+          totalReviews: 0,
           createdAt: serverTimestamp()
         });
 
@@ -338,13 +565,118 @@
       }catch(err){ console.error(err); toast('خطأ في الإضافة: '+err.message,'error'); }
     });
 
+    /* ==== Review Handlers ==== */
+    $('#reviewForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      if(!currentUser || !currentServiceForReview){ return; }
+      
+      const rating = parseInt($('#reviewRating').value);
+      const comment = $('#reviewComment').value.trim();
+      const accuracy = $('#reviewAccuracy').value;
+      
+      if(!rating || !accuracy){ toast('يرجى إدخال التقييم وتحديد دقة المعلومات','error'); return; }
+      
+      try{
+        const reviewData = {
+          userId: currentUser.uid,
+          userEmail: currentUser.email,
+          rating: rating,
+          comment: comment,
+          accuracy: accuracy,
+          createdAt: serverTimestamp()
+        };
+        
+        // تحديث الخدمة بإضافة التقييم الجديد
+        const serviceRef = doc(db, 'services', currentServiceForReview.id);
+        await updateDoc(serviceRef, {
+          reviews: arrayUnion(reviewData)
+        });
+        
+        // إعادة حساب متوسط التقييم
+        const updatedReviews = [...(currentServiceForReview.reviews || []), reviewData];
+        const totalRating = updatedReviews.reduce((sum, review) => sum + review.rating, 0);
+        const averageRating = totalRating / updatedReviews.length;
+        
+        await updateDoc(serviceRef, {
+          averageRating: averageRating,
+          totalReviews: updatedReviews.length
+        });
+        
+        toast('شكراً لتقييمك الخدمة!','success');
+        closeReview();
+        loadServices(); // إعادة تحميل الخدمات لتحديث التقييمات
+        loadStats(); // تحديث الإحصائيات
+      }catch(err){ console.error(err); toast('خطأ في إضافة التقييم: '+err.message,'error'); }
+    });
+    
+    async function loadReviews(serviceId){
+      try{
+        const serviceDoc = await getDocs(query(collection(db, 'services'), where('__name__', '==', serviceId)));
+        if(!serviceDoc.empty){
+          const serviceData = serviceDoc.docs[0].data();
+          const reviews = serviceData.reviews || [];
+          
+          const reviewsList = $('#reviewsList');
+          reviewsList.innerHTML = '';
+          
+          if(reviews.length === 0){
+            reviewsList.innerHTML = '<p>لا توجد تقييمات بعد</p>';
+            return;
+          }
+          
+          // ترتيب التقييمات من الأحدث إلى الأقدم
+          const sortedReviews = [...reviews].sort((a, b) => {
+            return b.createdAt?.toDate() - a.createdAt?.toDate();
+          });
+          
+          sortedReviews.forEach(review => {
+            const reviewEl = document.createElement('div');
+            reviewEl.className = 'review-item';
+            
+            const date = review.createdAt ? review.createdAt.toDate().toLocaleDateString('ar-EG') : 'تاريخ غير معروف';
+            
+            reviewEl.innerHTML = `
+              <div class="review-header">
+                <div>${review.userEmail || 'مستخدم'}</div>
+                <div>${date}</div>
+              </div>
+              <div class="rating">
+                ${renderStars(review.rating)}
+              </div>
+              <div><strong>دقة المعلومات:</strong> ${review.accuracy}</div>
+              ${review.comment ? `<div>${escapeHTML(review.comment)}</div>` : ''}
+            `;
+            
+            reviewsList.appendChild(reviewEl);
+          });
+        }
+      }catch(err){ console.error('خطأ في تحميل التقييمات:', err); }
+    }
+    
+    function renderStars(rating){
+      let stars = '';
+      for(let i = 1; i <= 5; i++){
+        if(i <= rating){
+          stars += '<i class="fas fa-star"></i>';
+        } else {
+          stars += '<i class="far fa-star"></i>';
+        }
+      }
+      return stars;
+    }
+
     /* ==== Load & Render Services ==== */
     async function loadServices(){
       try{
         const q = query(collection(db,'services'), orderBy('createdAt','desc'));
         const snap = await getDocs(q);
         services = [];
-        snap.forEach(d => services.push({ id:d.id, ...d.data() }));
+        allServices = [];
+        snap.forEach(d => {
+          const data = d.data();
+          services.push({ id:d.id, ...data });
+          allServices.push({ id:d.id, ...data });
+        });
         renderServices();
       }catch(err){ console.error(err); toast('خطأ في تحميل الخدمات','error'); }
     }
@@ -358,20 +690,33 @@
         const isOwner = currentUser && s.userId === currentUser.uid;
         const card = document.createElement('div');
         card.className='card';
+        
+        // عرض متوسط التقييم إن وجد
+        const ratingHtml = s.averageRating ? `
+          <div class="rating">
+            ${renderStars(Math.round(s.averageRating))}
+            <span style="color:#666;margin-right:5px">(${s.totalReviews || 0})</span>
+          </div>
+        ` : '<div style="color:#777;font-size:0.9rem">لا توجد تقييمات بعد</div>';
+        
         card.innerHTML = `
           ${s.imageUrl ? `<img src="${s.imageUrl}" alt="${s.name}"/>` : ``}
           <h3 style="margin:.3rem 0">${s.name}</h3>
           <div class="meta"><span>🏷️ ${s.category}</span><span>📍 ${s.location}</span></div>
+          ${ratingHtml}
           <p><b>الأوراق:</b> ${escapeHTML(s.documents||'')}</p>
           ${s.cost && s.cost!=='غير محدد' ? `<p><b>التكلفة:</b> ${escapeHTML(s.cost)}</p>`:''}
           ${s.duration && s.duration!=='غير محدد' ? `<p><b>المدة:</b> ${escapeHTML(s.duration)}</p>`:''}
           ${s.notes ? `<p><b>ملاحظات:</b> ${escapeHTML(s.notes)}</p>`:''}
           <small style="display:block;margin-top:8px;color:#666">أضيفت بواسطة: ${s.userEmail || '—'}</small>
-          ${isOwner ? `<div class="f-end" style="margin-top:10px">
-              <button class="btn btn-danger btn-icon" data-id="${s.id}">🗑️ حذف</button>
-            </div>`:``}
+          <div class="f-end" style="margin-top:10px">
+            <button class="btn btn-primary btn-icon" onclick="openReview('${s.id}')">
+              <i class="fas fa-star"></i> قيم الخدمة
+            </button>
+            ${isOwner ? `<button class="btn btn-danger btn-icon" data-id="${s.id}">🗑️ حذف</button>`:''}
+          </div>
         `;
-        // attach delete if owner
+        // إرفاق حدث الحذف إذا كان المالك
         if(isOwner){
           const delBtn = card.querySelector('button.btn-danger');
           delBtn.addEventListener('click', ()=>confirmDelete(s));
@@ -400,14 +745,21 @@
     /* ==== Stats ==== */
     async function loadStats(){
       try{
-        const snap = await getDocs(collection(db,'services'));
-        $('#statServices').textContent = snap.size;
+        const servicesSnap = await getDocs(collection(db,'services'));
+        $('#statServices').textContent = servicesSnap.size;
 
         const users = new Set();
-        snap.forEach(d=>{ const u=d.data().userId; if(u) users.add(u); });
+        let totalReviews = 0;
+        
+        servicesSnap.forEach(d=>{ 
+          const data = d.data();
+          const u = data.userId; 
+          if(u) users.add(u);
+          totalReviews += data.totalReviews || 0;
+        });
+        
         $('#statUsers').textContent = users.size;
-
-        $('#statReviews').textContent = '0'; // Placeholder لحين إضافة التقييمات لاحقاً
+        $('#statReviews').textContent = totalReviews;
       }catch(e){
         $('#statServices').textContent='0'; $('#statUsers').textContent='0'; $('#statReviews').textContent='0';
       }
@@ -415,11 +767,20 @@
 
     /* ==== Global keys (Esc closes modals) ==== */
     document.addEventListener('keydown', (e)=>{
-      if(e.key==='Escape'){ $('#authModal').classList.remove('active'); $('#addModal').classList.remove('active'); }
+      if(e.key==='Escape'){ 
+        $('#authModal').classList.remove('active'); 
+        $('#addModal').classList.remove('active'); 
+        $('#reviewModal').classList.remove('active');
+      }
     });
     document.querySelectorAll('.modal').forEach(m=>{
       m.addEventListener('click', (e)=>{ if(e.target===m) m.classList.remove('active'); });
     });
+    
+    // جعل دوال البحث والتقييم متاحة عالمياً
+    window.searchServices = searchServices;
+    window.openReview = openReview;
+    window.closeReview = closeReview;
   </script>
 </body>
 </html>
