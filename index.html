@@ -8,25 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
-  <!-- Meta Tags for Social Media Sharing -->
-  <meta property="og:title" content="دليل - Daleel | دليل الخدمات الحكومية والعامة">
-  <meta property="og:description" content="دليل شامل للخدمات الحكومية - منصة تفاعلية لمشاركة التجارب وتسهيل الوصول للخدمات العامة">
-  <meta property="og:image" content="https://raw.githubusercontent.com/rawad-store/konozalkhair/main/preview.jpg">
-  <meta property="og:url" content="https://rawad-store.github.io/">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="ar_AR">
-
-  <!-- Twitter Card Tags -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="دليل - Daleel | دليل الخدمات الحكومية والعامة">
-  <meta name="twitter:description" content="دليل شامل للخدمات الحكومية - منصة تفاعلية لمشاركة التجارب وتسهيل الوصول للخدمات العامة">
-  <meta name="twitter:image" content="https://raw.githubusercontent.com/rawad-store/rawad-store.github.io/main/preview.jpg">
-  
-  <!-- Preload critical resources -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
-
   <style>
     :root {
       --primary: #2D5F7C;
@@ -483,6 +464,18 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
     
+    .review-form-section {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .review-form-section h4 {
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+    
     @media (max-width: 768px) {
       .row-2 {
         grid-template-columns: 1fr;
@@ -673,36 +666,39 @@
         <button class="btn btn-outline" onclick="closeReview()">إغلاق</button>
       </div>
       <div class="box-body">
-        <form id="reviewForm">
-          <div class="row">
-            <label>التقييم</label>
-            <div class="rating" id="ratingStars">
-              <i class="far fa-star" data-rating="1"></i>
-              <i class="far fa-star" data-rating="2"></i>
-              <i class="far fa-star" data-rating="3"></i>
-              <i class="far fa-star" data-rating="4"></i>
-              <i class="far fa-star" data-rating="5"></i>
+        <div class="review-form-section">
+          <h4>أضف تقييمك</h4>
+          <form id="reviewForm">
+            <div class="row">
+              <label>التقييم</label>
+              <div class="rating" id="ratingStars">
+                <i class="far fa-star" data-rating="1"></i>
+                <i class="far fa-star" data-rating="2"></i>
+                <i class="far fa-star" data-rating="3"></i>
+                <i class="far fa-star" data-rating="4"></i>
+                <i class="far fa-star" data-rating="5"></i>
+              </div>
+              <input type="hidden" id="reviewRating" value="0" required />
             </div>
-            <input type="hidden" id="reviewRating" value="0" required />
-          </div>
-          <div class="row">
-            <label for="reviewComment">التعليق (اختياري)</label>
-            <textarea id="reviewComment" placeholder="اكتب تعليقك عن الخدمة..."></textarea>
-          </div>
-          <div class="row">
-            <label for="reviewAccuracy">هل المعلومات صحيحة؟</label>
-            <select id="reviewAccuracy" required>
-              <option value="">اختر الإجابة</option>
-              <option value="نعم">نعم، المعلومات صحيحة</option>
-              <option value="جزئياً">جزئياً، بعض المعلومات تحتاج تحديث</option>
-              <option value="لا">لا، المعلومات غير صحيحة</option>
-            </select>
-          </div>
-          <div class="f-end">
-            <button type="button" class="btn" onclick="closeReview()">إلغاء</button>
-            <button type="submit" class="btn btn-primary btn-icon">💾 حفظ التقييم</button>
-          </div>
-        </form>
+            <div class="row">
+              <label for="reviewComment">التعليق (اختياري)</label>
+              <textarea id="reviewComment" placeholder="اكتب تعليقك عن الخدمة..."></textarea>
+            </div>
+            <div class="row">
+              <label for="reviewAccuracy">هل المعلومات صحيحة؟</label>
+              <select id="reviewAccuracy" required>
+                <option value="">اختر الإجابة</option>
+                <option value="نعم">نعم، المعلومات صحيحة</option>
+                <option value="جزئياً">جزئياً، بعض المعلومات تحتاج تحديث</option>
+                <option value="لا">لا، المعلومات غير صحيحة</option>
+              </select>
+            </div>
+            <div class="f-end">
+              <button type="button" class="btn" onclick="closeReview()">إلغاء</button>
+              <button type="submit" class="btn btn-primary btn-icon">💾 حفظ التقييم</button>
+            </div>
+          </form>
+        </div>
         
         <div class="reviews" id="serviceReviews">
           <h4>التقييمات السابقة</h4>
@@ -1129,21 +1125,28 @@
           rating: rating,
           comment: comment,
           accuracy: accuracy,
-          createdAt: serverTimestamp()
+          createdAt: new Date() // استخدام التاريخ المحلي بدلاً من serverTimestamp
         };
         
-        // تحديث الخدمة بإضافة التقييم الجديد
+        // الحصول على الخدمة الحالية أولاً
         const serviceRef = doc(db, 'services', currentServiceForReview.id);
-        await updateDoc(serviceRef, {
-          reviews: arrayUnion(reviewData)
-        });
+        const serviceDoc = await getDoc(serviceRef);
+        
+        if (!serviceDoc.exists()) {
+          toast('الخدمة غير موجودة', 'error');
+          return;
+        }
+        
+        const serviceData = serviceDoc.data();
+        const updatedReviews = [...(serviceData.reviews || []), reviewData];
         
         // إعادة حساب متوسط التقييم
-        const updatedReviews = [...(currentServiceForReview.reviews || []), reviewData];
         const totalRating = updatedReviews.reduce((sum, review) => sum + review.rating, 0);
         const averageRating = totalRating / updatedReviews.length;
         
+        // تحديث الخدمة باستخدام set() بدلاً من update()
         await updateDoc(serviceRef, {
+          reviews: updatedReviews,
           averageRating: averageRating,
           totalReviews: updatedReviews.length
         });
@@ -1153,18 +1156,18 @@
         loadServices(); // إعادة تحميل الخدمات لتحديث التقييمات
         loadStats(); // تحديث الإحصائيات
       } catch (err) {
-        console.error(err);
+        console.error('خطأ في إضافة التقييم:', err);
         toast('خطأ في إضافة التقييم: ' + err.message, 'error');
       }
     });
     
     async function loadReviews(serviceId) {
       try {
-        const q = query(collection(db, 'services'), where('__name__', '==', serviceId));
-        const querySnapshot = await getDocs(q);
+        const serviceRef = doc(db, 'services', serviceId);
+        const serviceDoc = await getDoc(serviceRef);
         
-        if (!querySnapshot.empty) {
-          const serviceData = querySnapshot.docs[0].data();
+        if (serviceDoc.exists()) {
+          const serviceData = serviceDoc.data();
           const reviews = serviceData.reviews || [];
           
           const reviewsList = $('#reviewsList');
@@ -1177,14 +1180,20 @@
           
           // ترتيب التقييمات من الأحدث إلى الأقدم
           const sortedReviews = [...reviews].sort((a, b) => {
-            return b.createdAt?.toDate() - a.createdAt?.toDate();
+            const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(a.createdAt);
+            const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(b.createdAt);
+            return dateB - dateA;
           });
           
           sortedReviews.forEach(review => {
             const reviewEl = document.createElement('div');
             reviewEl.className = 'review-item';
             
-            const date = review.createdAt ? review.createdAt.toDate().toLocaleDateString('ar-EG') : 'تاريخ غير معروف';
+            let date = 'تاريخ غير معروف';
+            if (review.createdAt) {
+              const reviewDate = review.createdAt.toDate ? review.createdAt.toDate() : new Date(review.createdAt);
+              date = reviewDate.toLocaleDateString('ar-EG');
+            }
             
             reviewEl.innerHTML = `
               <div class="review-header">
