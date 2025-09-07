@@ -1475,8 +1475,9 @@
       initStarEvents();
     });
     
-    <!-- نافذة تعريفية Daleel تفاعلية -->
- div id="welcomeModal" style="position: fixed;
+     {<!-- نافذة تعريفية Daleel تفاعلية -->
+<div id="welcomeModal" style="
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -1595,6 +1596,7 @@
 }
 </style>
 
+<script>
 // تحقق إذا ظهرت النافذة مسبقاً
 if (!localStorage.getItem('welcomeShown')) {
     const modal = document.getElementById('welcomeModal');
@@ -1645,6 +1647,6 @@ if (!localStorage.getItem('welcomeShown')) {
 } else {
     document.getElementById('welcomeModal').style.display = 'none';
 }
-  </script>
+</script>
 </body>
 </html>
