@@ -7,6 +7,9 @@
   <meta name="description" content="دليل شامل للخدمات الحكومية والعامة مع تقييمات المستخدمين والمعلومات المفصلة"/>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  
+  <!-- سياسة أمان المحتوى -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:;">
 
   <style>
     :root {
@@ -311,6 +314,8 @@
     label {
       font-weight: 600;
       color: var(--primary);
+      display: block;
+      margin-bottom: 5px;
     }
     
     input, select, textarea {
@@ -476,6 +481,10 @@
       color: var(--primary);
     }
     
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
     @media (max-width: 768px) {
       .row-2 {
         grid-template-columns: 1fr;
@@ -550,8 +559,8 @@
   <!-- Search -->
   <div class="container">
     <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="ابحث عن خدمة..." />
-      <button onclick="searchServices()"><i class="fas fa-search"></i></button>
+      <input type="text" id="searchInput" placeholder="ابحث عن خدمة..." name="search" />
+      <button type="button" onclick="searchServices()"><i class="fas fa-search"></i></button>
     </div>
     
     <div class="tabs">
@@ -601,54 +610,54 @@
 
   <!-- Add Service Modal -->
   <div id="addModal" class="modal" aria-hidden="true">
-    <div class="box" role="dialog" aria-modal="true">
+    <div class="box" role="dialog" aria-modal="true" aria-labelledby="addServiceTitle">
       <div class="box-header">
-        <h3 style="margin:0">إضافة خدمة جديدة</h3>
+        <h3 id="addServiceTitle" style="margin:0">إضافة خدمة جديدة</h3>
         <button class="btn btn-outline" onclick="toggleAdd()">إغلاق</button>
       </div>
       <form id="serviceForm" class="box-body">
-        <div class="row">
+        <div class="form-group">
           <label for="svcName">اسم الخدمة</label>
-          <input id="svcName" placeholder="مثال: استخراج جواز سفر" required />
+          <input id="svcName" name="serviceName" placeholder="مثال: استخراج جواز سفر" required />
         </div>
         <div class="row row-2">
-          <div>
+          <div class="form-group">
             <label for="svcCat">القسم</label>
-            <select id="svcCat" required>
+            <select id="svcCat" name="serviceCategory" required>
               <option value="">اختر القسم</option>
-              <option>حكومي</option>
-              <option>صحة</option>
-              <option>تعليم</option>
-              <option>مالي</option>
-              <option>أخرى</option>
+              <option value="حكومي">حكومي</option>
+              <option value="صحة">صحة</option>
+              <option value="تعليم">تعليم</option>
+              <option value="مالي">مالي</option>
+              <option value="أخرى">أخرى</option>
             </select>
           </div>
-          <div>
+          <div class="form-group">
             <label for="svcLoc">المكان</label>
-            <input id="svcLoc" placeholder="الشرقية - أبوحماد" required />
+            <input id="svcLoc" name="serviceLocation" placeholder="الشرقية - أبوحماد" required />
           </div>
         </div>
-        <div class="row">
+        <div class="form-group">
           <label for="svcDocs">الأوراق المطلوبة</label>
-          <textarea id="svcDocs" placeholder="اذكر الأوراق المطلوبة..." required></textarea>
+          <textarea id="svcDocs" name="serviceDocuments" placeholder="اذكر الأوراق المطلوبة..." required></textarea>
         </div>
         <div class="row row-2">
-          <div>
+          <div class="form-group">
             <label for="svcCost">التكلفة (اختياري)</label>
-            <input id="svcCost" placeholder="مثال: 100 جنيه"/>
+            <input id="svcCost" name="serviceCost" placeholder="مثال: 100 جنيه"/>
           </div>
-          <div>
+          <div class="form-group">
             <label for="svcDur">المدة المتوقعة (اختياري)</label>
-            <input id="svcDur" placeholder="مثال: 3-5 أيام"/>
+            <input id="svcDur" name="serviceDuration" placeholder="مثال: 3-5 أيام"/>
           </div>
         </div>
-        <div class="row">
+        <div class="form-group">
           <label for="svcNotes">ملاحظات (اختياري)</label>
-          <textarea id="svcNotes" placeholder="أي معلومات إضافية مفيدة..."></textarea>
+          <textarea id="svcNotes" name="serviceNotes" placeholder="أي معلومات إضافية مفيدة..."></textarea>
         </div>
-        <div class="row">
+        <div class="form-group">
           <label for="svcImg">صورة الخدمة (اختياري)</label>
-          <input id="svcImg" type="file" accept="image/*"/>
+          <input id="svcImg" name="serviceImage" type="file" accept="image/*"/>
         </div>
         <div class="f-end">
           <button type="button" class="btn" onclick="toggleAdd()">إلغاء</button>
@@ -660,33 +669,33 @@
 
   <!-- Review Modal -->
   <div id="reviewModal" class="modal" aria-hidden="true">
-    <div class="box" role="dialog" aria-modal="true">
+    <div class="box" role="dialog" aria-modal="true" aria-labelledby="reviewServiceTitle">
       <div class="box-header">
-        <h3 style="margin:0">تقييم الخدمة: <span id="reviewServiceName"></span></h3>
+        <h3 id="reviewServiceTitle" style="margin:0">تقييم الخدمة: <span id="reviewServiceName"></span></h3>
         <button class="btn btn-outline" onclick="closeReview()">إغلاق</button>
       </div>
       <div class="box-body">
         <div class="review-form-section">
           <h4>أضف تقييمك</h4>
           <form id="reviewForm">
-            <div class="row">
+            <div class="form-group">
               <label>التقييم</label>
               <div class="rating" id="ratingStars">
-                <i class="far fa-star" data-rating="1"></i>
-                <i class="far fa-star" data-rating="2"></i>
-                <i class="far fa-star" data-rating="3"></i>
-                <i class="far fa-star" data-rating="4"></i>
-                <i class="far fa-star" data-rating="5"></i>
+                <i class="far fa-star" data-rating="1" role="button" tabindex="0" aria-label="نجمة واحدة"></i>
+                <i class="far fa-star" data-rating="2" role="button" tabindex="0" aria-label="نجمتين"></i>
+                <i class="far fa-star" data-rating="3" role="button" tabindex="0" aria-label="ثلاث نجوم"></i>
+                <i class="far fa-star" data-rating="4" role="button" tabindex="0" aria-label="أربع نجوم"></i>
+                <i class="far fa-star" data-rating="5" role="button" tabindex="0" aria-label="خمس نجوم"></i>
               </div>
-              <input type="hidden" id="reviewRating" value="0" required />
+              <input type="hidden" id="reviewRating" name="reviewRating" value="0" required />
             </div>
-            <div class="row">
+            <div class="form-group">
               <label for="reviewComment">التعليق (اختياري)</label>
-              <textarea id="reviewComment" placeholder="اكتب تعليقك عن الخدمة..."></textarea>
+              <textarea id="reviewComment" name="reviewComment" placeholder="اكتب تعليقك عن الخدمة..."></textarea>
             </div>
-            <div class="row">
+            <div class="form-group">
               <label for="reviewAccuracy">هل المعلومات صحيحة؟</label>
-              <select id="reviewAccuracy" required>
+              <select id="reviewAccuracy" name="reviewAccuracy" required>
                 <option value="">اختر الإجابة</option>
                 <option value="نعم">نعم، المعلومات صحيحة</option>
                 <option value="جزئياً">جزئياً، بعض المعلومات تحتاج تحديث</option>
@@ -710,7 +719,7 @@
 
   <!-- Auth Modal -->
   <div id="authModal" class="modal" aria-hidden="true">
-    <div class="box" role="dialog" aria-modal="true">
+    <div class="box" role="dialog" aria-modal="true" aria-labelledby="authTitle">
       <div class="box-header">
         <h3 id="authTitle" style="margin:0">تسجيل الدخول</h3>
         <button class="btn btn-outline" onclick="closeAuth()">إغلاق</button>
@@ -718,13 +727,13 @@
       <div class="box-body">
         <!-- Login -->
         <form id="loginForm" class="row" autocomplete="on">
-          <div class="row">
+          <div class="form-group">
             <label for="loginEmail">البريد الإلكتروني</label>
-            <input id="loginEmail" type="email" placeholder="email@example.com" required />
+            <input id="loginEmail" name="loginEmail" type="email" placeholder="email@example.com" required />
           </div>
-          <div class="row">
+          <div class="form-group">
             <label for="loginPass">كلمة المرور</label>
-            <input id="loginPass" type="password" placeholder="******" required />
+            <input id="loginPass" name="loginPassword" type="password" placeholder="******" required />
           </div>
           <div class="f-end">
             <button type="submit" class="btn btn-primary btn-icon">➡️ دخول</button>
@@ -733,18 +742,18 @@
 
         <!-- Register -->
         <form id="registerForm" class="row" style="display:none" autocomplete="on">
-          <div class="row">
+          <div class="form-group">
             <label for="regEmail">البريد الإلكتروني</label>
-            <input id="regEmail" type="email" placeholder="email@example.com" required />
+            <input id="regEmail" name="registerEmail" type="email" placeholder="email@example.com" required />
           </div>
           <div class="row row-2">
-            <div>
+            <div class="form-group">
               <label for="regPass">كلمة المرور</label>
-              <input id="regPass" type="password" minlength="6" placeholder="6 أحرف على الأقل" required />
+              <input id="regPass" name="registerPassword" type="password" minlength="6" placeholder="6 أحرف على الأقل" required />
             </div>
-            <div>
+            <div class="form-group">
               <label for="regConfirm">تأكيد كلمة المرور</label>
-              <input id="regConfirm" type="password" minlength="6" placeholder="أعد كتابة كلمة المرور" required />
+              <input id="regConfirm" name="registerConfirmPassword" type="password" minlength="6" placeholder="أعد كتابة كلمة المرور" required />
             </div>
           </div>
           <div class="f-end">
@@ -767,7 +776,7 @@
     /* ==== Firebase SDKs ==== */
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js';
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js';
-    import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, deleteDoc, where, updateDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js';
+    import { getFirestore, collection, addDoc, getDocs, getDoc, query, orderBy, serverTimestamp, doc, deleteDoc, where, updateDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js';
     import { getStorage, ref as sRef, uploadBytes, getDownloadURL, deleteObject } from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js';
 
     /* ==== Config (خاصة بمشروعك) ==== */
@@ -919,6 +928,16 @@
             const rating = parseInt(this.getAttribute('data-rating'));
             $('#reviewRating').value = rating;
             setStars(rating);
+          });
+          
+          // إضافة دعم لوحة المفاتيح للنجوم
+          star.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              const rating = parseInt(this.getAttribute('data-rating'));
+              $('#reviewRating').value = rating;
+              setStars(rating);
+            }
           });
         });
       }
