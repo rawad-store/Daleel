@@ -347,7 +347,6 @@
       max-height: 90vh;
       overflow-y: auto;
       animation: scaleIn 0.3s ease;
-      -webkit-overflow-scrolling: touch;
     }
     
     @keyframes scaleIn {
@@ -997,7 +996,7 @@
     /* ==== Firebase SDKs ==== */
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js';
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js';
-    import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, deleteDoc, updateDoc, arrayUnion, arrayRemove, getDoc, Timestamp } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js';
+    import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, deleteDoc, updateDoc, arrayUnion, getDoc, Timestamp } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js';
 
     /* ==== Config ==== */
     const firebaseConfig = {
@@ -1019,7 +1018,6 @@
     let services = [];
     let allServices = [];
     let currentServiceForReview = null;
-    let currentReview = null;
     let isEditingService = false;
 
     /* ==== UI Helpers ==== */
@@ -1054,19 +1052,9 @@
       return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
     }
 
-    function openModal(modalId) {
-      $(`#${modalId}`).classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal(modalId) {
-      $(`#${modalId}`).classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
     /* ==== Auth Functions ==== */
     function openAuth(mode = 'login') {
-      openModal('authModal');
+      $('#authModal').classList.add('active');
       if (mode === 'register') {
         $('#authTitle').textContent = 'إنشاء حساب';
         $('#loginForm').style.display = 'none';
@@ -1081,7 +1069,7 @@
     }
     
     function closeAuth() {
-      closeModal('authModal');
+      $('#authModal').classList.remove('active');
       $('#loginForm').reset();
       $('#registerForm').reset();
     }
@@ -1115,43 +1103,45 @@
 
     /* ==== Service Functions ==== */
     function toggleAdd(serviceId = null) { 
-      const modal = $('#addModal');
-      if (modal.classList.contains('active') && !serviceId) {
-        closeModal('addModal');
-        return;
-      }
+  const modal = $('#addModal');
 
-      if (!currentUser && !serviceId) {
-        toast('يجب تسجيل الدخول أولاً', 'error');
-        openAuth('login');
-        return;
-      }
-      
-      if (serviceId) {
-        const service = allServices.find(s => s.id === serviceId);
-        if (service) {
-          isEditingService = true;
-          $('#addModalTitle').textContent = 'تعديل الخدمة';
-          $('#serviceFormSubmit').innerHTML = '💾 حفظ التعديلات';
-          $('#editServiceId').value = service.id;
-          $('#svcName').value = service.name || '';
-          $('#svcCat').value = service.category || '';
-          $('#svcLoc').value = service.location || '';
-          $('#svcDocs').value = service.documents || '';
-          $('#svcCost').value = service.cost || '';
-          $('#svcDur').value = service.duration || '';
-          $('#svcNotes').value = service.notes || '';
-        }
-      } else {
-        isEditingService = false;
-        $('#addModalTitle').textContent = 'إضافة خدمة جديدة';
-        $('#serviceFormSubmit').innerHTML = '💾 حفظ';
-        $('#serviceForm').reset();
-        $('#editServiceId').value = '';
-      }
-      
-      openModal('addModal');
+  // لو المودال مفتوح بالفعل → اقفله
+  if (modal.classList.contains('active') && !serviceId) {
+    modal.classList.remove('active');
+    return;
+  }
+
+  if (!currentUser && !serviceId) {
+    toast('يجب تسجيل الدخول أولاً', 'error');
+    openAuth('login');
+    return;
+  }
+  
+  if (serviceId) {
+    const service = allServices.find(s => s.id === serviceId);
+    if (service) {
+      isEditingService = true;
+      $('#addModalTitle').textContent = 'تعديل الخدمة';
+      $('#serviceFormSubmit').innerHTML = '💾 حفظ التعديلات';
+      $('#editServiceId').value = service.id;
+      $('#svcName').value = service.name || '';
+      $('#svcCat').value = service.category || '';
+      $('#svcLoc').value = service.location || '';
+      $('#svcDocs').value = service.documents || '';
+      $('#svcCost').value = service.cost || '';
+      $('#svcDur').value = service.duration || '';
+      $('#svcNotes').value = service.notes || '';
     }
+  } else {
+    isEditingService = false;
+    $('#addModalTitle').textContent = 'إضافة خدمة جديدة';
+    $('#serviceFormSubmit').innerHTML = '💾 حفظ';
+    $('#serviceForm').reset();
+    $('#editServiceId').value = '';
+  }
+  
+  modal.classList.add('active');
+}
 
 
     async function loadServices() {
@@ -1215,12 +1205,10 @@
             <button class="btn btn-primary btn-icon card-action-btn" onclick="openReview('${s.id}')" aria-label="قيم الخدمة">
               <i class="fas fa-star"></i> قيم الخدمة
             </button>
-            ${currentUser ? `
+            ${isOwner ? `
               <button class="btn btn-warning btn-icon card-action-btn" onclick="toggleAdd('${s.id}')" aria-label="تعديل الخدمة">
                 <i class="fas fa-edit"></i> تعديل
               </button>
-            ` : ''}
-            ${isOwner ? `
               <button class="btn btn-danger btn-icon card-action-btn" onclick="confirmDelete('${s.id}')" aria-label="حذف الخدمة">
                 <i class="fas fa-trash"></i> حذف
               </button>
@@ -1255,86 +1243,29 @@
         return;
       }
       
-      const service = allServices.find(s => s.id === serviceId);
+      const service = services.find(s => s.id === serviceId);
       if (!service) return;
       
       currentServiceForReview = service;
-      currentReview = null;
       $('#reviewServiceName').textContent = service.name;
       $('#reviewRating').value = '0';
       $('#reviewComment').value = '';
       $('#reviewAccuracy').value = '';
       resetStars();
-      $('#reviewForm button[type="submit"]').innerHTML = '💾 حفظ التقييم';
-      
-      // Remove delete button if exists
-      const deleteBtn = $('#reviewForm .btn-danger');
-      if (deleteBtn) deleteBtn.remove();
       
       const hasReviewed = service.reviews?.some(r => r.userId === currentUser.uid);
       if (hasReviewed) {
-        currentReview = service.reviews.find(r => r.userId === currentUser.uid);
-        if (currentReview) {
-          $('#reviewRating').value = currentReview.rating;
-          setStars(currentReview.rating);
-          $('#reviewComment').value = currentReview.comment || '';
-          $('#reviewAccuracy').value = currentReview.accuracy || '';
-          $('#reviewForm button[type="submit"]').innerHTML = '💾 حفظ التعديلات';
-          
-          // Add delete button
-          const fEnd = $('#reviewForm .f-end');
-          const delBtn = document.createElement('button');
-          delBtn.type = 'button';
-          delBtn.className = 'btn btn-danger btn-icon';
-          delBtn.innerHTML = '<i class="fas fa-trash"></i> حذف التقييم';
-          delBtn.onclick = deleteReview;
-          fEnd.insertBefore(delBtn, fEnd.firstChild);
-        }
+        $('#reviewForm').innerHTML = '<p style="color: var(--error);">لقد قيمت هذه الخدمة مسبقاً. يمكنك تقييم كل خدمة مرة واحدة فقط.</p>';
       }
       
       loadReviews(serviceId);
       
-      openModal('reviewModal');
-    }
-    
-    function deleteReview() {
-      if (!confirm('هل أنت متأكد من حذف تقييمك؟')) return;
-      
-      const originalText = $('#reviewForm button[type="submit"]').innerHTML;
-      showLoading($('#reviewForm'));
-      
-      const serviceRef = doc(db, 'services', currentServiceForReview.id);
-      
-      updateDoc(serviceRef, {
-        reviews: arrayRemove(currentReview)
-      }).then(() => {
-        return getDoc(serviceRef);
-      }).then(updatedService => {
-        const updatedReviews = updatedService.data().reviews || [];
-        const totalRating = updatedReviews.reduce((sum, review) => sum + review.rating, 0);
-        const averageRating = updatedReviews.length > 0 ? totalRating / updatedReviews.length : 0;
-        
-        return updateDoc(serviceRef, {
-          averageRating: averageRating,
-          totalReviews: updatedReviews.length
-        });
-      }).then(() => {
-        toast('تم حذف التقييم بنجاح', 'success');
-        closeReview();
-        loadServices();
-        loadStats();
-      }).catch(err => {
-        console.error(err);
-        toast('خطأ في حذف التقييم: ' + err.message, 'error');
-      }).finally(() => {
-        hideLoading($('#reviewForm'), originalText);
-      });
+      $('#reviewModal').classList.add('active');
     }
     
     function closeReview() {
-      closeModal('reviewModal');
+      $('#reviewModal').classList.remove('active');
       currentServiceForReview = null;
-      currentReview = null;
       const reviewForm = $('#reviewForm');
       reviewForm.innerHTML = `
         <div class="row">
@@ -1747,6 +1678,13 @@
           return;
         }
         
+        const hasReviewed = currentServiceForReview.reviews?.some(r => r.userId === currentUser.uid);
+        if (hasReviewed) {
+          toast('لقد قيمت هذه الخدمة مسبقاً', 'error');
+          hideLoading($('#reviewForm'), originalText);
+          return;
+        }
+        
         try {
           const reviewData = {
             userId: currentUser.uid,
@@ -1758,13 +1696,6 @@
           };
           
           const serviceRef = doc(db, 'services', currentServiceForReview.id);
-          
-          if (currentReview) {
-            await updateDoc(serviceRef, {
-              reviews: arrayRemove(currentReview)
-            });
-          }
-          
           await updateDoc(serviceRef, {
             reviews: arrayUnion(reviewData)
           });
@@ -1779,13 +1710,13 @@
             totalReviews: updatedReviews.length
           });
           
-          toast(currentReview ? 'تم تعديل التقييم بنجاح' : 'شكراً لتقييمك الخدمة!', 'success');
+          toast('شكراً لتقييمك الخدمة!', 'success');
           closeReview();
           loadServices();
           loadStats();
         } catch (err) {
           console.error(err);
-          toast('خطأ في ' + (currentReview ? 'تعديل' : 'إضافة') + ' التقييم: ' + err.message, 'error');
+          toast('خطأ في إضافة التقييم: ' + err.message, 'error');
         } finally {
           hideLoading($('#reviewForm'), originalText);
         }
@@ -1815,23 +1746,17 @@
       // Modal Close on Esc
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') { 
-          closeModal('authModal');
-          closeModal('addModal');
+          $('#authModal').classList.remove('active'); 
+          $('#addModal').classList.remove('active'); 
           closeReview();
-          closeModal('welcomeModal');
         }
       });
       
       document.querySelectorAll('.modal').forEach(m => {
         m.addEventListener('click', (e) => {
           if (e.target === m) {
-            if (m.id === 'reviewModal') {
-              closeReview();
-            } else if (m.id === 'welcomeModal') {
-              hideModal();
-            } else {
-              closeModal(m.id);
-            }
+            m.classList.remove('active');
+            if (m.id === 'reviewModal') closeReview();
           }
         });
       });
@@ -1842,19 +1767,16 @@
       const startBtn = $('#startNow');
       const closeBtn = $('#closeModal');
 
-      if (!localStorage.getItem('welcomeShown')) {
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-        localStorage.setItem('welcomeShown', 'true');
-        fadeItems.forEach((el, i)=>{
-          setTimeout(()=>{ el.classList.add('show'); }, i*600);
-        });
-        setTimeout(()=>{ startBtn.classList.add('show'); }, fadeItems.length*600);
-      }
+      modal.style.display = 'flex'; // Show every time
+
+      fadeItems.forEach((el, i)=>{
+        setTimeout(()=>{ el.classList.add('show'); }, i*600);
+      });
+
+      setTimeout(()=>{ startBtn.classList.add('show'); }, fadeItems.length*600);
 
       function hideModal(){
         modal.style.display = 'none';
-        document.body.style.overflow = '';
       }
 
       closeBtn.onclick = hideModal;
