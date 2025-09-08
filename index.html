@@ -244,38 +244,6 @@
       background-color: #f5f5f5;
     }
     
-    .search-filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 20px;
-      justify-content: center;
-    }
-    
-    .filter-group {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    
-    .filter-group label {
-      font-size: 0.9rem;
-      color: #555;
-    }
-    
-    .filter-select {
-      padding: 6px 10px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      background: var(--white);
-      transition: var(--transition);
-    }
-    
-    .filter-select:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 5px var(--primary);
-    }
-    
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -512,38 +480,6 @@
       color: var(--primary);
     }
     
-    .tabs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 10px;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    
-    .tabs::-webkit-scrollbar {
-      display: none;
-    }
-    
-    .tab {
-      background: #f1f1f1;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: var(--transition);
-    }
-    
-    .tab:hover {
-      background: #e5e5e5;
-    }
-    
-    .tab.active {
-      background: var(--primary);
-      color: var(--white);
-    }
-    
     footer {
       background: var(--primary);
       color: var(--white);
@@ -607,16 +543,6 @@
       
       .hero h1 {
         font-size: 1.8rem;
-      }
-      
-      .tabs {
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-      }
-      
-      .search-filters {
-        flex-direction: column;
-        align-items: center;
       }
       
       .card-actions {
@@ -712,51 +638,6 @@
       <div id="searchSuggestions" class="search-suggestions" role="listbox" aria-label="اقتراحات البحث"></div>
     </section>
     
-    <div class="search-filters" aria-label="مرشحات البحث">
-      <div class="filter-group">
-        <label for="ratingFilter">التقييم:</label>
-        <select id="ratingFilter" class="filter-select" onchange="applyFilters()" aria-label="تصفية حسب التقييم">
-          <option value="">جميع التقييمات</option>
-          <option value="5">5 نجوم</option>
-          <option value="4">4 نجوم فأكثر</option>
-          <option value="3">3 نجوم فأكثر</option>
-          <option value="2">2 نجوم فأكثر</option>
-          <option value="1">1 نجمة فأكثر</option>
-        </select>
-      </div>
-      
-      <div class="filter-group">
-        <label for="costFilter">التكلفة:</label>
-        <select id="costFilter" class="filter-select" onchange="applyFilters()" aria-label="تصفية حسب التكلفة">
-          <option value="">جميع التكاليف</option>
-          <option value="مجاني">مجاني</option>
-          <option value="منخفض">منخفضة التكلفة</option>
-          <option value="متوسط">متوسطة التكلفة</option>
-          <option value="مرتفع">مرتفعة التكلفة</option>
-        </select>
-      </div>
-      
-      <div class="filter-group">
-        <label for="durationFilter">المدة:</label>
-        <select id="durationFilter" class="filter-select" onchange="applyFilters()" aria-label="تصفية حسب المدة">
-          <option value="">جميع المدد</option>
-          <option value="سريع">سريعة (أقل من يوم)</option>
-          <option value="قصير">قصيرة (1-3 أيام)</option>
-          <option value="متوسط">متوسطة (أسبوع)</option>
-          <option value="طويل">طويلة (أكثر من أسبوع)</option>
-        </select>
-      </div>
-    </div>
-    
-    <nav class="tabs" role="tablist" aria-label="تصفية حسب الفئة">
-      <div class="tab active" data-category="" role="tab" aria-selected="true">جميع الخدمات</div>
-      <div class="tab" data-category="حكومي" role="tab" aria-selected="false">حكومي</div>
-      <div class="tab" data-category="صحة" role="tab" aria-selected="false">صحة</div>
-      <div class="tab" data-category="تعليم" role="tab" aria-selected="false">تعليم</div>
-      <div class="tab" data-category="مالي" role="tab" aria-selected="false">مالي</div>
-      <div class="tab" data-category="أخرى" role="tab" aria-selected="false">أخرى</div>
-    </nav>
-
     <div id="searchResultsInfo" class="search-results-info" aria-live="polite"></div>
 
     <!-- Services Section -->
@@ -1324,10 +1205,12 @@
             <button class="btn btn-primary btn-icon card-action-btn" onclick="openReview('${s.id}')" aria-label="قيم الخدمة">
               <i class="fas fa-star"></i> قيم الخدمة
             </button>
-            ${isOwner ? `
+            ${currentUser ? `
               <button class="btn btn-warning btn-icon card-action-btn" onclick="toggleAdd('${s.id}')" aria-label="تعديل الخدمة">
                 <i class="fas fa-edit"></i> تعديل
               </button>
+            ` : ''}
+            ${isOwner ? `
               <button class="btn btn-danger btn-icon card-action-btn" onclick="confirmDelete('${s.id}')" aria-label="حذف الخدمة">
                 <i class="fas fa-trash"></i> حذف
               </button>
@@ -1534,17 +1417,11 @@
     /* ==== Search and Filter Functions ==== */
     function searchServices() {
       const searchTerm = $('#searchInput').value.trim().toLowerCase();
-      const activeTab = $('.tab.active');
-      const category = activeTab ? activeTab.getAttribute('data-category') : '';
-      filterServices(searchTerm, category);
+      filterServices(searchTerm);
     }
     
-    function filterServices(searchTerm = '', category = '') {
+    function filterServices(searchTerm = '') {
       let filtered = [...allServices];
-      
-      if (category) {
-        filtered = filtered.filter(service => service.category === category);
-      }
       
       if (searchTerm) {
         const searchWords = searchTerm.split(/\s+/).filter(word => word.length > 0);
@@ -1564,35 +1441,6 @@
         });
       }
       
-      const ratingFilter = $('#ratingFilter').value;
-      if (ratingFilter) {
-        const minRating = parseInt(ratingFilter);
-        filtered = filtered.filter(service => service.averageRating >= minRating);
-      }
-      
-      const costFilter = $('#costFilter').value;
-      if (costFilter) {
-        filtered = filtered.filter(service => {
-          if (costFilter === 'مجاني') return service.cost?.includes('مجاني') || service.cost === '0';
-          if (costFilter === 'منخفض') return service.cost && !service.cost.includes('مجاني') && parseInt(service.cost) < 100;
-          if (costFilter === 'متوسط') return service.cost && parseInt(service.cost) >= 100 && parseInt(service.cost) < 500;
-          if (costFilter === 'مرتفع') return service.cost && parseInt(service.cost) >= 500;
-          return true;
-        });
-      }
-      
-      const durationFilter = $('#durationFilter').value;
-      if (durationFilter) {
-        filtered = filtered.filter(service => {
-          if (!service.duration) return false;
-          if (durationFilter === 'سريع') return service.duration.includes('ساعة') || service.duration.includes('يوم') && parseInt(service.duration) < 1;
-          if (durationFilter === 'قصير') return service.duration.includes('يوم') && parseInt(service.duration) <= 3;
-          if (durationFilter === 'متوسط') return service.duration.includes('يوم') && parseInt(service.duration) > 3 || service.duration.includes('أسبوع');
-          if (durationFilter === 'طويل') return service.duration.includes('أسبوع') && parseInt(service.duration) > 1 || service.duration.includes('شهر');
-          return true;
-        });
-      }
-      
       services = filtered;
       renderServices();
       updateSearchResultsInfo(filtered.length);
@@ -1600,16 +1448,10 @@
     
     function updateSearchResultsInfo(count) {
       const searchTerm = $('#searchInput').value.trim();
-      const activeTab = $('.tab.active');
-      const category = activeTab ? activeTab.getAttribute('data-category') : '';
       
       let infoText = '';
-      if (searchTerm && category) {
-        infoText = `عرض ${count} نتيجة للبحث عن "${searchTerm}" في قسم "${category}"`;
-      } else if (searchTerm) {
+      if (searchTerm) {
         infoText = `عرض ${count} نتيجة للبحث عن "${searchTerm}"`;
-      } else if (category) {
-        infoText = `عرض ${count} خدمة في قسم "${category}"`;
       } else {
         infoText = `عرض ${count} خدمة`;
       }
@@ -1669,10 +1511,6 @@
       } else {
         suggestionsContainer.style.display = 'none';
       }
-    }
-
-    function applyFilters() {
-      searchServices();
     }
 
     /* ==== Stats Functions ==== */
@@ -1886,19 +1724,6 @@
         }
       });
 
-      // Tabs Click
-      const tabs = $$('.tab');
-      tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-          tabs.forEach(t => t.classList.remove('active'));
-          this.classList.add('active');
-          
-          const category = this.getAttribute('data-category');
-          const searchTerm = $('#searchInput').value.trim().toLowerCase();
-          filterServices(searchTerm, category);
-        });
-      });
-      
       // Search Input
       $('#searchInput').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
@@ -1980,7 +1805,6 @@
     window.toggleAdd = toggleAdd;
     window.logout = logout;
     window.searchServices = searchServices;
-    window.applyFilters = applyFilters;
     window.openReview = openReview;
     window.closeReview = closeReview;
     window.confirmDelete = confirmDelete;
