@@ -347,6 +347,7 @@
       max-height: 90vh;
       overflow-y: auto;
       animation: scaleIn 0.3s ease;
+      -webkit-overflow-scrolling: touch;
     }
     
     @keyframes scaleIn {
@@ -996,7 +997,7 @@
     /* ==== Firebase SDKs ==== */
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js';
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js';
-    import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, deleteDoc, updateDoc, arrayUnion, arrayRemove, getDoc, Timestamp, enableIndexedDbPersistence } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js';
+    import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, deleteDoc, updateDoc, arrayUnion, arrayRemove, getDoc, Timestamp } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js';
 
     /* ==== Config ==== */
     const firebaseConfig = {
@@ -1013,14 +1014,6 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-enableIndexedDbPersistence(db)
-  .catch((err) => {
-    if (err.code === 'failed-precondition') {
-      toast('لا يمكن تمكين الوضع الغير متصل: فتح عدة نوافذ', 'error');
-    } else if (err.code === 'unimplemented') {
-      toast('المتصفح لا يدعم الوضع الغير متصل', 'error');
-    }
-  });
     /* ==== State ==== */
     let currentUser = null;
     let services = [];
@@ -1061,9 +1054,19 @@ enableIndexedDbPersistence(db)
       return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
     }
 
+    function openModal(modalId) {
+      $(`#${modalId}`).classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(modalId) {
+      $(`#${modalId}`).classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
     /* ==== Auth Functions ==== */
     function openAuth(mode = 'login') {
-      $('#authModal').classList.add('active');
+      openModal('authModal');
       if (mode === 'register') {
         $('#authTitle').textContent = 'إنشاء حساب';
         $('#loginForm').style.display = 'none';
@@ -1078,7 +1081,7 @@ enableIndexedDbPersistence(db)
     }
     
     function closeAuth() {
-      $('#authModal').classList.remove('active');
+      closeModal('authModal');
       $('#loginForm').reset();
       $('#registerForm').reset();
     }
@@ -1112,45 +1115,43 @@ enableIndexedDbPersistence(db)
 
     /* ==== Service Functions ==== */
     function toggleAdd(serviceId = null) { 
-  const modal = $('#addModal');
+      const modal = $('#addModal');
+      if (modal.classList.contains('active') && !serviceId) {
+        closeModal('addModal');
+        return;
+      }
 
-  // لو المودال مفتوح بالفعل → اقفله
-  if (modal.classList.contains('active') && !serviceId) {
-    modal.classList.remove('active');
-    return;
-  }
-
-  if (!currentUser && !serviceId) {
-    toast('يجب تسجيل الدخول أولاً', 'error');
-    openAuth('login');
-    return;
-  }
-  
-  if (serviceId) {
-    const service = allServices.find(s => s.id === serviceId);
-    if (service) {
-      isEditingService = true;
-      $('#addModalTitle').textContent = 'تعديل الخدمة';
-      $('#serviceFormSubmit').innerHTML = '💾 حفظ التعديلات';
-      $('#editServiceId').value = service.id;
-      $('#svcName').value = service.name || '';
-      $('#svcCat').value = service.category || '';
-      $('#svcLoc').value = service.location || '';
-      $('#svcDocs').value = service.documents || '';
-      $('#svcCost').value = service.cost || '';
-      $('#svcDur').value = service.duration || '';
-      $('#svcNotes').value = service.notes || '';
+      if (!currentUser && !serviceId) {
+        toast('يجب تسجيل الدخول أولاً', 'error');
+        openAuth('login');
+        return;
+      }
+      
+      if (serviceId) {
+        const service = allServices.find(s => s.id === serviceId);
+        if (service) {
+          isEditingService = true;
+          $('#addModalTitle').textContent = 'تعديل الخدمة';
+          $('#serviceFormSubmit').innerHTML = '💾 حفظ التعديلات';
+          $('#editServiceId').value = service.id;
+          $('#svcName').value = service.name || '';
+          $('#svcCat').value = service.category || '';
+          $('#svcLoc').value = service.location || '';
+          $('#svcDocs').value = service.documents || '';
+          $('#svcCost').value = service.cost || '';
+          $('#svcDur').value = service.duration || '';
+          $('#svcNotes').value = service.notes || '';
+        }
+      } else {
+        isEditingService = false;
+        $('#addModalTitle').textContent = 'إضافة خدمة جديدة';
+        $('#serviceFormSubmit').innerHTML = '💾 حفظ';
+        $('#serviceForm').reset();
+        $('#editServiceId').value = '';
+      }
+      
+      openModal('addModal');
     }
-  } else {
-    isEditingService = false;
-    $('#addModalTitle').textContent = 'إضافة خدمة جديدة';
-    $('#serviceFormSubmit').innerHTML = '💾 حفظ';
-    $('#serviceForm').reset();
-    $('#editServiceId').value = '';
-  }
-  
-  modal.classList.add('active');
-}
 
 
     async function loadServices() {
@@ -1293,7 +1294,7 @@ enableIndexedDbPersistence(db)
       
       loadReviews(serviceId);
       
-      $('#reviewModal').classList.add('active');
+      openModal('reviewModal');
     }
     
     function deleteReview() {
@@ -1331,7 +1332,7 @@ enableIndexedDbPersistence(db)
     }
     
     function closeReview() {
-      $('#reviewModal').classList.remove('active');
+      closeModal('reviewModal');
       currentServiceForReview = null;
       currentReview = null;
       const reviewForm = $('#reviewForm');
@@ -1814,17 +1815,23 @@ enableIndexedDbPersistence(db)
       // Modal Close on Esc
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') { 
-          $('#authModal').classList.remove('active'); 
-          $('#addModal').classList.remove('active'); 
+          closeModal('authModal');
+          closeModal('addModal');
           closeReview();
+          closeModal('welcomeModal');
         }
       });
       
       document.querySelectorAll('.modal').forEach(m => {
         m.addEventListener('click', (e) => {
           if (e.target === m) {
-            m.classList.remove('active');
-            if (m.id === 'reviewModal') closeReview();
+            if (m.id === 'reviewModal') {
+              closeReview();
+            } else if (m.id === 'welcomeModal') {
+              hideModal();
+            } else {
+              closeModal(m.id);
+            }
           }
         });
       });
@@ -1835,16 +1842,19 @@ enableIndexedDbPersistence(db)
       const startBtn = $('#startNow');
       const closeBtn = $('#closeModal');
 
-      modal.style.display = 'flex'; // Show every time
-
-      fadeItems.forEach((el, i)=>{
-        setTimeout(()=>{ el.classList.add('show'); }, i*600);
-      });
-
-      setTimeout(()=>{ startBtn.classList.add('show'); }, fadeItems.length*600);
+      if (!localStorage.getItem('welcomeShown')) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        localStorage.setItem('welcomeShown', 'true');
+        fadeItems.forEach((el, i)=>{
+          setTimeout(()=>{ el.classList.add('show'); }, i*600);
+        });
+        setTimeout(()=>{ startBtn.classList.add('show'); }, fadeItems.length*600);
+      }
 
       function hideModal(){
         modal.style.display = 'none';
+        document.body.style.overflow = '';
       }
 
       closeBtn.onclick = hideModal;
