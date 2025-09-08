@@ -996,7 +996,7 @@
     /* ==== Firebase SDKs ==== */
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js';
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js';
-    import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, deleteDoc, updateDoc, arrayUnion, arrayRemove, getDoc, Timestamp } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js';
+    import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, deleteDoc, updateDoc, arrayUnion, arrayRemove, getDoc, Timestamp, enableIndexedDbPersistence } from 'https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js';
 
     /* ==== Config ==== */
     const firebaseConfig = {
@@ -1013,6 +1013,14 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+enableIndexedDbPersistence(db)
+  .catch((err) => {
+    if (err.code === 'failed-precondition') {
+      toast('لا يمكن تمكين الوضع الغير متصل: فتح عدة نوافذ', 'error');
+    } else if (err.code === 'unimplemented') {
+      toast('المتصفح لا يدعم الوضع الغير متصل', 'error');
+    }
+  });
     /* ==== State ==== */
     let currentUser = null;
     let services = [];
