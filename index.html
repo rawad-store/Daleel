@@ -293,7 +293,6 @@
       border-radius: 8px;
       margin-bottom: 8px;
       transition: var(--transition);
-      position: relative;
     }
     
     .review-header {
@@ -301,28 +300,6 @@
       justify-content: space-between;
       margin-bottom: 5px;
       font-size: 0.9rem;
-    }
-    
-    .review-actions {
-      position: absolute;
-      left: 10px;
-      top: 10px;
-      display: flex;
-      gap: 5px;
-    }
-    
-    .review-action-btn {
-      background: rgba(0,0,0,0.1);
-      border: none;
-      border-radius: 4px;
-      padding: 3px 6px;
-      cursor: pointer;
-      font-size: 0.8rem;
-      transition: var(--transition);
-    }
-    
-    .review-action-btn:hover {
-      background: rgba(0,0,0,0.2);
     }
     
     .empty {
@@ -770,7 +747,6 @@
       </div>
       <div class="box-body">
         <form id="reviewForm">
-          <input type="hidden" id="reviewId" value="">
           <div class="row">
             <label>التقييم</label>
             <div class="rating" id="ratingStars" role="radiogroup" aria-label="اختيار التقييم">
@@ -797,7 +773,7 @@
           </div>
           <div class="f-end">
             <button type="button" class="btn" onclick="closeReview()" aria-label="إلغاء">إلغاء</button>
-            <button type="submit" class="btn btn-primary btn-icon" id="reviewSubmitBtn" aria-label="حفظ التقييم">💾 حفظ التقييم</button>
+            <button type="submit" class="btn btn-primary btn-icon" aria-label="حفظ التقييم">💾 حفظ التقييم</button>
           </div>
         </form>
         
@@ -903,118 +879,117 @@
           " aria-label="إغلاق النافذة">&times;</button>
 
           <!-- المحتوى -->
-          <section class="welcome-section">
-            <div class="welcome-content">
-              
-              <!-- العنوان -->
-              <h2 id="welcomeTitle" class="fadeItem">
-                ✨ مرحبًا بك في "دليلك" ✨
-              </h2>
+<section class="welcome-section">
+  <div class="welcome-content">
+    
+    <!-- العنوان -->
+    <h2 id="welcomeTitle" class="fadeItem">
+      ✨ مرحبًا بك في "دليلك" ✨
+    </h2>
 
-              <!-- النصوص التعريفية -->
-              <p class="fadeItem">
-                "دليلك" هو منصتك الأولى لمعرفة <strong>الأوراق والمستندات والرسوم</strong> المطلوبة لإنجاز الخدمات الحكومية والعامة بسهولة ومن أول مرة.
-              </p>
+    <!-- النصوص التعريفية -->
+    <p class="fadeItem">
+      "دليلك" هو منصتك الأولى لمعرفة <strong>الأوراق والمستندات والرسوم</strong> المطلوبة لإنجاز الخدمات الحكومية والعامة بسهولة ومن أول مرة.
+    </p>
 
-              <p class="fadeItem">
-                استكشف الخدمات، واطلع على التجارب الحقيقية للآخرين لتعرف <strong>الخطوات الصحيحة</strong> قبل أي مشوار تقوم به.
-              </p>
+    <p class="fadeItem">
+      استكشف الخدمات، واطلع على التجارب الحقيقية للآخرين لتعرف <strong>الخطوات الصحيحة</strong> قبل أي مشوار تقوم به.
+    </p>
 
-              <p class="fadeItem">
-                أي شخص يمكنه <strong>إضافة تجربته، تقييم الخدمات، وترك ملاحظاته</strong> لتوفير الوقت والجهد والمال على الجميع.
-              </p>
+    <p class="fadeItem">
+      أي شخص يمكنه <strong>إضافة تجربته، تقييم الخدمات، وترك ملاحظاته</strong> لتوفير الوقت والجهد والمال على الجميع.
+    </p>
 
-              <p class="fadeItem">
-                💡 <strong>ابدأ بنفسك!</strong> شارك آخر مهمة أو خدمة أنجزتها مهما كانت بسيطة، فقد تكون سببًا في مساعدة شخص آخر.
-              </p>
+    <p class="fadeItem">
+      💡 <strong>ابدأ بنفسك!</strong> شارك آخر مهمة أو خدمة أنجزتها مهما كانت بسيطة، فقد تكون سببًا في مساعدة شخص آخر.
+    </p>
 
-              <!-- زر البدء -->
-              <button id="startNow" class="btn-start fadeItem" aria-label="ابدأ الآن">
-                🚀 ابدأ الآن
-              </button>
-            </div>
-          </section>
-
-          <!-- CSS -->
-          <style>
-            .welcome-section {
-              text-align: center;
-              padding: 3rem 1rem;
-              background: #f9f9f9;
-            }
-            .welcome-content {
-              max-width: 750px;
-              margin: auto;
-            }
-            .welcome-content h2 {
-              color: #27ae60;
-              font-size: 2rem;
-              margin-bottom: 20px;
-              font-weight: bold;
-              opacity: 0;
-            }
-            .welcome-content p {
-              color: #34495e;
-              line-height: 1.8;
-              margin-bottom: 15px;
-              font-size: 1.1rem;
-              opacity: 0;
-            }
-            .btn-start {
-              background: linear-gradient(135deg, #e67e22, #d35400);
-              color: #fff;
-              border: none;
-              padding: 14px 35px;
-              border-radius: 12px;
-              font-size: 1.1rem;
-              cursor: pointer;
-              transition: all 0.3s ease;
-              box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-              opacity: 0;
-            }
-            .btn-start:hover {
-              transform: scale(1.05);
-              box-shadow: 0 6px 14px rgba(0,0,0,0.25);
-            }
-
-            /* أنيميشن */
-            .fadeItem {
-              transform: translateY(20px);
-              transition: all 0.8s ease;
-            }
-            .fadeIn {
-              opacity: 1 !important;
-              transform: translateY(0) !important;
-            }
-
-            @media (max-width: 480px) {
-              .welcome-content h2 {
-                font-size: 1.6rem;
-              }
-              .btn-start {
-                width: 100%;
-                font-size: 1rem;
-              }
-            }
-          </style>
-
-          <!-- JavaScript -->
-          <script>
-            // إظهار العناصر بالتدريج
-            document.addEventListener("DOMContentLoaded", () => {
-              const items = document.querySelectorAll(".fadeItem");
-              items.forEach((el, i) => {
-                setTimeout(() => el.classList.add("fadeIn"), i * 250);
-              });
-            });
-
-            // عند الضغط على الزر يتم فتح نافذة إضافة خدمة جديدة
-            document.getElementById("startNow").addEventListener("click", function () {
-              toggleAdd(); // يفتح المودال الخاص بإضافة الخدمة
-            });
-          </script>
-      </div>
+    <!-- زر البدء -->
+    <button id="startNow" class="btn-start fadeItem" aria-label="ابدأ الآن">
+      🚀 ابدأ الآن
+    </button>
   </div>
+</section>
+
+<!-- CSS -->
+<style>
+  .welcome-section {
+    text-align: center;
+    padding: 3rem 1rem;
+    background: #f9f9f9;
+  }
+  .welcome-content {
+    max-width: 750px;
+    margin: auto;
+  }
+  .welcome-content h2 {
+    color: #27ae60;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+    opacity: 0;
+  }
+  .welcome-content p {
+    color: #34495e;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    opacity: 0;
+  }
+  .btn-start {
+    background: linear-gradient(135deg, #e67e22, #d35400);
+    color: #fff;
+    border: none;
+    padding: 14px 35px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    opacity: 0;
+  }
+  .btn-start:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+  }
+
+  /* أنيميشن */
+  .fadeItem {
+    transform: translateY(20px);
+    transition: all 0.8s ease;
+  }
+  .fadeIn {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  @media (max-width: 480px) {
+    .welcome-content h2 {
+      font-size: 1.6rem;
+    }
+    .btn-start {
+      width: 100%;
+      font-size: 1rem;
+    }
+  }
+</style>
+
+<!-- JavaScript -->
+<script>
+  // إظهار العناصر بالتدريج
+  document.addEventListener("DOMContentLoaded", () => {
+    const items = document.querySelectorAll(".fadeItem");
+    items.forEach((el, i) => {
+      setTimeout(() => el.classList.add("fadeIn"), i * 250);
+    });
+  });
+
+  // عند الضغط على الزر يتم فتح نافذة إضافة خدمة جديدة
+  document.getElementById("startNow").addEventListener("click", function () {
+    toggleAdd(); // يفتح المودال الخاص بإضافة الخدمة
+  });
+</script>
+
 
   <!-- Firebase + App -->
   <script type="module">
@@ -1043,9 +1018,8 @@
     let services = [];
     let allServices = [];
     let currentServiceForReview = null;
+    let currentReview = null;
     let isEditingService = false;
-    let isEditingReview = false;
-    let currentReviewIndex = -1;
 
     /* ==== UI Helpers ==== */
     const $ = (s, p = document) => p.querySelector(s);
@@ -1130,45 +1104,46 @@
 
     /* ==== Service Functions ==== */
     function toggleAdd(serviceId = null) { 
-      const modal = $('#addModal');
+  const modal = $('#addModal');
 
-      // لو المودال مفتوح بالفعل → اقفله
-      if (modal.classList.contains('active') && !serviceId) {
-        modal.classList.remove('active');
-        return;
-      }
+  // لو المودال مفتوح بالفعل → اقفله
+  if (modal.classList.contains('active') && !serviceId) {
+    modal.classList.remove('active');
+    return;
+  }
 
-      if (!currentUser && !serviceId) {
-        toast('يجب تسجيل الدخول أولاً', 'error');
-        openAuth('login');
-        return;
-      }
-      
-      if (serviceId) {
-        const service = allServices.find(s => s.id === serviceId);
-        if (service) {
-          isEditingService = true;
-          $('#addModalTitle').textContent = 'تعديل الخدمة';
-          $('#serviceFormSubmit').innerHTML = '💾 حفظ التعديلات';
-          $('#editServiceId').value = service.id;
-          $('#svcName').value = service.name || '';
-          $('#svcCat').value = service.category || '';
-          $('#svcLoc').value = service.location || '';
-          $('#svcDocs').value = service.documents || '';
-          $('#svcCost').value = service.cost || '';
-          $('#svcDur').value = service.duration || '';
-          $('#svcNotes').value = service.notes || '';
-        }
-      } else {
-        isEditingService = false;
-        $('#addModalTitle').textContent = 'إضافة خدمة جديدة';
-        $('#serviceFormSubmit').innerHTML = '💾 حفظ';
-        $('#serviceForm').reset();
-        $('#editServiceId').value = '';
-      }
-      
-      modal.classList.add('active');
+  if (!currentUser && !serviceId) {
+    toast('يجب تسجيل الدخول أولاً', 'error');
+    openAuth('login');
+    return;
+  }
+  
+  if (serviceId) {
+    const service = allServices.find(s => s.id === serviceId);
+    if (service) {
+      isEditingService = true;
+      $('#addModalTitle').textContent = 'تعديل الخدمة';
+      $('#serviceFormSubmit').innerHTML = '💾 حفظ التعديلات';
+      $('#editServiceId').value = service.id;
+      $('#svcName').value = service.name || '';
+      $('#svcCat').value = service.category || '';
+      $('#svcLoc').value = service.location || '';
+      $('#svcDocs').value = service.documents || '';
+      $('#svcCost').value = service.cost || '';
+      $('#svcDur').value = service.duration || '';
+      $('#svcNotes').value = service.notes || '';
     }
+  } else {
+    isEditingService = false;
+    $('#addModalTitle').textContent = 'إضافة خدمة جديدة';
+    $('#serviceFormSubmit').innerHTML = '💾 حفظ';
+    $('#serviceForm').reset();
+    $('#editServiceId').value = '';
+  }
+  
+  modal.classList.add('active');
+}
+
 
     async function loadServices() {
       $('#services').innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> جاري تحميل الخدمات...</div>';
@@ -1271,48 +1246,88 @@
         return;
       }
       
-      const service = services.find(s => s.id === serviceId);
+      const service = allServices.find(s => s.id === serviceId);
       if (!service) return;
       
       currentServiceForReview = service;
+      currentReview = null;
       $('#reviewServiceName').textContent = service.name;
       $('#reviewRating').value = '0';
       $('#reviewComment').value = '';
       $('#reviewAccuracy').value = '';
-      $('#reviewId').value = '';
       resetStars();
+      $('#reviewForm button[type="submit"]').innerHTML = '💾 حفظ التقييم';
       
-      // تحقق إذا كان المستخدم قد قيم هذه الخدمة مسبقاً
-      const userReviewIndex = service.reviews?.findIndex(r => r.userId === currentUser.uid) || -1;
-      const hasReviewed = userReviewIndex !== -1;
+      // Remove delete button if exists
+      const deleteBtn = $('#reviewForm .btn-danger');
+      if (deleteBtn) deleteBtn.remove();
       
+      const hasReviewed = service.reviews?.some(r => r.userId === currentUser.uid);
       if (hasReviewed) {
-        const userReview = service.reviews[userReviewIndex];
-        $('#reviewRating').value = userReview.rating;
-        $('#reviewComment').value = userReview.comment || '';
-        $('#reviewAccuracy').value = userReview.accuracy;
-        $('#reviewId').value = userReviewIndex;
-        setStars(userReview.rating);
-        
-        isEditingReview = true;
-        $('#reviewSubmitBtn').innerHTML = '💾 تحديث التقييم';
-      } else {
-        isEditingReview = false;
-        $('#reviewSubmitBtn').innerHTML = '💾 حفظ التقييم';
+        currentReview = service.reviews.find(r => r.userId === currentUser.uid);
+        if (currentReview) {
+          $('#reviewRating').value = currentReview.rating;
+          setStars(currentReview.rating);
+          $('#reviewComment').value = currentReview.comment || '';
+          $('#reviewAccuracy').value = currentReview.accuracy || '';
+          $('#reviewForm button[type="submit"]').innerHTML = '💾 حفظ التعديلات';
+          
+          // Add delete button
+          const fEnd = $('#reviewForm .f-end');
+          const delBtn = document.createElement('button');
+          delBtn.type = 'button';
+          delBtn.className = 'btn btn-danger btn-icon';
+          delBtn.innerHTML = '<i class="fas fa-trash"></i> حذف التقييم';
+          delBtn.onclick = deleteReview;
+          fEnd.insertBefore(delBtn, fEnd.firstChild);
+        }
       }
       
       loadReviews(serviceId);
+      
       $('#reviewModal').classList.add('active');
+    }
+    
+    function deleteReview() {
+      if (!confirm('هل أنت متأكد من حذف تقييمك؟')) return;
+      
+      const originalText = $('#reviewForm button[type="submit"]').innerHTML;
+      showLoading($('#reviewForm'));
+      
+      const serviceRef = doc(db, 'services', currentServiceForReview.id);
+      
+      updateDoc(serviceRef, {
+        reviews: arrayRemove(currentReview)
+      }).then(() => {
+        return getDoc(serviceRef);
+      }).then(updatedService => {
+        const updatedReviews = updatedService.data().reviews || [];
+        const totalRating = updatedReviews.reduce((sum, review) => sum + review.rating, 0);
+        const averageRating = updatedReviews.length > 0 ? totalRating / updatedReviews.length : 0;
+        
+        return updateDoc(serviceRef, {
+          averageRating: averageRating,
+          totalReviews: updatedReviews.length
+        });
+      }).then(() => {
+        toast('تم حذف التقييم بنجاح', 'success');
+        closeReview();
+        loadServices();
+        loadStats();
+      }).catch(err => {
+        console.error(err);
+        toast('خطأ في حذف التقييم: ' + err.message, 'error');
+      }).finally(() => {
+        hideLoading($('#reviewForm'), originalText);
+      });
     }
     
     function closeReview() {
       $('#reviewModal').classList.remove('active');
       currentServiceForReview = null;
-      isEditingReview = false;
-      currentReviewIndex = -1;
+      currentReview = null;
       const reviewForm = $('#reviewForm');
       reviewForm.innerHTML = `
-        <input type="hidden" id="reviewId" value="">
         <div class="row">
           <label>التقييم</label>
           <div class="rating" id="ratingStars" role="radiogroup" aria-label="اختيار التقييم">
@@ -1339,7 +1354,7 @@
         </div>
         <div class="f-end">
           <button type="button" class="btn" onclick="closeReview()" aria-label="إلغاء">إلغاء</button>
-          <button type="submit" class="btn btn-primary btn-icon" id="reviewSubmitBtn" aria-label="حفظ التقييم">💾 حفظ التقييم</button>
+          <button type="submit" class="btn btn-primary btn-icon" aria-label="حفظ التقييم">💾 حفظ التقييم</button>
         </div>
       `;
       initStarEvents();
@@ -1414,27 +1429,13 @@
             return dateB - dateA;
           });
           
-          sortedReviews.forEach((review, index) => {
+          sortedReviews.forEach(review => {
             const reviewEl = document.createElement('div');
             reviewEl.className = 'review-item';
             
             const date = review.createdAt ? review.createdAt.toDate().toLocaleDateString('ar-EG', { year: 'numeric', month: 'short', day: 'numeric' }) : 'تاريخ غير معروف';
             
-            // إضافة أزرار التعديل والحذف إذا كان المستخدم هو صاحب التقييم
-            const isOwner = currentUser && review.userId === currentUser.uid;
-            const actionsHtml = isOwner ? `
-              <div class="review-actions">
-                <button class="review-action-btn" onclick="editReview(${index})" title="تعديل">
-                  <i class="fas fa-edit"></i>
-                </button>
-                <button class="review-action-btn" onclick="deleteReview(${index})" title="حذف">
-                  <i class="fas fa-trash"></i>
-                </button>
-              </div>
-            ` : '';
-            
             reviewEl.innerHTML = `
-              ${actionsHtml}
               <div class="review-header">
                 <div>${escapeHTML(review.userEmail || 'مستخدم مجهول')}</div>
                 <div>${date}</div>
@@ -1454,72 +1455,6 @@
       } catch (err) {
         console.error('خطأ في تحميل التقييمات:', err);
         reviewsList.innerHTML = '<p style="color: var(--error);">خطأ في تحميل التقييمات</p>';
-      }
-    }
-
-    async function editReview(reviewIndex) {
-      if (!currentServiceForReview || !currentUser) return;
-      
-      const serviceRef = doc(db, 'services', currentServiceForReview.id);
-      const serviceSnap = await getDoc(serviceRef);
-      
-      if (serviceSnap.exists()) {
-        const serviceData = serviceSnap.data();
-        const reviews = serviceData.reviews || [];
-        
-        if (reviewIndex >= 0 && reviewIndex < reviews.length && reviews[reviewIndex].userId === currentUser.uid) {
-          const review = reviews[reviewIndex];
-          
-          $('#reviewRating').value = review.rating;
-          $('#reviewComment').value = review.comment || '';
-          $('#reviewAccuracy').value = review.accuracy;
-          $('#reviewId').value = reviewIndex;
-          setStars(review.rating);
-          
-          isEditingReview = true;
-          $('#reviewSubmitBtn').innerHTML = '💾 تحديث التقييم';
-          
-          // التمرير إلى أعلى النموذج
-          $('#reviewForm').scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    }
-
-    async function deleteReview(reviewIndex) {
-      if (!currentServiceForReview || !currentUser || !confirm('هل تريد حذف هذا التقييم؟')) return;
-      
-      try {
-        const serviceRef = doc(db, 'services', currentServiceForReview.id);
-        const serviceSnap = await getDoc(serviceRef);
-        
-        if (serviceSnap.exists()) {
-          const serviceData = serviceSnap.data();
-          const reviews = serviceData.reviews || [];
-          
-          if (reviewIndex >= 0 && reviewIndex < reviews.length && reviews[reviewIndex].userId === currentUser.uid) {
-            // إزالة التقييم من المصفوفة
-            const updatedReviews = reviews.filter((_, index) => index !== reviewIndex);
-            
-            // حساب التقييم المتوسط الجديد
-            const totalRating = updatedReviews.reduce((sum, review) => sum + review.rating, 0);
-            const averageRating = updatedReviews.length > 0 ? totalRating / updatedReviews.length : 0;
-            
-            // تحديث الخدمة في قاعدة البيانات
-            await updateDoc(serviceRef, {
-              reviews: updatedReviews,
-              averageRating: averageRating,
-              totalReviews: updatedReviews.length
-            });
-            
-            toast('تم حذف التقييم', 'success');
-            loadReviews(currentServiceForReview.id);
-            loadServices();
-            loadStats();
-          }
-        }
-      } catch (err) {
-        console.error('خطأ في حذف التقييم:', err);
-        toast('خطأ في حذف التقييم: ' + err.message, 'error');
       }
     }
 
@@ -1796,7 +1731,6 @@
         const rating = parseInt($('#reviewRating').value);
         const comment = $('#reviewComment').value.trim();
         const accuracy = $('#reviewAccuracy').value;
-        const reviewIndex = $('#reviewId').value;
         
         if (!rating || !accuracy) {
           toast('يرجى إدخال التقييم وتحديد دقة المعلومات', 'error');
@@ -1805,68 +1739,44 @@
         }
         
         try {
-          const serviceRef = doc(db, 'services', currentServiceForReview.id);
-          const serviceSnap = await getDoc(serviceRef);
+          const reviewData = {
+            userId: currentUser.uid,
+            userEmail: currentUser.email,
+            rating: rating,
+            comment: comment,
+            accuracy: accuracy,
+            createdAt: Timestamp.now()
+          };
           
-          if (serviceSnap.exists()) {
-            const serviceData = serviceSnap.data();
-            const reviews = serviceData.reviews || [];
-            
-            if (isEditingReview && reviewIndex !== '') {
-              // تحديث التقييم الحالي
-              const index = parseInt(reviewIndex);
-              if (index >= 0 && index < reviews.length && reviews[index].userId === currentUser.uid) {
-                const updatedReviews = [...reviews];
-                updatedReviews[index] = {
-                  ...updatedReviews[index],
-                  rating: rating,
-                  comment: comment,
-                  accuracy: accuracy,
-                  updatedAt: Timestamp.now()
-                };
-                
-                // حساب التقييم المتوسط الجديد
-                const totalRating = updatedReviews.reduce((sum, review) => sum + review.rating, 0);
-                const averageRating = updatedReviews.length > 0 ? totalRating / updatedReviews.length : 0;
-                
-                await updateDoc(serviceRef, {
-                  reviews: updatedReviews,
-                  averageRating: averageRating
-                });
-                
-                toast('تم تحديث التقييم بنجاح', 'success');
-              }
-            } else {
-              // إضافة تقييم جديد
-              const reviewData = {
-                userId: currentUser.uid,
-                userEmail: currentUser.email,
-                rating: rating,
-                comment: comment,
-                accuracy: accuracy,
-                createdAt: Timestamp.now()
-              };
-              
-              const updatedReviews = [...reviews, reviewData];
-              const totalRating = updatedReviews.reduce((sum, review) => sum + review.rating, 0);
-              const averageRating = updatedReviews.length > 0 ? totalRating / updatedReviews.length : 0;
-              
-              await updateDoc(serviceRef, {
-                reviews: updatedReviews,
-                averageRating: averageRating,
-                totalReviews: updatedReviews.length
-              });
-              
-              toast('شكراً لتقييمك الخدمة!', 'success');
-            }
-            
-            closeReview();
-            loadServices();
-            loadStats();
+          const serviceRef = doc(db, 'services', currentServiceForReview.id);
+          
+          if (currentReview) {
+            await updateDoc(serviceRef, {
+              reviews: arrayRemove(currentReview)
+            });
           }
+          
+          await updateDoc(serviceRef, {
+            reviews: arrayUnion(reviewData)
+          });
+          
+          const updatedService = await getDoc(serviceRef);
+          const updatedReviews = updatedService.data().reviews || [];
+          const totalRating = updatedReviews.reduce((sum, review) => sum + review.rating, 0);
+          const averageRating = updatedReviews.length > 0 ? totalRating / updatedReviews.length : 0;
+          
+          await updateDoc(serviceRef, {
+            averageRating: averageRating,
+            totalReviews: updatedReviews.length
+          });
+          
+          toast(currentReview ? 'تم تعديل التقييم بنجاح' : 'شكراً لتقييمك الخدمة!', 'success');
+          closeReview();
+          loadServices();
+          loadStats();
         } catch (err) {
           console.error(err);
-          toast('خطأ في إضافة/تحديث التقييم: ' + err.message, 'error');
+          toast('خطأ في ' + (currentReview ? 'تعديل' : 'إضافة') + ' التقييم: ' + err.message, 'error');
         } finally {
           hideLoading($('#reviewForm'), originalText);
         }
@@ -1956,8 +1866,6 @@
     window.openReview = openReview;
     window.closeReview = closeReview;
     window.confirmDelete = confirmDelete;
-    window.editReview = editReview;
-    window.deleteReview = deleteReview;
   </script>
 </body>
 </html>
