@@ -1808,13 +1808,13 @@
                 }
                 
                 try {
-                    const reviewData = {
-                        userId: currentUser.uid,
-                        userEmail: currentUser.email,
-                        rating: rating,
-                        comment: comment,
-                        accuracy: accuracy,
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    const reviewData = { 
+                      userId: currentUser.uid, 
+                      userEmail: currentUser.email, 
+                      rating, 
+                      comment, 
+                      accuracy, 
+                      createdAt: new Date().toISOString() // تخزين التاريخ كنص ISO
                     };
                     
                     const serviceRef = db.collection('services').doc(currentServiceForReview.id);
