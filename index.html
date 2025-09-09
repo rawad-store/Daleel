@@ -1432,7 +1432,7 @@
             try {
                 const serviceSnap = await db.collection('services').doc(serviceId).get();
                 
-                if (serviceSnap.exists()) {
+                if (serviceSnap.exists) {
                     const serviceData = serviceSnap.data();
                     const reviews = serviceData.reviews || [];
                     
