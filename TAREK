@@ -1,0 +1,1940 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>دليل - Daleel | دليل الخدمات الحكومية والعامة</title>
+    <meta name="description" content="دليل شامل للخدمات الحكومية والعامة مع تقييمات المستخدمين والمعلومات المفصلة"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Meta Tags for Social Media Sharing -->
+    <meta property="og:title" content="دليل - Daleel | دليل الخدمات الحكومية والعامة">
+    <meta property="og:description" content="دليل شامل للخدمات الحكومية - منصة تفاعلية لمشاركة التجارب وتسهيل الوصول للخدمات العامة">
+    <meta property="og:image" content="https://raw.githubusercontent.com/rawad-store/daleel/main/preview.jpg">
+    <meta property="og:url" content="https://rawad-store.github.io/Daleel/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ar_AR">
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="دليل - Daleel | دليل الخدمات الحكومية والعامة">
+    <meta name="twitter:description" content="دليل شامل للخدمات الحكومية - منصة تفاعلية لمشاركة التجارب وتسهيل الوصول للخدمات العامة">
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/rawad-store/daleel/main/preview.jpg">
+    
+    <style>
+        /* أنماط CSS تبقى كما هي */
+        :root {
+            --primary: #2D5F7C;
+            --secondary: #4A90E2;
+            --accent: #F5A623;
+            --text: #333;
+            --bg: #F8F9FA;
+            --white: #fff;
+            --border: #E0E0E0;
+            --shadow: 0 2px 12px rgba(0,0,0,.08);
+            --success: #27AE60;
+            --error: #E74C3C;
+            --primary-color: #2D5F7C;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        a:hover {
+            opacity: 0.8;
+        }
+        
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: var(--white);
+            box-shadow: var(--shadow);
+        }
+        
+        .nav {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+        }
+        
+        .brand {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn {
+            border: none;
+            border-radius: 8px;
+            padding: .65rem 1rem;
+            cursor: pointer;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-danger {
+            background: var(--error);
+            color: var(--white);
+        }
+        
+        .btn-warning {
+            background: #f39c12;
+            color: var(--white);
+        }
+        
+        .btn-icon {
+            display: inline-flex;
+            gap: .45rem;
+            align-items: center;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 40px 0;
+            transition: var(--transition);
+        }
+        
+        .hero .wrap {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 16px;
+            display: grid;
+            gap: 16px;
+        }
+        
+        .hero h1 {
+            margin: 0 0 10px;
+            font-size: 2.2rem;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.25);
+            padding: 12px 16px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+        
+        .stat:hover {
+            transform: scale(1.05);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 24px 16px;
+        }
+        
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+        
+        .search-bar {
+            display: flex;
+            width: 100%;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 8px 0 0 8px;
+            font-family: inherit;
+            outline: none;
+            transition: var(--transition);
+        }
+        
+        .search-bar input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 5px var(--primary);
+        }
+        
+        .search-bar button {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border-radius: 0 0 8px 8px;
+            box-shadow: var(--shadow);
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 10;
+            display: none;
+            transition: var(--transition);
+        }
+        
+        .search-suggestion {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        
+        .search-suggestion:hover {
+            background-color: #f5f5f5;
+        }
+        
+        /* قائمة التصنيفات الأفقية */
+        .horizontal-filters {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding: 15px 0;
+            margin: 15px auto 20px;
+            max-width: 600px;
+            scrollbar-width: thin;
+        }
+        
+        .horizontal-filters::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .horizontal-filters::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            background: var(--white);
+            border: 2px solid var(--border);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            font-size: 14px;
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: var(--white);
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            padding: 14px;
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .meta {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            font-size: .9rem;
+            color: #555;
+            margin: .5rem 0;
+        }
+        
+        .rating {
+            display: flex;
+            gap: 3px;
+            margin: 8px 0;
+            color: #FFC107;
+        }
+
+        .rating i {
+            font-size: 1.2rem; /* تحسين حجم النجوم */
+        }
+        
+        .reviews {
+            margin-top: 10px;
+            border-top: 1px solid var(--border);
+            padding-top: 10px;
+        }
+        
+        .review-item {
+            background: #f9f9f9;
+            padding: 15px; /* زيادة الحشو */
+            border-radius: 8px;
+            margin-bottom: 15px; /* زيادة المسافة بين التقييمات */
+            transition: var(--transition);
+            border: 1px solid var(--border); /* إضافة حدود */
+        }
+
+        .review-item:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* تأثير hover */
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px; /* زيادة المسافة */
+            font-size: 0.95rem; /* تحسين حجم الخط */
+            color: #444; /* لون أغمق قليلاً */
+        }
+        
+        .review-header div:first-child {
+            font-weight: 600; /* جعل اسم المستخدم bold */
+        }
+
+        .review-accuracy {
+            margin-top: 5px;
+            font-style: italic; /* إضافة نمط لدقة المعلومات */
+            color: #666;
+        }
+
+        .review-comment {
+            margin-top: 10px;
+            border-top: 1px dashed var(--border); /* خط فاصل منقط */
+            padding-top: 10px;
+            font-size: 0.95rem;
+        }
+        
+        .empty {
+            padding: 48px;
+            text-align: center;
+            color: #777;
+            grid-column: 1 / -1;
+        }
+        
+        .search-results-info {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #555;
+        }
+        
+        .modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,.5);
+            z-index: 100;
+            padding: 16px;
+            transition: var(--transition);
+        }
+        
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .box {
+            background: var(--white);
+            border-radius: 14px;
+            max-width: 520px;
+            width: 100%;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: scaleIn 0.3s ease;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .box-header {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .box-body {
+            padding: 16px 18px;
+        }
+        
+        .row {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .row-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        label {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: .7rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            outline: none;
+            transition: var(--transition);
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 5px var(--primary);
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .f-end {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .toast-wrap {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 200;
+        }
+        
+        .toast {
+            background: var(--primary);
+            color: var(--white);
+            padding: .8rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            box-shadow: var(--shadow);
+            animation: slideIn 0.3s ease;
+            transition: var(--transition);
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .toast.error {
+            background: var(--error);
+        }
+        
+        .toast.success {
+            background: var(--success);
+        }
+        
+        .contact-info {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .contact-info:hover {
+            transform: translateY(-5px);
+        }
+        
+        .contact-info h3 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text);
+            transition: var(--transition);
+        }
+        
+        .contact-link:hover {
+            color: var(--primary);
+        }
+        
+        footer {
+            background: var(--primary);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        
+        .social-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .social-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        .disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        /* أنماط نافذة الترحيب */
+        #welcomeModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        .welcome-section {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: #f9f9f9;
+        }
+        
+        .welcome-content {
+            max-width: 750px;
+            margin: auto;
+        }
+        
+        .welcome-content h2 {
+            color: #27ae60;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .welcome-content p {
+            color: #34495e;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .btn-start {
+            background: linear-gradient(135deg, #e67e22, #d35400);
+            color: #fff;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        
+        .btn-start:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+        }
+        
+        .fadeItem {
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        
+        .fadeItem.show {
+            opacity: 1 !important;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .row-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                justify-content: center;
+            }
+            
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .card-actions {
+                flex-direction: column;
+            }
+            
+            .horizontal-filters {
+                gap: 8px;
+            }
+            
+            .filter-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+            
+            .stat {
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+            }
+        }
+        
+        /* تحسينات للبطاقات وأزرار الإجراءات */
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .card-action-btn {
+            flex: 1;
+            text-align: center;
+            min-width: 120px;
+        }
+        
+        /* تعديل عرض التقييمات لتكون رأسية ومتجاوبة */
+        #reviewsList {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+        
+        .review-item {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        @media (max-width: 768px) {
+            .review-item {
+                padding: 12px; /* تقليل الحشو على الشاشات الصغيرة */
+            }
+            
+            .review-header {
+                flex-direction: column; /* جعل الرأس رأسياً على الشاشات الصغيرة */
+                align-items: flex-start;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="nav" role="navigation" aria-label="التنقل الرئيسي">
+            <div class="brand">📍 دليل <span style="font-weight:400;color:#777">| دليلك للخدمات</span></div>
+            <div class="actions">
+                <button id="addServiceNav" class="btn btn-primary btn-icon" style="display:none" onclick="toggleAdd()" aria-label="إضافة خدمة جديدة">➕ أضف خدمة عملتها</button>
+                <button id="loginBtn" class="btn btn-outline btn-icon" onclick="openAuth('login')" aria-label="تسجيل الدخول">دخول</button>
+                <button id="registerBtn" class="btn btn-primary btn-icon" onclick="openAuth('register')" aria-label="إنشاء حساب">تسجيل</button>
+                <button id="logoutBtn" class="btn btn-outline btn-icon" style="display:none" onclick="logout()" aria-label="تسجيل الخروج">خروج</button>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero" aria-labelledby="hero-title">
+        <div class="wrap">
+            <div>
+                <h1 id="hero-title">دليلك الشامل للخدمات الحكومية والعامة</h1>
+                <p style="opacity:.9">استكشف الخدمات وشارك تجربتك مع الآخرين</p>
+            </div>
+            <div class="stats">
+                <div class="stat" aria-live="polite"><b id="statServices">0</b> خدمة</div>
+                <div class="stat" aria-live="polite"><b id="statUsers">0</b> مستخدم</div>
+                <div class="stat" aria-live="polite"><b id="statReviews">0</b> تقييم</div>
+                <div class="stat"><button id="addServiceTop" class="btn btn-primary btn-icon" style="display:none" onclick="toggleAdd()" aria-label="إضافة خدمة جديدة">➕ أضف خدمة عملتها</button></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Main Content -->
+    <main class="container" aria-label="المحتوى الرئيسي">
+        <!-- Search Section -->
+        <section class="search-container" aria-label="بحث عن الخدمات">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="ابحث عن خدمة (يمكنك البحث بأي جزء من الكلمة أو عدة كلمات)..." aria-label="حقل البحث" />
+                <button onclick="searchServices()" aria-label="بحث"><i class="fas fa-search"></i></button>
+            </div>
+            <div id="searchSuggestions" class="search-suggestions" role="listbox" aria-label="اقتراحات البحث"></div>
+            
+            <!-- قائمة التصنيفات الأفقية -->
+            <div class="horizontal-filters">
+                <button class="filter-btn active" data-category="الكل" onclick="filterByCategory('الكل')">الكل</button>
+                <button class="filter-btn" data-category="حكومي" onclick="filterByCategory('حكومي')">حكومي</button>
+                <button class="filter-btn" data-category="صحة" onclick="filterByCategory('صحة')">صحة</button>
+                <button class="filter-btn" data-category="تعليم" onclick="filterByCategory('تعليم')">تعليم</button>
+                <button class="filter-btn" data-category="مالي" onclick="filterByCategory('مالي')">مالي</button>
+                <button class="filter-btn" data-category="أخرى" onclick="filterByCategory('أخرى')">أخرى</button>
+            </div>
+        </section>
+        
+        <div id="searchResultsInfo" class="search-results-info" aria-live="polite"></div>
+        
+        <!-- Services Section -->
+        <section id="services" class="grid" aria-label="قائمة الخدمات"></section>
+        <div id="empty" class="empty">لا توجد خدمات حالياً — كن أول من يضيف خدمة ✨</div>
+        
+        <!-- Contact Section -->
+        <section class="contact-info" aria-label="معلومات الاتصال">
+            <h3>للتواصل معنا</h3>
+            <p>يسعدنا تواصلكم معنا لأي استفسارات أو مقترحات</p>
+            <div class="contact-links">
+                <a href="mailto:tarek500500@gmail.com" class="contact-link" aria-label="البريد الإلكتروني">
+                    <i class="fas fa-envelope"></i> tarek500500@gmail.com
+                </a>
+                <a href="https://wa.me/+201126630356?text=مرحباً، أريد الاستفسار عن خدماتكم" class="contact-link" target="_blank" rel="noopener noreferrer" aria-label="واتساب">
+                    <i class="fab fa-whatsapp"></i> واتساب
+                </a>
+            </div>
+        </section>
+        
+        <section style="text-align: center; margin-top: 30px;" aria-label="وسائل التواصل الاجتماعي">
+            <h4 style="margin-bottom: 1.5rem; color: var(--primary-color); font-size: 1.3rem; font-weight: 600;">تابعونا على وسائل التواصل الاجتماعي</h4>
+            <div class="social-grid">
+                <a href="https://www.facebook.com/share/1FzKsPMMsG/" class="social-card" target="_blank" rel="noopener noreferrer" style="background-color: #1877f2; color: #fff; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%;" aria-label="فيسبوك">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://rawad-store.github.io/konozalkhair/" class="social-card" target="_blank" rel="noopener noreferrer" style="background-color: #e63946; color: #fff; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%;" aria-label="مؤسسة كنوز الخير">
+                    <i class="fas fa-hand-holding-heart"></i>
+                </a>
+                <a href="https://www.facebook.com/share/18bfjxRbHH" class="social-card" target="_blank" rel="noopener noreferrer" style="background-color: #1877f2; color: #fff; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%;" aria-label="فيسبوك">
+                    <i class="fab fa-facebook-f"></i>
+                </a>    
+                <a href="https://rawad-store.github.io/" class="social-card" target="_blank" rel="noopener noreferrer" style="background-color: #2a9d8f; color: #fff; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%;" aria-label="مكتبة رواد ستور">
+                    <i class="fas fa-book"></i>
+                </a>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer aria-label="تذييل الصفحة">
+        <p>© 2025 دليل - Daleel. جميع الحقوق محفوظة لمكتبة الرواد بالصوة</p>
+    </footer>
+    
+    <!-- Add Service Modal -->
+    <div id="addModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="box" aria-modal="true" aria-labelledby="addModalTitle">
+            <div class="box-header">
+                <h3 style="margin:0" id="addModalTitle">إضافة خدمة جديدة</h3>
+                <button class="btn btn-outline" onclick="toggleAdd()">إغلاق</button>
+            </div>
+            <form id="serviceForm" class="box-body">
+                <input type="hidden" id="editServiceId" value="">
+                <div class="row">
+                    <label for="svcName">اسم الخدمة</label>
+                    <input id="svcName" placeholder="مثال: استخراج جواز سفر" required aria-required="true" />
+                </div>
+                <div class="row row-2">
+                    <div>
+                        <label for="svcCat">القسم</label>
+                        <select id="svcCat" required aria-required="true">
+                            <option value="">اختر القسم</option>
+                            <option>حكومي</option>
+                            <option>صحة</option>
+                            <option>تعليم</option>
+                            <option>مالي</option>
+                            <option>أخرى</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="svcLoc">المكان</label>
+                        <input id="svcLoc" placeholder="الشرقية - أبوحماد" required aria-required="true" />
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="svcDocs">الأوراق المطلوبة</label>
+                    <textarea id="svcDocs" placeholder="اذكر الأوراق المطلوبة..." required aria-required="true"></textarea>
+                </div>
+                <div class="row row-2">
+                    <div>
+                        <label for="svcCost">التكلفة (اختياري)</label>
+                        <input id="svcCost" placeholder="مثال: 100 جنيه"/>
+                    </div>
+                    <div>
+                        <label for="svcDur">المدة المتوقعة (اختياري)</label>
+                        <input id="svcDur" placeholder="مثال: 3-5 أيام"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="svcNotes">ملاحظات (اختياري)</label>
+                    <textarea id="svcNotes" placeholder="أي معلومات إضافية مفيدة..."></textarea>
+                </div>
+                <div class="f-end">
+                    <button type="button" class="btn" onclick="toggleAdd()" aria-label="إلغاء">إلغاء</button>
+                    <button type="submit" class="btn btn-primary btn-icon" id="serviceFormSubmit" aria-label="حفظ الخدمة">💾 حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Review Modal -->
+    <div id="reviewModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="box" aria-modal="true" aria-labelledby="reviewServiceName">
+            <div class="box-header">
+                <h3 style="margin:0">تقييم الخدمة: <span id="reviewServiceName"></span></h3>
+                <button class="btn btn-outline" onclick="closeReview()" aria-label="إغلاق النافذة">إغلاق</button>
+            </div>
+            <div class="box-body">
+                <form id="reviewForm">
+                    <div class="row">
+                        <label>التقييم</label>
+                        <div class="rating" id="ratingStars" role="radiogroup" aria-label="اختيار التقييم">
+                            <i class="far fa-star" data-rating="1" role="radio" aria-checked="false" tabindex="0"></i>
+                            <i class="far fa-star" data-rating="2" role="radio" aria-checked="false" tabindex="-1"></i>
+                            <i class="far fa-star" data-rating="3" role="radio" aria-checked="false" tabindex="-1"></i>
+                            <i class="far fa-star" data-rating="4" role="radio" aria-checked="false" tabindex="-1"></i>
+                            <i class="far fa-star" data-rating="5" role="radio" aria-checked="false" tabindex="-1"></i>
+                        </div>
+                        <input type="hidden" id="reviewRating" value="0" required aria-required="true" />
+                    </div>
+                    <div class="row">
+                        <label for="reviewComment">التعليق (اختياري)</label>
+                        <textarea id="reviewComment" placeholder="اكتب تعليقك عن الخدمة..."></textarea>
+                    </div>
+                    <div class="row">
+                        <label for="reviewAccuracy">هل المعلومات صحيحة?</label>
+                        <select id="reviewAccuracy" required aria-required="true">
+                            <option value="">اختر الإجابة</option>
+                            <option value="نعم">نعم، المعلومات صحيحة</option>
+                            <option value="جزئياً">جزئياً، بعض المعلومات تحتاج تحديث</option>
+                            <option value="لا">لا، المعلومات غير صحيحة</option>
+                        </select>
+                    </div>
+                    <div class="f-end">
+                        <button type="button" class="btn" onclick="closeReview()" aria-label="إلغاء">إلغاء</button>
+                        <button type="submit" class="btn btn-primary btn-icon" aria-label="حفظ التقييم">💾 حفظ التقييم</button>
+                    </div>
+                </form>
+                
+                <section class="reviews" id="serviceReviews" aria-label="التقييمات السابقة">
+                    <h4>التقييمات السابقة</h4>
+                    <div id="reviewsList" class="loading" aria-live="polite"><i class="fas fa-spinner fa-spin"></i> جاري التحميل...</div>
+                </section>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="box" aria-modal="true" aria-labelledby="authTitle">
+            <div class="box-header">
+                <h3 id="authTitle" style="margin:0">تسجيل الدخول</h3>
+                <button class="btn btn-outline" onclick="closeAuth()" aria-label="إغلاق النافذة">إغلاق</button>
+            </div>
+            <div class="box-body">
+                <!-- Login -->
+                <form id="loginForm" class="row" autocomplete="on">
+                    <div class="row">
+                        <label for="loginEmail">البريد الإلكتروني</label>
+                        <input id="loginEmail" type="email" placeholder="email@example.com" required aria-required="true" />
+                    </div>
+                    <div class="row">
+                        <label for="loginPass">كلمة المرور</label>
+                        <input id="loginPass" type="password" placeholder="******" required aria-required="true" />
+                    </div>
+                    <div class="f-end">
+                        <button type="submit" class="btn btn-primary btn-icon" aria-label="دخول">➡️ دخول</button>
+                    </div>
+                </form>
+                
+                <!-- Register -->
+                <form id="registerForm" class="row" style="display:none" autocomplete="on">
+                    <div class="row">
+                        <label for="regEmail">البريد الإلكتروني</label>
+                        <input id="regEmail" type="email" placeholder="email@example.com" required aria-required="true" />
+                    </div>
+                    <div class="row row-2">
+                        <div>
+                            <label for="regPass">كلمة المرور</label>
+                            <input id="regPass" type="password" minlength="6" placeholder="6 أحرف على الأقل" required aria-required="true" />
+                        </div>
+                        <div>
+                            <label for="regConfirm">تأكيد كلمة المرور</label>
+                            <input id="regConfirm" type="password" minlength="6" placeholder="أعد كتابة كلمة المرور" required aria-required="true" />
+                        </div>
+                    </div>
+                    <div class="f-end">
+                        <button type="submit" class="btn btn-primary btn-icon" aria-label="إنشاء حساب">📝 إنشاء حساب</button>
+                    </div>
+                </form>
+                
+                <div style="margin-top:10px;text-align:center">
+                    <a href="#" onclick="switchAuth()" aria-label="تبديل بين تسجيل الدخول وإنشاء حساب">تبديل إلى <span id="switchLabel">إنشاء حساب</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toasts -->
+    <div id="toasts" class="toast-wrap" aria-live="polite"></div>
+    
+    <!-- نافذة تعريفية Daleel تفاعلية -->
+    <div id="welcomeModal" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+        <div style="
+            background: #ffffff;
+            padding: 30px 25px;
+            max-width: 550px;
+            width: 90%;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            border-top: 6px solid #27ae60;
+            overflow: hidden;
+        ">
+            <!-- زر الإغلاق -->
+            <button id="closeModal" style="
+                position: absolute;
+                top: 10px;
+                right: 15px;
+                border: none;
+                background: transparent;
+                font-size: 22px;
+                font-weight: bold;
+                cursor: pointer;
+                color: #34495e;
+            " aria-label="إغلاق النافذة">&times;</button>
+            
+            <!-- المحتوى -->
+            <section class="welcome-section">
+                <div class="welcome-content">
+                    <!-- العنوان -->
+                    <h2 id="welcomeTitle" class="fadeItem">
+                        ✨ مرحبًا بك في "دليلك" ✨
+                    </h2>
+                    <!-- النصوص التعريفية -->
+                    <p class="fadeItem">
+                        "دليلك" هو منصتك الأولى لمعرفة <strong>الأوراق والمستندات والرسوم</strong> المطلوبة لإنجاز الخدمات الحكومية والعامة بسهولة ومن أول مرة.
+                    </p>
+                    <p class="fadeItem">
+                        استكشف الخدمات، واطلع على التجارب الحقيقية للآخرين لتعرف <strong>الخطوات الصحيحة</strong> قبل أي مشوار تقوم به.
+                    </p>
+                    <p class="fadeItem">
+                        أي شخص يمكنه <strong>إضافة تجربته، تقييم الخدمات، وترك ملاحظاته</strong> لتوفير الوقت والجهد والمال على الجميع.
+                    </p>
+                    <p class="fadeItem">
+                        💡 <strong>ابدأ بنفسك!</strong> شارك آخر مهمة أو خدمة أنجزتها مهما كانت بسيطة، فقد تكون سببًا في مساعدة شخص آخر.
+                    </p>
+                    <!-- زر البدء -->
+                    <button id="startNow" class="btn-start fadeItem" aria-label="ابدأ الآن">
+                        🚀 ابدأ الآن
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Firebase + App -->
+    <script src="https://www.gstatic.com/firebasejs/10.2.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.2.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore-compat.js"></script>
+    <script>
+        // ==== Firebase Config ====
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6TzN-QHVUOwizABYxm0Y8fkqTp1qb_qA",
+            authDomain: "daleel-c4204.firebaseapp.com",
+            projectId: "daleel-c4204",
+            storageBucket: "daleel-c4204.appspot.com",
+            messagingSenderId: "864882936232",
+            appId: "1:864882936232:web:5bfc14d7c0f02559d5f02d"
+        };
+        
+        // ==== Initialize Firebase ====
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        // ==== State ====
+        let currentUser = null;
+        let services = [];
+        let allServices = [];
+        let currentServiceForReview = null;
+        let currentReview = null;
+        let isEditingService = false;
+        let currentCategory = 'الكل';
+        
+        // ==== UI Helpers ====
+        const $ = (s, p = document) => p.querySelector(s);
+        const $$ = (s, p = document) => p.querySelectorAll(s);
+        
+        function toast(msg, type = 'success') {
+            const el = document.createElement('div');
+            el.className = `toast ${type}`;
+            el.textContent = msg;
+            $('#toasts').appendChild(el);
+            setTimeout(() => el.remove(), 5000);
+        }
+        
+        function showLoading(form) {
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.classList.add('disabled');
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري...';
+            }
+        }
+        
+        function hideLoading(form, originalText) {
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.classList.remove('disabled');
+                submitBtn.innerHTML = originalText;
+            }
+        }
+        
+        function escapeHTML(str) {
+            return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+        }
+        
+        function openModal(modalId) {
+            $(`#${modalId}`).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal(modalId) {
+            $(`#${modalId}`).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // ==== Global Functions for HTML Events ====
+        window.openAuth = function(mode = 'login') {
+            openModal('authModal');
+            if (mode === 'register') {
+                $('#authTitle').textContent = 'إنشاء حساب';
+                $('#loginForm').style.display = 'none';
+                $('#registerForm').style.display = 'grid';
+                $('#switchLabel').textContent = 'تسجيل الدخول';
+            } else {
+                $('#authTitle').textContent = 'تسجيل الدخول';
+                $('#loginForm').style.display = 'grid';
+                $('#registerForm').style.display = 'none';
+                $('#switchLabel').textContent = 'إنشاء حساب';
+            }
+        };
+        
+        window.closeAuth = function() {
+            closeModal('authModal');
+            $('#loginForm').reset();
+            $('#registerForm').reset();
+        };
+        
+        window.switchAuth = function() {
+            if ($('#loginForm').style.display !== 'none') {
+                openAuth('register');
+            } else {
+                openAuth('login');
+            }
+        };
+        
+        window.logout = function() {
+            auth.signOut()
+                .then(() => toast('تم تسجيل الخروج'))
+                .catch(e => toast('خطأ: ' + e.message, 'error'));
+        };
+        
+        function mapAuthErr(e) {
+            switch (e.code) {
+                case 'auth/email-already-in-use': return 'البريد الإلكتروني مستخدم بالفعل';
+                case 'auth/invalid-email': return 'البريد الإلكتروني غير صالح';
+                case 'auth/weak-password': return 'كلمة المرور ضعيفة (6 أحرف على الأقل)';
+                case 'auth/user-not-found': return 'لا يوجد حساب بهذا البريد';
+                case 'auth/wrong-password': return 'كلمة المرور غير صحيحة';
+                case 'auth/invalid-credential': return 'بيانات الدخول غير صحيحة';
+                case 'auth/operation-not-allowed': return 'العملية غير مسموحة';
+                default: return e.message;
+            }
+        }
+        
+        // ==== Service Functions ====
+        window.toggleAdd = function(serviceId = null) {
+            const modal = $('#addModal');
+            if (modal.classList.contains('active') && !serviceId) {
+                closeModal('addModal');
+                return;
+            }
+            
+            if (!currentUser && !serviceId) {
+                toast('يجب تسجيل الدخول أولاً', 'error');
+                openAuth('login');
+                return;
+            }
+            
+            if (serviceId) {
+                const service = allServices.find(s => s.id === serviceId);
+                if (service) {
+                    isEditingService = true;
+                    $('#addModalTitle').textContent = 'تعديل الخدمة';
+                    $('#serviceFormSubmit').innerHTML = '💾 حفظ التعديلات';
+                    $('#editServiceId').value = service.id;
+                    $('#svcName').value = service.name || '';
+                    $('#svcCat').value = service.category || '';
+                    $('#svcLoc').value = service.location || '';
+                    $('#svcDocs').value = service.documents || '';
+                    $('#svcCost').value = service.cost || '';
+                    $('#svcDur').value = service.duration || '';
+                    $('#svcNotes').value = service.notes || '';
+                }
+            } else {
+                isEditingService = false;
+                $('#addModalTitle').textContent = 'إضافة خدمة جديدة';
+                $('#serviceFormSubmit').innerHTML = '💾 حفظ';
+                $('#serviceForm').reset();
+                $('#editServiceId').value = '';
+            }
+            
+            openModal('addModal');
+        };
+        
+        async function loadServices() {
+            $('#services').innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> جاري تحميل الخدمات...</div>';
+            
+            try {
+                const snap = await db.collection('services').orderBy('createdAt', 'desc').get();
+                services = [];
+                allServices = [];
+                
+                snap.forEach(d => {
+                    const data = d.data();
+                    const service = { id: d.id, ...data };
+                    services.push(service);
+                    allServices.push(service);
+                });
+                
+                renderServices();
+                updateSearchResultsInfo(services.length);
+            } catch (err) {
+                console.error('خطأ في تحميل الخدمات:', err);
+                toast('خطأ في تحميل الخدمات', 'error');
+                $('#services').innerHTML = '<p style="color: var(--error);">خطأ في تحميل الخدمات</p>';
+            }
+        }
+        
+        function renderServices() {
+            const wrap = $('#services');
+            wrap.innerHTML = '';
+            
+            // Filter by category if needed
+            let filteredServices = [...services];
+            if (currentCategory !== 'الكل') {
+                filteredServices = services.filter(service => service.category === currentCategory);
+            }
+            
+            if (filteredServices.length === 0) {
+                $('#empty').style.display = 'block';
+                return;
+            }
+            
+            $('#empty').style.display = 'none';
+            
+            filteredServices.forEach(s => {
+                const isOwner = currentUser && s.userId === currentUser.uid;
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                const ratingHtml = s.averageRating > 0 ? `
+                    <div class="rating">
+                        ${renderStars(s.averageRating)}
+                        <span style="color:#666;margin-right:5px">(${s.totalReviews || 0})</span>
+                    </div>
+                ` : '<div style="color:#777;font-size:0.9rem">لا توجد تقييمات بعد</div>';
+                
+                card.innerHTML = `
+                    <h3 style="margin:.3rem 0">${escapeHTML(s.name)}</h3>
+                    <div class="meta"><span>🏷️ ${escapeHTML(s.category)}</span><span>📍 ${escapeHTML(s.location)}</span></div>
+                    ${ratingHtml}
+                    <p><b>الأوراق:</b> ${escapeHTML(s.documents || '')}</p>
+                    ${s.cost && s.cost !== 'غير محدد' ? `<p><b>التكلفة:</b> ${escapeHTML(s.cost)}</p>` : ''}
+                    ${s.duration && s.duration !== 'غير محدد' ? `<p><b>المدة:</b> ${escapeHTML(s.duration)}</p>` : ''}
+                    ${s.notes ? `<p><b>ملاحظات:</b> ${escapeHTML(s.notes)}</p>` : ''}
+                    <small style="display:block;margin-top:8px;color:#666">أضيفت بواسطة: ${escapeHTML(s.userEmail || '—')}</small>
+                    <div class="card-actions">
+                        <button class="btn btn-primary btn-icon card-action-btn" onclick="openReview('${s.id}')" aria-label="قيم الخدمة">
+                            <i class="fas fa-star"></i> قيم الخدمة
+                        </button>
+                        ${currentUser ? `
+                            <button class="btn btn-warning btn-icon card-action-btn" onclick="toggleAdd('${s.id}')" aria-label="تعديل الخدمة">
+                                <i class="fas fa-edit"></i> تعديل
+                            </button>
+                        ` : ''}
+                        ${isOwner ? `
+                            <button class="btn btn-danger btn-icon card-action-btn" onclick="confirmDelete('${s.id}')" aria-label="حذف الخدمة">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        ` : ''}
+                    </div>
+                `;
+                
+                wrap.appendChild(card);
+            });
+        }
+        
+        window.confirmDelete = async function(serviceId) {
+            const svc = services.find(s => s.id === serviceId);
+            if (!svc || !confirm('هل تريد حذف هذه الخدمة؟')) return;
+            
+            try {
+                await db.collection('services').doc(svc.id).delete();
+                toast('تم حذف الخدمة');
+                loadServices();
+                loadStats();
+            } catch (err) {
+                console.error(err);
+                toast('خطأ في الحذف: ' + err.message, 'error');
+            }
+        };
+        
+        // ==== Review Functions (Redesigned from scratch for scalability) ====
+        window.openReview = async function(serviceId) {
+            if (!currentUser) {
+                toast('يجب تسجيل الدخول أولاً', 'error');
+                openAuth('login');
+                return;
+            }
+            
+            const service = allServices.find(s => s.id === serviceId);
+            if (!service) return;
+            
+            currentServiceForReview = service;
+            currentReview = null;
+            $('#reviewServiceName').textContent = service.name;
+            $('#reviewRating').value = '0';
+            $('#reviewComment').value = '';
+            $('#reviewAccuracy').value = '';
+            resetStars();
+            $('#reviewForm button[type="submit"]').innerHTML = '💾 حفظ التقييم';
+            
+            // Remove delete button if exists
+            const deleteBtn = $('#reviewForm .btn-danger');
+            if (deleteBtn) deleteBtn.remove();
+            
+            // Check if user has reviewed
+            const reviewSnap = await db.collection('services').doc(serviceId).collection('reviews').doc(currentUser.uid).get();
+            if (reviewSnap.exists) {
+                currentReview = reviewSnap.data();
+                $('#reviewRating').value = currentReview.rating;
+                setStars(currentReview.rating);
+                $('#reviewComment').value = currentReview.comment || '';
+                $('#reviewAccuracy').value = currentReview.accuracy || '';
+                $('#reviewForm button[type="submit"]').innerHTML = '💾 حفظ التعديلات';
+                
+                // Add delete button
+                const fEnd = $('#reviewForm .f-end');
+                const delBtn = document.createElement('button');
+                delBtn.type = 'button';
+                delBtn.className = 'btn btn-danger btn-icon';
+                delBtn.innerHTML = '<i class="fas fa-trash"></i> حذف التقييم';
+                delBtn.onclick = deleteReview;
+                fEnd.insertBefore(delBtn, fEnd.firstChild);
+            }
+            
+            loadReviews(serviceId);
+            initStarEvents(); // Initialize star events
+            
+            openModal('reviewModal');
+        };
+        
+        async function deleteReview() {
+            if (!confirm('هل أنت متأكد من حذف تقييمك؟')) return;
+            
+            const originalText = $('#reviewForm button[type="submit"]').innerHTML;
+            showLoading($('#reviewForm'));
+            
+            try {
+                await db.collection('services').doc(currentServiceForReview.id).collection('reviews').doc(currentUser.uid).delete();
+                await updateReviewCounters(currentServiceForReview.id);
+                toast('تم حذف التقييم بنجاح', 'success');
+                closeReview();
+                loadServices();
+                loadStats();
+            } catch (err) {
+                console.error(err);
+                toast('خطأ في حذف التقييم: ' + err.message, 'error');
+            } finally {
+                hideLoading($('#reviewForm'), originalText);
+            }
+        }
+        
+        window.closeReview = function() {
+            closeModal('reviewModal');
+            currentServiceForReview = null;
+            currentReview = null;
+            const reviewForm = $('#reviewForm');
+            reviewForm.innerHTML = `
+                <div class="row">
+                    <label>التقييم</label>
+                    <div class="rating" id="ratingStars" role="radiogroup" aria-label="اختيار التقييم">
+                        <i class="far fa-star" data-rating="1" role="radio" aria-checked="false" tabindex="0"></i>
+                        <i class="far fa-star" data-rating="2" role="radio" aria-checked="false" tabindex="-1"></i>
+                        <i class="far fa-star" data-rating="3" role="radio" aria-checked="false" tabindex="-1"></i>
+                        <i class="far fa-star" data-rating="4" role="radio" aria-checked="false" tabindex="-1"></i>
+                        <i class="far fa-star" data-rating="5" role="radio" aria-checked="false" tabindex="-1"></i>
+                    </div>
+                    <input type="hidden" id="reviewRating" value="0" required aria-required="true" />
+                </div>
+                <div class="row">
+                    <label for="reviewComment">التعليق (اختياري)</label>
+                    <textarea id="reviewComment" placeholder="اكتب تعليقك عن الخدمة..."></textarea>
+                </div>
+                <div class="row">
+                    <label for="reviewAccuracy">هل المعلومات صحيحة؟</label>
+                    <select id="reviewAccuracy" required aria-required="true">
+                        <option value="">اختر الإجابة</option>
+                        <option value="نعم">نعم، المعلومات صحيحة</option>
+                        <option value="جزئياً">جزئياً، بعض المعلومات تحتاج تحديث</option>
+                        <option value="لا">لا، المعلومات غير صحيحة</option>
+                    </select>
+                </div>
+                <div class="f-end">
+                    <button type="button" class="btn" onclick="closeReview()" aria-label="إلغاء">إلغاء</button>
+                    <button type="submit" class="btn btn-primary btn-icon" aria-label="حفظ التقييم">💾 حفظ التقييم</button>
+                </div>
+            `;
+            initStarEvents();
+        };
+        
+        function resetStars() {
+            const stars = $$('#ratingStars i');
+            stars.forEach(star => {
+                star.classList.remove('fas');
+                star.classList.add('far');
+            });
+        }
+        
+        function setStars(rating) {
+            const stars = $$('#ratingStars i');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.remove('far');
+                    star.classList.add('fas');
+                } else {
+                    star.classList.remove('fas');
+                    star.classList.add('far');
+                }
+            });
+        }
+        
+        function initStarEvents() {
+            const stars = $$('#ratingStars i');
+            if (stars.length > 0) {
+                stars.forEach(star => {
+                    star.addEventListener('mouseenter', function() {
+                        const rating = parseInt(this.getAttribute('data-rating'));
+                        setStars(rating);
+                    });
+                    
+                    star.addEventListener('mouseleave', function() {
+                        const currentRating = parseInt($('#reviewRating').value);
+                        setStars(currentRating);
+                    });
+                    
+                    star.addEventListener('click', function() {
+                        const rating = parseInt(this.getAttribute('data-rating'));
+                        $('#reviewRating').value = rating;
+                        setStars(rating);
+                    });
+                });
+            }
+        }
+        
+        async function loadReviews(serviceId) {
+            const reviewsList = $('#reviewsList');
+            reviewsList.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> جاري التحميل...</div>';
+            
+            try {
+                const reviewsSnap = await db.collection('services').doc(serviceId).collection('reviews').orderBy('createdAt', 'desc').get();
+                
+                reviewsList.innerHTML = '';
+                
+                if (reviewsSnap.empty) {
+                    reviewsList.innerHTML = '<p>لا توجد تقييمات بعد</p>';
+                    return;
+                }
+                
+                reviewsSnap.forEach(doc => {
+                    const review = doc.data();
+                    const reviewEl = document.createElement('div');
+                    reviewEl.className = 'review-item';
+                    
+                    const date = review.createdAt ? review.createdAt.toDate().toLocaleDateString('ar-EG', { year: 'numeric', month: 'short', day: 'numeric' }) : 'تاريخ غير معروف';
+                    
+                    reviewEl.innerHTML = `
+                        <div class="review-header">
+                            <div>${escapeHTML(review.userEmail || 'مستخدم مجهول')}</div>
+                            <div>${date}</div>
+                        </div>
+                        <div class="rating">
+                            ${renderStars(review.rating)}
+                        </div>
+                        <div class="review-accuracy"><strong>دقة المعلومات:</strong> ${escapeHTML(review.accuracy)}</div>
+                        ${review.comment ? `<div class="review-comment">${escapeHTML(review.comment)}</div>` : ''}
+                    `;
+                    
+                    reviewsList.appendChild(reviewEl);
+                });
+            } catch (err) {
+                console.error('خطأ في تحميل التقييمات:', err);
+                reviewsList.innerHTML = '<p style="color: var(--error);">خطأ في تحميل التقييمات</p>';
+            }
+        }
+        
+        async function updateReviewCounters(serviceId) {
+            const reviewsSnap = await db.collection('services').doc(serviceId).collection('reviews').get();
+            let totalRating = 0;
+            let count = 0;
+            
+            reviewsSnap.forEach(doc => {
+                const r = doc.data();
+                totalRating += r.rating;
+                count++;
+            });
+            
+            const average = count > 0 ? totalRating / count : 0;
+            
+            await db.collection('services').doc(serviceId).update({
+                averageRating: average,
+                totalReviews: count
+            });
+        }
+        
+        window.renderStars = function(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) {
+                    stars += '<i class="fas fa-star"></i>';
+                } else if (i - 0.5 <= rating) {
+                    stars += '<i class="fas fa-star-half-alt"></i>';
+                } else {
+                    stars += '<i class="far fa-star"></i>';
+                }
+            }
+            return stars;
+        };
+        
+        // ==== Search and Filter Functions ====
+        window.searchServices = function() {
+            const searchTerm = $('#searchInput').value.trim().toLowerCase();
+            filterServices(searchTerm);
+        };
+        
+        function filterServices(searchTerm = '') {
+            let filtered = [...allServices];
+            
+            if (searchTerm) {
+                const searchWords = searchTerm.split(/\s+/).filter(word => word.length > 0);
+                
+                filtered = filtered.filter(service => {
+                    const combinedText = [
+                        service.name?.toLowerCase() || '',
+                        service.location?.toLowerCase() || '',
+                        service.documents?.toLowerCase() || '',
+                        service.notes?.toLowerCase() || '',
+                        service.category?.toLowerCase() || '',
+                        service.cost?.toLowerCase() || '',
+                        service.duration?.toLowerCase() || ''
+                    ].join(' ');
+                    
+                    return searchWords.every(word => combinedText.includes(word));
+                });
+            }
+            
+            services = filtered;
+            renderServices();
+            updateSearchResultsInfo(filtered.length);
+        }
+        
+        window.filterByCategory = function(category) {
+            currentCategory = category;
+            
+            // Update active button
+            $$('.filter-btn').forEach(btn => {
+                if (btn.dataset.category === category) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            renderServices();
+            updateSearchResultsInfo(services.length);
+        };
+        
+        function updateSearchResultsInfo(count) {
+            const searchTerm = $('#searchInput').value.trim();
+            
+            let infoText = '';
+            if (searchTerm) {
+                infoText = `عرض ${count} نتيجة للبحث عن "${searchTerm}"`;
+            } else if (currentCategory !== 'الكل') {
+                infoText = `عرض ${count} خدمة في قسم "${currentCategory}"`;
+            } else {
+                infoText = `عرض ${count} خدمة`;
+            }
+            
+            $('#searchResultsInfo').textContent = infoText;
+        }
+        
+        function showSearchSuggestions(searchTerm) {
+            const suggestionsContainer = $('#searchSuggestions');
+            
+            if (!searchTerm || allServices.length === 0) {
+                suggestionsContainer.style.display = 'none';
+                return;
+            }
+            
+            const allWords = new Set();
+            allServices.forEach(service => {
+                const fields = [
+                    service.name,
+                    service.location,
+                    service.documents,
+                    service.notes,
+                    service.category,
+                    service.cost,
+                    service.duration
+                ];
+                
+                fields.forEach(field => {
+                    if (field) {
+                        field.toString().split(/\s+/).forEach(word => {
+                            if (word.length > 2) {
+                                allWords.add(word.toLowerCase());
+                            }
+                        });
+                    }
+                });
+            });
+            
+            const matchingWords = Array.from(allWords).filter(word => 
+                word.includes(searchTerm)
+            ).slice(0, 10);
+            
+            if (matchingWords.length > 0) {
+                suggestionsContainer.innerHTML = '';
+                matchingWords.forEach(word => {
+                    const suggestion = document.createElement('div');
+                    suggestion.className = 'search-suggestion';
+                    suggestion.textContent = word;
+                    suggestion.addEventListener('click', () => {
+                        $('#searchInput').value = word;
+                        suggestionsContainer.style.display = 'none';
+                        searchServices();
+                    });
+                    suggestionsContainer.appendChild(suggestion);
+                });
+                suggestionsContainer.style.display = 'block';
+            } else {
+                suggestionsContainer.style.display = 'none';
+            }
+        }
+        
+        // ==== Stats Functions ====
+        async function loadStats() {
+            try {
+                const servicesSnap = await db.collection('services').get();
+                $('#statServices').textContent = servicesSnap.size;
+                const users = new Set();
+                let totalReviews = 0;
+                
+                servicesSnap.forEach(d => {
+                    const data = d.data();
+                    const u = data.userId;
+                    if (u) users.add(u);
+                    totalReviews += data.totalReviews || 0;
+                });
+                
+                $('#statUsers').textContent = users.size;
+                $('#statReviews').textContent = totalReviews;
+            } catch (e) {
+                $('#statServices').textContent = '0';
+                $('#statUsers').textContent = '0';
+                $('#statReviews').textContent = '0';
+            }
+        }
+        
+        // ==== Welcome Modal Functions ====
+        function showWelcomeModal() {
+            const modal = $('#welcomeModal');
+            const fadeItems = $$('.fadeItem');
+            const startBtn = $('#startNow');
+            const closeBtn = $('#closeModal');
+            
+            // Show modal on every visit (for testing) - يمكن تغيير هذا ليعتمد على localStorage إذا أردت
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            fadeItems.forEach((el, i) => {
+                setTimeout(() => { 
+                    el.classList.add('show'); 
+                }, i * 600);
+            });
+            
+            setTimeout(() => { 
+                startBtn.classList.add('show'); 
+            }, fadeItems.length * 600);
+            
+            // Auto close after 120 seconds
+            setTimeout(hideWelcomeModal, 120000);
+            
+            function hideWelcomeModal() {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+            
+            closeBtn.onclick = hideWelcomeModal;
+            startBtn.onclick = hideWelcomeModal;
+        }
+        
+        // ==== Event Listeners ====
+        document.addEventListener('DOMContentLoaded', function() {
+            loadServices();
+            loadStats();
+            initStarEvents();
+            showWelcomeModal();
+            
+            // Auth Handlers
+            $('#registerForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const originalText = $('#registerForm button[type="submit"]').innerHTML;
+                showLoading($('#registerForm'));
+                const email = $('#regEmail').value.trim();
+                const pass = $('#regPass').value;
+                const confirm = $('#regConfirm').value;
+                
+                if (pass !== confirm) {
+                    toast('كلمات المرور غير متطابقة', 'error');
+                    hideLoading($('#registerForm'), originalText);
+                    return;
+                }
+                
+                try {
+                    await auth.createUserWithEmailAndPassword(email, pass);
+                    toast('تم إنشاء الحساب بنجاح');
+                    closeAuth();
+                } catch (err) {
+                    toast(mapAuthErr(err), 'error');
+                    console.error('خطأ في التسجيل:', err);
+                } finally {
+                    hideLoading($('#registerForm'), originalText);
+                }
+            });
+            
+            $('#loginForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const originalText = $('#loginForm button[type="submit"]').innerHTML;
+                showLoading($('#loginForm'));
+                const email = $('#loginEmail').value.trim();
+                const pass = $('#loginPass').value;
+                
+                try {
+                    await auth.signInWithEmailAndPassword(email, pass);
+                    toast('تم تسجيل الدخول');
+                    closeAuth();
+                } catch (err) {
+                    toast(mapAuthErr(err), 'error');
+                    console.error('خطأ في الدخول:', err);
+                } finally {
+                    hideLoading($('#loginForm'), originalText);
+                }
+            });
+            
+            // Service Form Submit
+            $('#serviceForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!currentUser) {
+                    toast('سجّل الدخول أولاً', 'error');
+                    return;
+                }
+                const originalText = $('#serviceForm button[type="submit"]').innerHTML;
+                showLoading($('#serviceForm'));
+                const name = $('#svcName').value.trim();
+                const category = $('#svcCat').value;
+                const location = $('#svcLoc').value.trim();
+                const documents = $('#svcDocs').value.trim();
+                const cost = $('#svcCost').value.trim() || 'غير محدد';
+                const duration = $('#svcDur').value.trim() || 'غير محدد';
+                const notes = $('#svcNotes').value.trim();
+                const serviceId = $('#editServiceId').value;
+                
+                if (!name || !category || !location || !documents) {
+                    toast('يرجى ملء الحقول المطلوبة', 'error');
+                    hideLoading($('#serviceForm'), originalText);
+                    return;
+                }
+                
+                try {
+                    if (isEditingService && serviceId) {
+                        const serviceRef = db.collection('services').doc(serviceId);
+                        await serviceRef.update({
+                            name,
+                            category,
+                            location,
+                            documents,
+                            cost,
+                            duration,
+                            notes,
+                            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                        toast('تم تحديث الخدمة بنجاح', 'success');
+                    } else {
+                        await db.collection('services').add({
+                            name,
+                            category,
+                            location,
+                            documents,
+                            cost,
+                            duration,
+                            notes,
+                            userId: currentUser.uid,
+                            userEmail: currentUser.email,
+                            averageRating: 0,
+                            totalReviews: 0,
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                        toast('تمت إضافة الخدمة بنجاح', 'success');
+                    }
+                    
+                    $('#serviceForm').reset();
+                    toggleAdd(); // Close modal after save
+                    loadServices();
+                    loadStats();
+                } catch (err) {
+                    console.error(err);
+                    toast('خطأ: ' + err.message, 'error');
+                } finally {
+                    hideLoading($('#serviceForm'), originalText);
+                }
+            });
+            
+            // Review Form Submit
+            $('#reviewModal').addEventListener('submit', async (e) => {
+                if (e.target.id !== 'reviewForm') return;
+                e.preventDefault();
+                if (!currentUser || !currentServiceForReview) return;
+                
+                const originalText = $('#reviewForm button[type="submit"]').innerHTML;
+                showLoading($('#reviewForm'));
+                
+                const rating = parseInt($('#reviewRating').value);
+                const comment = $('#reviewComment').value.trim();
+                const accuracy = $('#reviewAccuracy').value;
+                
+                if (!rating || !accuracy) {
+                    toast('يرجى إدخال التقييم وتحديد دقة المعلومات', 'error');
+                    hideLoading($('#reviewForm'), originalText);
+                    return;
+                }
+                
+                try {
+                    const reviewData = { 
+                        userId: currentUser.uid, 
+                        userEmail: currentUser.email, 
+                        rating, 
+                        comment, 
+                        accuracy, 
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+                    
+                    await db.collection('services').doc(currentServiceForReview.id).collection('reviews').doc(currentUser.uid).set(reviewData);
+                    await updateReviewCounters(currentServiceForReview.id);
+                    
+                    toast(currentReview ? 'تم تعديل التقييم بنجاح' : 'شكراً لتقييمك الخدمة!', 'success');
+                    closeReview();
+                    loadServices();
+                    loadStats();
+                } catch (err) {
+                    console.error(err);
+                    toast('خطأ في ' + (currentReview ? 'تعديل' : 'إضافة') + ' التقييم: ' + err.message, 'error');
+                } finally {
+                    hideLoading($('#reviewForm'), originalText);
+                }
+            });
+            
+            // Search Input
+            $('#searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    searchServices();
+                }
+            });
+            
+            $('#searchInput').addEventListener('input', function() {
+                const searchTerm = this.value.trim().toLowerCase();
+                showSearchSuggestions(searchTerm);
+                searchServices();
+            });
+            
+            // Hide Suggestions on Click Outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.search-container')) {
+                    $('#searchSuggestions').style.display = 'none';
+                }
+            });
+            
+            // Modal Close on Esc
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeModal('authModal');
+                    closeModal('addModal');
+                    closeReview();
+                    $('#welcomeModal').style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            document.querySelectorAll('.modal').forEach(m => {
+                m.addEventListener('click', (e) => {
+                    if (e.target === m) {
+                        if (m.id === 'reviewModal') {
+                            closeReview();
+                        } else if (m.id === 'welcomeModal') {
+                            $('#welcomeModal').style.display = 'none';
+                            document.body.style.overflow = '';
+                        } else {
+                            closeModal(m.id);
+                        }
+                    }
+                });
+            });
+        });
+        
+        // Auth State Listener
+        auth.onAuthStateChanged((user) => {
+            currentUser = user;
+            $('#loginBtn').style.display = user ? 'none' : 'inline-block';
+            $('#registerBtn').style.display = user ? 'none' : 'inline-block';
+            $('#logoutBtn').style.display = user ? 'inline-block' : 'none';
+            $('#addServiceNav').style.display = user ? 'inline-block' : 'none';
+            $('#addServiceTop').style.display = user ? 'inline-block' : 'none';
+            loadServices();
+            loadStats();
+        });
+    </script>
+</body>
+</html>
