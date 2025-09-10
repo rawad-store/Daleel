@@ -1496,6 +1496,45 @@
                         ${review.comment ? `<div class="review-comment">${escapeHTML(review.comment)}</div>` : ''}
                     `;
                     
+                    if (review.userId === currentUser.uid) {
+                        const actions = document.createElement('div');
+                        actions.style.marginTop = '10px';
+                        actions.style.display = 'flex';
+                        actions.style.gap = '8px';
+                        actions.style.justifyContent = 'flex-end';
+
+                        const editBtn = document.createElement('button');
+                        editBtn.className = 'btn btn-warning btn-icon';
+                        editBtn.innerHTML = '<i class="fas fa-edit"></i> تعديل';
+                        editBtn.onclick = function() {
+                            currentReview = review;
+                            $('#reviewRating').value = review.rating;
+                            setStars(review.rating);
+                            $('#reviewComment').value = review.comment || '';
+                            $('#reviewAccuracy').value = review.accuracy || '';
+                            $('#reviewForm button[type="submit"]').innerHTML = '💾 حفظ التعديلات';
+
+                            if (!$('#reviewForm .btn-danger')) {
+                                const fEnd = $('#reviewForm .f-end');
+                                const delBtn = document.createElement('button');
+                                delBtn.type = 'button';
+                                delBtn.className = 'btn btn-danger btn-icon';
+                                delBtn.innerHTML = '<i class="fas fa-trash"></i> حذف التقييم';
+                                delBtn.onclick = deleteReview;
+                                fEnd.insertBefore(delBtn, fEnd.firstChild);
+                            }
+                        };
+
+                        const delBtn = document.createElement('button');
+                        delBtn.className = 'btn btn-danger btn-icon';
+                        delBtn.innerHTML = '<i class="fas fa-trash"></i> حذف';
+                        delBtn.onclick = deleteReview;
+
+                        actions.appendChild(editBtn);
+                        actions.appendChild(delBtn);
+                        reviewEl.appendChild(actions);
+                    }
+
                     reviewsList.appendChild(reviewEl);
                 });
             } catch (err) {
