@@ -717,6 +717,31 @@
             text-align: center;
             min-width: 120px;
         }
+        
+        /* تعديل عرض التقييمات لتكون رأسية ومتجاوبة */
+        #reviewsList {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+        
+        .review-item {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        @media (max-width: 768px) {
+            .review-item {
+                padding: 12px; /* تقليل الحشو على الشاشات الصغيرة */
+            }
+            
+            .review-header {
+                flex-direction: column; /* جعل الرأس رأسياً على الشاشات الصغيرة */
+                align-items: flex-start;
+                gap: 5px;
+            }
+        }
     </style>
 </head>
 <body>
