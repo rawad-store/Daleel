@@ -312,6 +312,10 @@
             margin: 8px 0;
             color: #FFC107;
         }
+
+        .rating i {
+            font-size: 1.2rem; /* تحسين حجم النجوم */
+        }
         
         .reviews {
             margin-top: 10px;
@@ -321,17 +325,40 @@
         
         .review-item {
             background: #f9f9f9;
-            padding: 10px;
+            padding: 15px; /* زيادة الحشو */
             border-radius: 8px;
-            margin-bottom: 8px;
+            margin-bottom: 15px; /* زيادة المسافة بين التقييمات */
             transition: var(--transition);
+            border: 1px solid var(--border); /* إضافة حدود */
+        }
+
+        .review-item:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* تأثير hover */
         }
         
         .review-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
+            margin-bottom: 8px; /* زيادة المسافة */
+            font-size: 0.95rem; /* تحسين حجم الخط */
+            color: #444; /* لون أغمق قليلاً */
+        }
+        
+        .review-header div:first-child {
+            font-weight: 600; /* جعل اسم المستخدم bold */
+        }
+
+        .review-accuracy {
+            margin-top: 5px;
+            font-style: italic; /* إضافة نمط لدقة المعلومات */
+            color: #666;
+        }
+
+        .review-comment {
+            margin-top: 10px;
+            border-top: 1px dashed var(--border); /* خط فاصل منقط */
+            padding-top: 10px;
+            font-size: 0.95rem;
         }
         
         .empty {
@@ -1440,8 +1467,8 @@
                         <div class="rating">
                             ${renderStars(review.rating)}
                         </div>
-                        <div><strong>دقة المعلومات:</strong> ${escapeHTML(review.accuracy)}</div>
-                        ${review.comment ? `<div>${escapeHTML(review.comment)}</div>` : ''}
+                        <div class="review-accuracy"><strong>دقة المعلومات:</strong> ${escapeHTML(review.accuracy)}</div>
+                        ${review.comment ? `<div class="review-comment">${escapeHTML(review.comment)}</div>` : ''}
                     `;
                     
                     reviewsList.appendChild(reviewEl);
