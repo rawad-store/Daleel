@@ -1258,7 +1258,7 @@
             }
         };
         
-        // ==== Review Functions ====
+        // ==== Review Functions (Redesigned from scratch for scalability) ====
         window.openReview = async function(serviceId) {
             if (!currentUser) {
                 toast('يجب تسجيل الدخول أولاً', 'error');
@@ -1282,25 +1282,24 @@
             const deleteBtn = $('#reviewForm .btn-danger');
             if (deleteBtn) deleteBtn.remove();
             
-            const hasReviewed = service.reviews?.some(r => r.userId === currentUser.uid);
-            if (hasReviewed) {
-                currentReview = service.reviews.find(r => r.userId === currentUser.uid);
-                if (currentReview) {
-                    $('#reviewRating').value = currentReview.rating;
-                    setStars(currentReview.rating);
-                    $('#reviewComment').value = currentReview.comment || '';
-                    $('#reviewAccuracy').value = currentReview.accuracy || '';
-                    $('#reviewForm button[type="submit"]').innerHTML = '💾 حفظ التعديلات';
-                    
-                    // Add delete button
-                    const fEnd = $('#reviewForm .f-end');
-                    const delBtn = document.createElement('button');
-                    delBtn.type = 'button';
-                    delBtn.className = 'btn btn-danger btn-icon';
-                    delBtn.innerHTML = '<i class="fas fa-trash"></i> حذف التقييم';
-                    delBtn.onclick = deleteReview;
-                    fEnd.insertBefore(delBtn, fEnd.firstChild);
-                }
+            // Check if user has reviewed
+            const reviewSnap = await db.collection('services').doc(serviceId).collection('reviews').doc(currentUser.uid).get();
+            if (reviewSnap.exists) {
+                currentReview = reviewSnap.data();
+                $('#reviewRating').value = currentReview.rating;
+                setStars(currentReview.rating);
+                $('#reviewComment').value = currentReview.comment || '';
+                $('#reviewAccuracy').value = currentReview.accuracy || '';
+                $('#reviewForm button[type="submit"]').innerHTML = '💾 حفظ التعديلات';
+                
+                // Add delete button
+                const fEnd = $('#reviewForm .f-end');
+                const delBtn = document.createElement('button');
+                delBtn.type = 'button';
+                delBtn.className = 'btn btn-danger btn-icon';
+                delBtn.innerHTML = '<i class="fas fa-trash"></i> حذف التقييم';
+                delBtn.onclick = deleteReview;
+                fEnd.insertBefore(delBtn, fEnd.firstChild);
             }
             
             loadReviews(serviceId);
@@ -1309,38 +1308,25 @@
             openModal('reviewModal');
         };
         
-        function deleteReview() {
+        async function deleteReview() {
             if (!confirm('هل أنت متأكد من حذف تقييمك؟')) return;
             
             const originalText = $('#reviewForm button[type="submit"]').innerHTML;
             showLoading($('#reviewForm'));
             
-            const serviceRef = db.collection('services').doc(currentServiceForReview.id);
-            
-            serviceRef.update({
-                reviews: firebase.firestore.FieldValue.arrayRemove(currentReview)
-            }).then(() => {
-                return serviceRef.get();
-            }).then(updatedService => {
-                const updatedReviews = updatedService.data().reviews || [];
-                const totalRating = updatedReviews.reduce((sum, review) => sum + review.rating, 0);
-                const averageRating = updatedReviews.length > 0 ? totalRating / updatedReviews.length : 0;
-                
-                return serviceRef.update({
-                    averageRating: averageRating,
-                    totalReviews: updatedReviews.length
-                });
-            }).then(() => {
+            try {
+                await db.collection('services').doc(currentServiceForReview.id).collection('reviews').doc(currentUser.uid).delete();
+                await updateReviewCounters(currentServiceForReview.id);
                 toast('تم حذف التقييم بنجاح', 'success');
                 closeReview();
                 loadServices();
                 loadStats();
-            }).catch(err => {
+            } catch (err) {
                 console.error(err);
                 toast('خطأ في حذف التقييم: ' + err.message, 'error');
-            }).finally(() => {
+            } finally {
                 hideLoading($('#reviewForm'), originalText);
-            });
+            }
         }
         
         window.closeReview = function() {
@@ -1430,52 +1416,59 @@
             reviewsList.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> جاري التحميل...</div>';
             
             try {
-                const serviceSnap = await db.collection('services').doc(serviceId).get();
+                const reviewsSnap = await db.collection('services').doc(serviceId).collection('reviews').orderBy('createdAt', 'desc').get();
                 
-                if (serviceSnap.exists) {
-                    const serviceData = serviceSnap.data();
-                    const reviews = serviceData.reviews || [];
-                    
-                    reviewsList.innerHTML = '';
-                    
-                    if (reviews.length === 0) {
-                        reviewsList.innerHTML = '<p>لا توجد تقييمات بعد</p>';
-                        return;
-                    }
-                    
-                    const sortedReviews = [...reviews].sort((a, b) => {
-                        const dateA = a.createdAt?.toDate() || new Date(0);
-                        const dateB = b.createdAt?.toDate() || new Date(0);
-                        return dateB - dateA;
-                    });
-                    
-                    sortedReviews.forEach(review => {
-                        const reviewEl = document.createElement('div');
-                        reviewEl.className = 'review-item';
-                        
-                        const date = review.createdAt ? review.createdAt.toDate().toLocaleDateString('ar-EG', { year: 'numeric', month: 'short', day: 'numeric' }) : 'تاريخ غير معروف';
-                        
-                        reviewEl.innerHTML = `
-                            <div class="review-header">
-                                <div>${escapeHTML(review.userEmail || 'مستخدم مجهول')}</div>
-                                <div>${date}</div>
-                            </div>
-                            <div class="rating">
-                                ${renderStars(review.rating)}
-                            </div>
-                            <div><strong>دقة المعلومات:</strong> ${escapeHTML(review.accuracy)}</div>
-                            ${review.comment ? `<div>${escapeHTML(review.comment)}</div>` : ''}
-                        `;
-                        
-                        reviewsList.appendChild(reviewEl);
-                    });
-                } else {
+                reviewsList.innerHTML = '';
+                
+                if (reviewsSnap.empty) {
                     reviewsList.innerHTML = '<p>لا توجد تقييمات بعد</p>';
+                    return;
                 }
+                
+                reviewsSnap.forEach(doc => {
+                    const review = doc.data();
+                    const reviewEl = document.createElement('div');
+                    reviewEl.className = 'review-item';
+                    
+                    const date = review.createdAt ? review.createdAt.toDate().toLocaleDateString('ar-EG', { year: 'numeric', month: 'short', day: 'numeric' }) : 'تاريخ غير معروف';
+                    
+                    reviewEl.innerHTML = `
+                        <div class="review-header">
+                            <div>${escapeHTML(review.userEmail || 'مستخدم مجهول')}</div>
+                            <div>${date}</div>
+                        </div>
+                        <div class="rating">
+                            ${renderStars(review.rating)}
+                        </div>
+                        <div><strong>دقة المعلومات:</strong> ${escapeHTML(review.accuracy)}</div>
+                        ${review.comment ? `<div>${escapeHTML(review.comment)}</div>` : ''}
+                    `;
+                    
+                    reviewsList.appendChild(reviewEl);
+                });
             } catch (err) {
                 console.error('خطأ في تحميل التقييمات:', err);
                 reviewsList.innerHTML = '<p style="color: var(--error);">خطأ في تحميل التقييمات</p>';
             }
+        }
+        
+        async function updateReviewCounters(serviceId) {
+            const reviewsSnap = await db.collection('services').doc(serviceId).collection('reviews').get();
+            let totalRating = 0;
+            let count = 0;
+            
+            reviewsSnap.forEach(doc => {
+                const r = doc.data();
+                totalRating += r.rating;
+                count++;
+            });
+            
+            const average = count > 0 ? totalRating / count : 0;
+            
+            await db.collection('services').doc(serviceId).update({
+                averageRating: average,
+                totalReviews: count
+            });
         }
         
         window.renderStars = function(rating) {
@@ -1768,7 +1761,6 @@
                             notes,
                             userId: currentUser.uid,
                             userEmail: currentUser.email,
-                            reviews: [],
                             averageRating: 0,
                             totalReviews: 0,
                             createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -1809,35 +1801,16 @@
                 
                 try {
                     const reviewData = { 
-                      userId: currentUser.uid, 
-                      userEmail: currentUser.email, 
-                      rating, 
-                      comment, 
-                      accuracy, 
-                      createdAt: new Date().toISOString() // تخزين التاريخ كنص ISO
+                        userId: currentUser.uid, 
+                        userEmail: currentUser.email, 
+                        rating, 
+                        comment, 
+                        accuracy, 
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
                     };
                     
-                    const serviceRef = db.collection('services').doc(currentServiceForReview.id);
-                    
-                    if (currentReview) {
-                        await serviceRef.update({
-                            reviews: firebase.firestore.FieldValue.arrayRemove(currentReview)
-                        });
-                    }
-                    
-                    await serviceRef.update({
-                        reviews: firebase.firestore.FieldValue.arrayUnion(reviewData)
-                    });
-                    
-                    const updatedService = await serviceRef.get();
-                    const updatedReviews = updatedService.data().reviews || [];
-                    const totalRating = updatedReviews.reduce((sum, review) => sum + review.rating, 0);
-                    const averageRating = updatedReviews.length > 0 ? totalRating / updatedReviews.length : 0;
-                    
-                    await serviceRef.update({
-                        averageRating: averageRating,
-                        totalReviews: updatedReviews.length
-                    });
+                    await db.collection('services').doc(currentServiceForReview.id).collection('reviews').doc(currentUser.uid).set(reviewData);
+                    await updateReviewCounters(currentServiceForReview.id);
                     
                     toast(currentReview ? 'تم تعديل التقييم بنجاح' : 'شكراً لتقييمك الخدمة!', 'success');
                     closeReview();
