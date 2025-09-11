@@ -318,9 +318,9 @@
         }
         
         .reviews {
-            margin-top: 10px;
+            margin-top: 20px;
             border-top: 1px solid var(--border);
-            padding-top: 10px;
+            padding-top: 15px;
         }
         
         .review-item {
@@ -462,10 +462,16 @@
         }
         
         .f-end {
+            position: sticky;
+            bottom: 0;
+            background: var(--white);
+            padding: 10px 18px; /* يتناسب مع padding الـ box-body */
+            border-top: 1px solid var(--border);
+            z-index: 10; /* لضمان عدم تداخل مع عناصر أخرى */
             display: flex;
             justify-content: flex-end;
             gap: 8px;
-            margin-top: 10px;
+            margin-top: 10px; /* الحفاظ على المسافة الأصلية */
         }
         
         .toast-wrap {
@@ -702,6 +708,14 @@
             .btn-start {
                 padding: 10px 25px;
                 font-size: 1rem;
+            }
+
+            .row {
+                margin-bottom: 20px; /* زيادة المسافات بين الحقول لتجنب الضغط على الموبايل */
+            }
+
+            .f-end {
+                padding: 10px 15px; /* تكييف للموبايل */
             }
         }
         
@@ -1578,6 +1592,9 @@
 
                     reviewsList.appendChild(reviewEl);
                 });
+                // بعد التحميل، أعد التمرير إلى الأعلى
+                const reviewBox = $('#reviewModal .box');
+                if (reviewBox) reviewBox.scrollTop = 0;
             } catch (err) {
                 console.error('خطأ في تحميل التقييمات:', err);
                 reviewsList.innerHTML = '<p style="color: var(--error);">خطأ في تحميل التقييمات</p>';
