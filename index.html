@@ -474,6 +474,16 @@
             margin-top: 10px; /* الحفاظ على المسافة الأصلية */
         }
         
+        #reviewForm {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 0 0 10px 0;
+            margin: 0 -18px 20px -18px; /* تعديل ليتناسب مع padding الـ box-body */
+        }
+        
         .toast-wrap {
             position: fixed;
             top: 16px;
@@ -1527,6 +1537,8 @@
                 
                 if (reviewsSnap.empty) {
                     reviewsList.innerHTML = '<p>لا توجد تقييمات بعد</p>';
+                    const reviewBox = $('#reviewModal .box');
+                    if (reviewBox) reviewBox.scrollTop = 0;
                     return;
                 }
                 
