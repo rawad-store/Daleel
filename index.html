@@ -811,7 +811,7 @@
         <nav class="nav" role="navigation" aria-label="التنقل الرئيسي">
             <div class="brand">📍 دليل <span style="font-weight:400;color:#777">| دليلك للخدمات</span></div>
             <div class="actions">
-                <button id="addServiceNav" class="btn btn-primary btn-icon" style="display:none" onclick="toggleAdd()" aria-label="إضافة خدمة جديدة">➕ أضف خدمة عملتها</button>
+                <button id="addServiceNav" class="btn btn-primary btn-icon" style="display:none" onclick="toggleAdd()" aria-label="إضافة خدمة جديدة">➕ أضف اخر خدمة عملتها</button>
                 <button id="loginBtn" class="btn btn-outline btn-icon" onclick="openAuth('login')" aria-label="تسجيل الدخول">دخول</button>
                 <button id="registerBtn" class="btn btn-primary btn-icon" onclick="openAuth('register')" aria-label="إنشاء حساب">تسجيل</button>
                 <button id="logoutBtn" class="btn btn-outline btn-icon" style="display:none" onclick="logout()" aria-label="تسجيل الخروج">خروج</button>
@@ -830,7 +830,7 @@
                 <div class="stat" aria-live="polite"><b id="statServices">0</b> خدمة</div>
                 <div class="stat" aria-live="polite"><b id="statUsers">0</b> مستخدم</div>
                 <div class="stat" aria-live="polite"><b id="statReviews">0</b> تقييم</div>
-                <div class="stat"><button id="addServiceTop" class="btn btn-primary btn-icon" style="display:none" onclick="toggleAdd()" aria-label="إضافة خدمة جديدة">➕ أضف خدمة عملتها</button></div>
+                <div class="stat"><button id="addServiceTop" class="btn btn-primary btn-icon" style="display:none" onclick="toggleAdd()" aria-label="إضافة خدمة جديدة">➕ أضف اخر خدمة عملتها</button></div>
             </div>
         </div>
     </section>
@@ -1085,33 +1085,37 @@
             " aria-label="إغلاق النافذة">&times;</button>
             
             <!-- المحتوى -->
-            <section class="welcome-section">
-                <div class="welcome-content">
-                    <!-- العنوان -->
-                    <h2 id="welcomeTitle" class="fadeItem">
-                        ✨ مرحبًا بك في "دليلك" ✨
-                    </h2>
-                    <!-- النصوص التعريفية -->
-                    <p class="fadeItem">
-                        "دليلك" هو منصتك الأولى لمعرفة <strong>الأوراق والمستندات والرسوم</strong> المطلوبة لإنجاز الخدمات الحكومية والعامة بسهولة ومن أول مرة.
-                    </p>
-                    <p class="fadeItem">
-                        استكشف الخدمات، واطلع على التجارب الحقيقية للآخرين لتعرف <strong>الخطوات الصحيحة</strong> قبل أي مشوار تقوم به.
-                    </p>
-                    <p class="fadeItem">
-                        أي شخص يمكنه <strong>إضافة تجربته، تقييم الخدمات، وترك ملاحظاته</strong> لتوفير الوقت والجهد والمال على الجميع.
-                    </p>
-                    <p class="fadeItem">
-                        💡 <strong>ابدأ بنفسك!</strong> شارك آخر مهمة أو خدمة أنجزتها مهما كانت بسيطة، فقد تكون سببًا في مساعدة شخص آخر.
-                    </p>
-                    <!-- زر البدء -->
-                    <button id="startNow" class="btn-start fadeItem" aria-label="ابدأ الآن">
-                        🚀 ابدأ الآن
-                    </button>
-                </div>
-            </section>
-        </div>
-    </div>
+<section class="welcome-section">
+    <div class="welcome-content">
+        <!-- العنوان -->
+        <h2 id="welcomeTitle" class="fadeItem">
+            👋 أهلاً بيك في تطبيق <span style="color:#ff9800;">"دليلك"</span>
+        </h2>
+        <!-- النصوص التعريفية -->
+        <p class="fadeItem">
+            خلّي مشاويرك الحكومية والخدمية أسهل وأسرع! ✨  
+            "دليلك" بيقولك <strong>إيه الأوراق المطلوبة، الرسوم، والخطوات</strong> بالترتيب قبل ما تروح.
+        </p>
+        <p class="fadeItem">
+            وكمان تقدر تشوف <strong>تجارب الناس اللي سبقوك</strong> 👥  
+            عشان تعرف كل التفاصيل الصغيرة اللي بتفرق وتوفّر وقتك وفلوسك.
+        </p>
+        <p class="fadeItem">
+            والأحلى من كده؟ <strong>إنت كمان تقدر تضيف تجربتك</strong> ⭐  
+            وتساعد غيرك زي ما غيرك هيساعدك.
+        </p>
+        <p class="fadeItem">
+            💡 جرّب دلوقتي! شارك آخر خدمة أنجزتها مهما كانت بسيطة،  
+            يمكن تكون سبب إن حد غيرك ينجزها من غير تعب.
+        </p>
+        <!-- زر البدء -->
+        <button id="startNow" class="btn-start fadeItem" aria-label="ابدأ الآن">
+            🚀 خلّي دليلك معاك
+        </button>
+      </div>
+    </section>
+  </div>
+</div>
 
     <!-- Firebase + App -->
     <script src="https://www.gstatic.com/firebasejs/10.2.0/firebase-app-compat.js"></script>
