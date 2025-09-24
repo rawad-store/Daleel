@@ -21,7 +21,7 @@
     <meta name="twitter:image" content="https://raw.githubusercontent.com/rawad-store/daleel/main/preview.jpg">
     
     <style>
-        /* أنماط CSS تبقى كما هي */
+        /* أنماط CSS تبقى كما هي مع بعض التحسينات للأداء والتوافق */
         :root {
             --primary: #2D5F7C;
             --secondary: #4A90E2;
@@ -803,6 +803,12 @@
                 gap: 5px;
             }
         }
+
+        /* إضافة أنماط لزر المشاركة الجديد */
+        .btn-share {
+            background: #3498db;
+            color: var(--white);
+        }
     </style>
 </head>
 <body>
@@ -1281,7 +1287,7 @@
             $('#services').innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> جاري تحميل الخدمات...</div>';
             
             try {
-                const snap = await db.collection('services').orderBy('createdAt', 'desc').get();
+                const snap = await db.collection('services').orderBy('averageRating', 'desc').get(); // تحسين: فرز حسب التقييم الأعلى
                 services = [];
                 allServices = [];
                 
@@ -1343,6 +1349,9 @@
                         <button class="btn btn-primary btn-icon card-action-btn" onclick="openReview('${s.id}')" aria-label="قيم الخدمة">
                             <i class="fas fa-star"></i> قيم الخدمة
                         </button>
+                        <button class="btn btn-share btn-icon card-action-btn" onclick="shareService('${s.id}')" aria-label="مشاركة الخدمة">
+                            <i class="fas fa-share-alt"></i> مشاركة
+                        </button>
                         ${currentUser ? `
                             <button class="btn btn-warning btn-icon card-action-btn" onclick="toggleAdd('${s.id}')" aria-label="تعديل الخدمة">
                                 <i class="fas fa-edit"></i> تعديل
@@ -1361,17 +1370,49 @@
         }
         
         window.confirmDelete = async function(serviceId) {
-            const svc = services.find(s => s.id === serviceId);
-            if (!svc || !confirm('هل تريد حذف هذه الخدمة؟')) return;
+            if (!confirm('هل أنت متأكد من حذف هذه الخدمة؟ سيتم حذف جميع التقييمات المرتبطة بها.')) return; // تحسين: إضافة تحذير عن حذف التقييمات
             
             try {
-                await db.collection('services').doc(svc.id).delete();
-                toast('تم حذف الخدمة');
+                const serviceRef = db.collection('services').doc(serviceId);
+                
+                // حذف التقييمات أولاً لتجنب فقدان البيانات
+                const reviewsSnap = await serviceRef.collection('reviews').get();
+                const batch = db.batch();
+                reviewsSnap.docs.forEach(doc => {
+                    batch.delete(doc.ref);
+                });
+                await batch.commit();
+                
+                await serviceRef.delete();
+                toast('تم حذف الخدمة والتقييمات المرتبطة');
                 loadServices();
                 loadStats();
             } catch (err) {
                 console.error(err);
                 toast('خطأ في الحذف: ' + err.message, 'error');
+            }
+        };
+        
+        // إبداع جديد: دالة مشاركة الخدمة عبر روابط التواصل
+        window.shareService = function(serviceId) {
+            const service = allServices.find(s => s.id === serviceId);
+            if (!service) return;
+            
+            const shareText = `اكتشف خدمة "${service.name}" في دليل: الأوراق المطلوبة: ${service.documents}. تقييم: ${service.averageRating.toFixed(1)} ⭐`;
+            const shareUrl = window.location.href + '#' + serviceId; // يمكن تخصيص الرابط
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: service.name,
+                    text: shareText,
+                    url: shareUrl
+                }).then(() => toast('تمت المشاركة بنجاح', 'success'))
+                  .catch(err => toast('خطأ في المشاركة: ' + err.message, 'error'));
+            } else {
+                // دعم للمتصفحات القديمة: نسخ الرابط
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    toast('تم نسخ رابط الخدمة إلى الحافظة', 'success');
+                }).catch(err => toast('خطأ في النسخ: ' + err.message, 'error'));
             }
         };
         
@@ -1666,7 +1707,7 @@
             } else if (currentCategory !== 'الكل') {
                 infoText = `عرض ${count} خدمة في قسم "${currentCategory}"`;
             } else {
-                infoText = `عرض ${count} خدمة`;
+                infoText = `عرض ${count} خدمة (مرتبة حسب التقييم)`;
             }
             
             $('#searchResultsInfo').textContent = infoText;
@@ -1757,7 +1798,7 @@
             const startBtn = $('#startNow');
             const closeBtn = $('#closeModal');
             
-            // Show modal on every visit (for testing) - يمكن تغيير هذا ليعتمد على localStorage إذا أردت
+            // عرض المودال في كل زيارة (يمكن تعديل لـ localStorage إذا لزم)
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
             
@@ -1771,7 +1812,7 @@
                 startBtn.classList.add('show'); 
             }, fadeItems.length * 600);
             
-            // Auto close after 120 seconds
+            // إغلاق تلقائي بعد 120 ثانية
             setTimeout(hideWelcomeModal, 120000);
             
             function hideWelcomeModal() {
